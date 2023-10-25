@@ -10,10 +10,10 @@ const routes: Routes = [
     path: 'list',
     component: UserListComponent,
   },
-  // {
-  //   path: 'create',
-  //   component: UserAddEditComponent,
-  // },
+  {
+    path: 'edit',
+    component: UserAddEditComponent,
+  },
   {
     path: 'edit/:id',
     component: UserAddEditComponent,

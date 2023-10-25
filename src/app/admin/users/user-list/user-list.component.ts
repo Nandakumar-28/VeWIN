@@ -7,6 +7,7 @@ import { NbDialogService } from '@nebular/theme';
 import { UsersService } from "../services/users.service";
 import { ROUTE_PATH } from "../../../shared/constants/route-path.constant";
 import { DialogDeleteComponent } from './dialog-delete.component';
+import { API_END_POINTS, getApiEndPoint } from '../../../shared/constants/api-constant';
 
 @Component({
   selector: 'ngx-user-list',
@@ -21,6 +22,7 @@ export class UserListComponent implements OnInit {
 
   first = 0;
   rows = 10;
+  userid: any;
 
   constructor(
     private dialogConfirmService: ConfirmationService,
@@ -44,32 +46,25 @@ export class UserListComponent implements OnInit {
     this.userList();
   }
 
-  /**
-   * create User
-   * @param
-   * @returns
-   */
-  createUser() {
-    this.router.navigate([
-      ROUTE_PATH.USERS,
-      ROUTE_PATH.USER,
-      ROUTE_PATH.USERES.CREATE,
-    ]);
-  }
 
   /**
    * Edit User
    * @param user_id
    * @returns
    */
-  editUser(user_id: any) {
-    this.router.navigate([
-      ROUTE_PATH.USERS,
-      ROUTE_PATH.USER,
-      ROUTE_PATH.USERES.EDIT,
-      user_id,
-    ]);
+  // editUser(user: any) {
+  //   this.router.navigate([
+  //     ROUTE_PATH.ADMIN,
+  //     ROUTE_PATH.USERS,
+  //     ROUTE_PATH.USERES.EDIT,
+  //     user,
+  //   ]);
+  // }
+  editUser(user: any) {
+  this.userService.setUserDetails(user);
+  this.router.navigate([ROUTE_PATH.ADMIN, ROUTE_PATH.USERS, ROUTE_PATH.USERES.EDIT]);
   }
+
 
   /**
    * Delete User confirmation
@@ -81,7 +76,8 @@ export class UserListComponent implements OnInit {
       context: { user },
     }).onClose.subscribe((result) => {
       if (result) {
-        this.deleteUser(user.userId);
+        console.log(result)
+        this.deleteUser(result);
       }
     });
   }
@@ -91,28 +87,26 @@ export class UserListComponent implements OnInit {
    * @param userId
    * @returns
    */
-  deleteUser(userId) {
-    let deletePostData = { userId: userId };
 
-    this.userService.deleteUser(deletePostData).subscribe(
-      (response) => {
+  deleteUser(user: any) {
+   const userId = user.id;
+   console.log('User to delete:', user);
+
+   this.userService.deleteUser(userId).subscribe(
+    (response: any) => {
+      console.log('Delete User API Response:', response);
+
+      if (response.statusCode === 200) {
+        console.log('User deleted successfully');
         this.userList();
-        // if (response["status"] != 200) {
-        //   this.toastrService.show(response["message"], "Warning", {
-        //     status: "warning",
-        //     duration: 8000,
-        //   });
-        // } else {
-        //   this.toastrService.show(response["message"], "Success", {
-        //     status: "success",
-        //     duration: 8000,
-        //   });
-        // }
-      },
-      (error) => {
-        console.log(error);
+      } else {
+        console.error('Error: User deletion failed. Response:', response);
       }
-    );
+    },
+    (error) => {
+      console.error('Error:', error);
+    }
+   );
   }
 
   /**
@@ -120,17 +114,17 @@ export class UserListComponent implements OnInit {
    * @param userId, userName, action
    * @returns
    */
-  confirmBlockUnBlock(userId, name, action) {
+  confirmBlockUnBlock(user:any,action:any) {
     this.dialogConfirmService.confirm({
       header: action + " - " +"confirmation",
       message:
         "Are you sure that you want to <b>" +
         action +
         " - " +
-        name +
+        user.name +
         "</b>  ?",
       accept: () => {
-        this.blockUnBlockUser(userId, action);
+        this.blockUnBlockUser(user, action);
       },
     });
   }
@@ -140,26 +134,26 @@ export class UserListComponent implements OnInit {
    * @param userId, action
    * @returns
    */
-  blockUnBlockUser(userId:any, action:any) {
-    let blockUnBlockPostData = {
-      userId: userId,
-      block: action == "Block" ? true : false,
-    };
-
-    this.userService.blockUnBlockUser(blockUnBlockPostData).subscribe(
+  blockUnBlockUser(user:any, action:any) {
+    // let blockUnBlockPostData = {
+    //   block: action == "Block" ? true : false,
+    // };
+        const mobile = user.mobile;
+        const status = action === "Block" ? "Inactive" : "Active";
+    this.userService.blockUnBlockUser(mobile, status).subscribe(
       (response) => {
         this.userList();
-        // if (response["status"] != 200) {
-        //   this.toastrService.show(response["message"], "Warning", {
-        //     status: "warning",
-        //     duration: 8000,
-        //   });
-        // } else {
-        //   this.toastrService.show(response["message"], "Success", {
-        //     status: "success",
-        //     duration: 8000,
-        //   });
-        // }
+        if (response["status"] != 200) {
+          this.toastrService.show(response["message"], "Warning", {
+            status: "warning",
+            duration: 8000,
+          });
+        } else {
+          this.toastrService.show(response["message"], "Success", {
+            status: "success",
+            duration: 8000,
+          });
+        }
       },
       (error) => {
         console.log(error);
@@ -173,7 +167,7 @@ export class UserListComponent implements OnInit {
    * @returns
    */
 
-   // Define your static user data
+  // Define your static user data
   staticUsers: any[] = [
     { username: 'Nanda Kumar', phone_number: '9674662433',decsignation:'Driver', address: 'Pollachi', active: true },
     { username: 'Karuppu Swamy', phone_number: '7536462774',decsignation:'Driver', address: 'pollachi', active: false },
@@ -185,7 +179,8 @@ export class UserListComponent implements OnInit {
     //this.users  =this.staticUsers;
     this.userService.getUserList().subscribe(
      (response) => {
-       this.users = response;
+       this.users = response.user;
+       //this.users = response;
         if (response["status"] != 200) {
           this.toastrService.show(response["message"], "Warning", {
             status: "warning",

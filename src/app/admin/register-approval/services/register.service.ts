@@ -34,7 +34,8 @@ export class RegisterService {
    */
   getUserList(): Observable<any> {
     let apiURL = getApiEndPoint(API_END_POINTS.USER.LIST);
-    return this.userServicehttp.get(apiURL).pipe(
+    const urlWithParams = `${apiURL}?status=Verified`;
+    return this.userServicehttp.get(urlWithParams).pipe(
       switchMap((result: any) => {
         if (result) {
           return of(result);
@@ -43,6 +44,48 @@ export class RegisterService {
         }
       })
     );
+  }
+  /**
+   * Approval User
+   * @param approvalData
+   * @returns
+   *
+   */
+  approveUser(mobile: string, status: string): Observable<any> {
+    
+      let apiURL = getApiEndPoint(API_END_POINTS.USER.APPROVAL)
+      return this.userServicehttp.put(`${apiURL}?mobile=${mobile}&Status=${status}`,{}).pipe(
+        switchMap((result: any) => {
+        if (result) {
+          return of(result);
+        } else {
+          return throwError(result);
+        }
+      })
+    );
+  }
+ 
+
+
+  /**
+   * Delete User
+   * @param deleteData
+   * @returns
+   *
+   */
+
+
+  declinedUser(mobile: string, status: string): Observable<any> {
+   let apiURL = getApiEndPoint(API_END_POINTS.USER.APPROVAL);
+   return this.userServicehttp.put(`${apiURL}?mobile=${mobile}&Status=${status}`,{}).pipe(
+    switchMap((result: any) => {
+      if (result) {
+        return of(result);
+      } else {
+        return throwError(result);
+      }
+    })
+   );
   }
 
   /**
@@ -54,44 +97,6 @@ export class RegisterService {
   deleteUser(deleteData): Observable<any> {
     let apiURL = getApiEndPoint(API_END_POINTS.USER.DELETE);
     return this.userServicehttp.delete(apiURL, deleteData).pipe(
-      switchMap((result: any) => {
-        if (result) {
-          return of(result);
-        } else {
-          return throwError(result);
-        }
-      })
-    );
-  }
-
-  /**
-   * Bllock/UnBlock User
-   * @param deleteData
-   * @returns
-   *
-   */
-  blockUnBlockUser(deleteData): Observable<any> {
-    let apiURL = getApiEndPoint(API_END_POINTS.USER.BLOCK_UBLOCK);
-    return this.userServicehttp.delete(apiURL, deleteData).pipe(
-      switchMap((result: any) => {
-        if (result) {
-          return of(result);
-        } else {
-          return throwError(result);
-        }
-      })
-    );
-  }
-
-  /**
-   * Retrive User details
-   * @param retriveData
-   * @returns
-   *
-   */
-  userRetrive(retriveData): Observable<any> {
-    let apiURL = getApiEndPoint(API_END_POINTS.USER.FETCH);
-    return this.userServicehttp.post(apiURL, retriveData).pipe(
       switchMap((result: any) => {
         if (result) {
           return of(result);

@@ -23,7 +23,7 @@ import { NbDialogRef } from '@nebular/theme';
         </ul>
       </nb-card-body>
       <nb-card-footer class="text-center">
-        <button nbButton status="success" (click)="deleteUser()">Declined</button>&nbsp;&nbsp;&nbsp;
+        <button nbButton status="success" (click)="deleteUser()">Delete</button>&nbsp;&nbsp;&nbsp;
         <button nbButton status="primary" (click)="close()">Cancel</button>
       </nb-card-footer>
     </nb-card>`,
@@ -41,7 +41,7 @@ export class DialogDeleteComponent implements OnInit {
   }
 
   deleteUser() {
-    this.dialogRef.close(true); // Close the delete dialog and trigger the approval action
+    this.dialogRef.close(this.user); // Close the delete dialog and trigger the approval action
   }
 
 }

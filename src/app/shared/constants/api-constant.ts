@@ -13,10 +13,11 @@ export const API_END_POINTS = {
    USER: {
     LIST: "api/User/GetUsers",
     CREATE: "user/create",
-    DELETE: "user/delete",
-    UPDATE: "user/update",
-    FETCH: "user/fetch",
-    BLOCK_UBLOCK: "user/blockUnblock",
+    DELETE: "api/User/Delete",
+    UPDATE: "api/User/UpdateUser",
+    APPROVAL: "api/User/UserApproval",
+    // BLOCK_UBLOCK: "user/blockUnblock",
+    // DECLINED: "user/decline",
   },
 };
 

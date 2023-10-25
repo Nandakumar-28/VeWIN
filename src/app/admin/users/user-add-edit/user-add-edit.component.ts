@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NbToastrService } from '@nebular/theme';
+import { ROUTE_PATH } from '../../../shared/constants/route-path.constant';
+import { UsersService } from '../services/users.service';
+import { DatePipe } from '@angular/common';
+
 
 @Component({
   selector: 'ngx-user-add-edit',
@@ -7,9 +14,139 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserAddEditComponent implements OnInit {
 
-  constructor() { }
+  AddUserForm: FormGroup;
+  submitted = false;
+  //page_title: string;
+  data_loading = false;
+  
+  //show password
+  showPassword =true;
+
+  //userlist pass user data
+  userDetails: any;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private aRoute: ActivatedRoute,
+    private userService: UsersService,
+    private toastrService: NbToastrService,
+    private datePipe: DatePipe
+  ) {}
 
   ngOnInit(): void {
+    this.AddUserFormInitialize();
+
+   // Check if user details are passed user list, service to user-edit
+
+   this.userService.getUserDetails().subscribe(user => {
+     if (user) {
+      this.userDetails = user;
+      // Pre-fill the form with user details
+      this.AddUserForm.patchValue({
+        name: this.userDetails.name,
+        mobile: this.userDetails.mobile,
+        email: this.userDetails.email,
+        address: this.userDetails.address,
+        pincode: this.userDetails.pincode,
+        password: this.userDetails.password,
+       });
+      }
+   });  
+  }  
+     
+
+  /**
+   * User Form Initialize
+   */
+
+  AddUserFormInitialize() {
+  const emailRegex = "[a-z0-9]+@[a-z]+.[a-z]{2,3}";
+  this.AddUserForm = this.formBuilder.group({
+    name: ["", [Validators.required]],
+    mobile: ["", [Validators.required]],
+    email: ["", [Validators.required, Validators.pattern(emailRegex)]],
+    address: ["", [Validators.required]],
+    pincode: ["", [Validators.required]],
+    password: ["", [Validators.required]],
+  });
+}
+
+  //Show Password
+   getInputType() {
+    if (this.showPassword) {
+      return 'text';
+    }
+    return 'password';
   }
 
+  toggleShowPassword() {
+    this.showPassword = !this.showPassword;
+  }
+
+  /**
+   * User Form Submit
+   */
+  onSubmit() {
+    this.submitted = true;
+
+    if (this.AddUserForm.invalid) {
+      return;
+    } // stop here if form is invalid
+
+    if (this.router.url.indexOf("edit") !== -1) {
+      this.AddUserForm.value.userId =
+        this.aRoute.snapshot.paramMap.get("id");
+      this.AddUserForm.value.flag = 1;
+    } else {
+      this.AddUserForm.value.flag = 0;
+    }
+  
+   // Get the current date and time in the desired format
+  const modifiedDate = this.datePipe.transform(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+  // Prepare the user object with updated details
+  const user = {
+    id:this.userDetails.id ,
+    name: this.AddUserForm.value.name,
+    mobile: this.AddUserForm.value.mobile,
+    email: this.AddUserForm.value.email,
+    address: this.AddUserForm.value.address,
+    pincode: this.AddUserForm.value.pincode,
+    password: this.AddUserForm.value.password,
+    status:"string",
+    vcode: "string",
+    usertype:  "string",
+    createdby: "string",
+    createdon: this.userDetails.createdon,
+    modifiedby: "admin" ,
+    modifiedon: modifiedDate,
+    isdeleted: "string"
+  }
+
+    this.userService.updateUser(user)
+      .subscribe((res) => {
+        this.backToUserList();
+        if (res["status"] != 200) {
+          this.toastrService.show(res["message"], "Warning", {
+            status: "warning",
+            duration: 8000,
+          });
+        } else {
+          this.toastrService.show(res["message"], "Success", {
+            status: "success",
+            duration: 8000,
+          });
+        }
+      });
+  }
+
+  /**
+   * Back to User List
+   * @param
+   * @returns
+   */
+  backToUserList() {
+    this.router.navigate([ROUTE_PATH.ADMIN, ROUTE_PATH.USERS,ROUTE_PATH.USERES.LIST,]);
+  }
 }

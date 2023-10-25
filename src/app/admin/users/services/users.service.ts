@@ -4,7 +4,7 @@ import { NbAuthJWTToken, NbAuthService } from "@nebular/auth";
 
 // Rxjs
 import { BehaviorSubject, Observable, throwError, of } from "rxjs";
-import { switchMap } from "rxjs/operators";
+import { catchError, map, switchMap } from "rxjs/operators";
 
 // constant
 import { API_END_POINTS, getApiEndPoint } from "../../../shared/constants/api-constant";
@@ -28,13 +28,26 @@ export class UsersService {
     });
   }
 
+    //pass select user Details in User-Edit
+
+  private userDetails = new BehaviorSubject<any>(null);
+
+  setUserDetails(user: any) {
+    this.userDetails.next(user);
+  }
+
+  getUserDetails() {
+    return this.userDetails.asObservable();
+  }
+
   /**
    * User List
    * @returns
    */
   getUserList(): Observable<any> {
     let apiURL = getApiEndPoint(API_END_POINTS.USER.LIST);
-    return this.userServicehttp.get(apiURL).pipe(
+    const urlWithParams = `${apiURL}?status=Active And Inactive`;
+    return this.userServicehttp.get(urlWithParams).pipe(
       switchMap((result: any) => {
         if (result) {
           return of(result);
@@ -47,20 +60,20 @@ export class UsersService {
 
   /**
    * Delete User
-   * @param deleteData
+   * @param userId
    * @returns
    *
    */
-  deleteUser(deleteData): Observable<any> {
-    let apiURL = getApiEndPoint(API_END_POINTS.USER.DELETE);
-    return this.userServicehttp.delete(apiURL, deleteData).pipe(
-      switchMap((result: any) => {
-        if (result) {
-          return of(result);
-        } else {
-          return throwError(result);
-        }
-      })
+  deleteUser(userId: number): Observable<any> {
+    let apiURL = getApiEndPoint(`${API_END_POINTS.USER.DELETE}/${userId}`);
+    return this.userServicehttp.put(apiURL,null).pipe(
+     switchMap((result: any) => {
+      if (result) {
+        return of(result);
+      } else {
+        return throwError(result);
+      }
+     })
     );
   }
 
@@ -70,9 +83,9 @@ export class UsersService {
    * @returns
    *
    */
-  blockUnBlockUser(deleteData): Observable<any> {
-    let apiURL = getApiEndPoint(API_END_POINTS.USER.BLOCK_UBLOCK);
-    return this.userServicehttp.delete(apiURL, deleteData).pipe(
+  blockUnBlockUser(mobile: string, status: string): Observable<any> {
+    let apiURL = getApiEndPoint(API_END_POINTS.USER.APPROVAL);
+   return this.userServicehttp.put(`${apiURL}?mobile=${mobile}&Status=${status}`,{}).pipe(
       switchMap((result: any) => {
         if (result) {
           return of(result);
@@ -84,14 +97,14 @@ export class UsersService {
   }
 
   /**
-   * Retrive User details
-   * @param retriveData
+   * Update User details
+   * @param user
    * @returns
    *
    */
-  userRetrive(retriveData): Observable<any> {
-    let apiURL = getApiEndPoint(API_END_POINTS.USER.FETCH);
-    return this.userServicehttp.post(apiURL, retriveData).pipe(
+  updateUser(user): Observable<any> {
+    let apiURL = getApiEndPoint(`${API_END_POINTS.USER.UPDATE}/${user.id}`);
+    return this.userServicehttp.put(apiURL, user).pipe(
       switchMap((result: any) => {
         if (result) {
           return of(result);
@@ -101,6 +114,8 @@ export class UsersService {
       })
     );
   }
+
+
 
   /**
    * Add User

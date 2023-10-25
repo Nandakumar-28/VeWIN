@@ -6,11 +6,23 @@ export const ROUTE_PATH = {
     CREATE: "create",
     EDIT: "edit",
   },
-  USERS: "users",
-  USER: "user",
-  USERES:{
+
+  ADMIN: "admin",
+   USERS: "users",
+   USERES:{
     LIST: "list",
-    CREATE: "create",
     EDIT: "edit",
-  },
+   },
+
+   PAYMENT:"payments",
+   PAYMENTS:{
+    COMPLETE: "complete",
+    REQUEST: "request" 
+   },
+
+   REGISTER:"register",
+   REGISTERS:{
+    LIST: "list",
+   }
+
 };
