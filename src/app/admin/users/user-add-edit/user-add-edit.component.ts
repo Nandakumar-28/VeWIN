@@ -127,7 +127,7 @@ export class UserAddEditComponent implements OnInit {
     this.userService.updateUser(user)
       .subscribe((res) => {
         this.backToUserList();
-        if (res["status"] != 200) {
+        if (res["statusCode"] != 200) {
           this.toastrService.show(res["message"], "Warning", {
             status: "warning",
             duration: 8000,

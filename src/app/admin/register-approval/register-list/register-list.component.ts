@@ -45,7 +45,7 @@ export class RegisterListComponent implements OnInit {
 
   /**
    * Approval User confirmation
-   * @param userId, userName
+   * @param user
    * @returns
    */
   approvalUser(user:any) {
@@ -66,7 +66,7 @@ export class RegisterListComponent implements OnInit {
     this.userService.approveUser(mobile, status).subscribe(
       (response) => {
         this.userList();
-        if (response["status"] != 200) {
+        if (response["statusCode"] != 200) {
           this.toastrService.show(response["message"], "Warning", {
             status: "warning",
             duration: 8000,
@@ -87,7 +87,7 @@ export class RegisterListComponent implements OnInit {
 
   /**
    * Declined Company
-   * @param userId
+   * @param user
    * @returns
    */
   declinedUser(user:any) {
@@ -107,7 +107,7 @@ export class RegisterListComponent implements OnInit {
     this.userService.declinedUser(mobile,status).subscribe(
       (response) => {
         this.userList();
-        if (response["status"] != 200) {
+        if (response["statusCode"] != 200) {
           this.toastrService.show(response["message"], "Warning", {
             status: "warning",
             duration: 8000,
@@ -174,7 +174,7 @@ export class RegisterListComponent implements OnInit {
       (response) => {
         this.users = response.user;
         // this. users = response;
-        if (response["status"] != 200) {
+        if (response["statusCode"] != 200) {
           this.toastrService.show(response["message"], "Warning", {
             status: "warning",
             duration: 8000,

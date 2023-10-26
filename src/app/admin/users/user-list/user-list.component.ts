@@ -52,23 +52,19 @@ export class UserListComponent implements OnInit {
    * @param user_id
    * @returns
    */
-  // editUser(user: any) {
-  //   this.router.navigate([
-  //     ROUTE_PATH.ADMIN,
-  //     ROUTE_PATH.USERS,
-  //     ROUTE_PATH.USERES.EDIT,
-  //     user,
-  //   ]);
-  // }
   editUser(user: any) {
   this.userService.setUserDetails(user);
-  this.router.navigate([ROUTE_PATH.ADMIN, ROUTE_PATH.USERS, ROUTE_PATH.USERES.EDIT]);
+  this.router.navigate([
+    ROUTE_PATH.ADMIN, 
+    ROUTE_PATH.USERS, 
+    ROUTE_PATH.USERES.EDIT
+    ]);
   }
 
 
   /**
    * Delete User confirmation
-   * @param userId, userName
+   * @param user
    * @returns
    */
   confirmDelete(user: any) {
@@ -76,17 +72,11 @@ export class UserListComponent implements OnInit {
       context: { user },
     }).onClose.subscribe((result) => {
       if (result) {
-        console.log(result)
+        // console.log(result)
         this.deleteUser(result);
       }
     });
   }
-
-  /**
-   * Delete Company
-   * @param userId
-   * @returns
-   */
 
   deleteUser(user: any) {
    const userId = user.id;
@@ -94,19 +84,19 @@ export class UserListComponent implements OnInit {
 
    this.userService.deleteUser(userId).subscribe(
     (response: any) => {
-      console.log('Delete User API Response:', response);
-
-      if (response.statusCode === 200) {
-        console.log('User deleted successfully');
         this.userList();
-      } else {
-        console.error('Error: User deletion failed. Response:', response);
-      }
-    },
-    (error) => {
-      console.error('Error:', error);
-    }
-   );
+        if (response["statusCode"] != 200) {
+          this.toastrService.show(response["message"], "Warning", {
+            status: "warning",
+            duration: 8000,
+          });
+        } else {
+          this.toastrService.show(response["message"], "Success", {
+            status: "success",
+            duration: 8000,
+          });
+        }
+    })
   }
 
   /**
@@ -143,7 +133,7 @@ export class UserListComponent implements OnInit {
     this.userService.blockUnBlockUser(mobile, status).subscribe(
       (response) => {
         this.userList();
-        if (response["status"] != 200) {
+        if (response["statusCode"] != 200) {
           this.toastrService.show(response["message"], "Warning", {
             status: "warning",
             duration: 8000,
@@ -181,7 +171,7 @@ export class UserListComponent implements OnInit {
      (response) => {
        this.users = response.user;
        //this.users = response;
-        if (response["status"] != 200) {
+        if (response["statusCode"] != 200) {
           this.toastrService.show(response["message"], "Warning", {
             status: "warning",
             duration: 8000,
