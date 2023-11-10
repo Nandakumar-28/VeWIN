@@ -3,24 +3,14 @@ import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { NbAuthService } from '@nebular/auth';
 import { AuthOptionsService } from './auth-options.service';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
-
 
 @Injectable()
 export class AuthLogin implements CanActivate {
 
     constructor(private authService: NbAuthService, 
         private router: Router,
-        private userPermission: AuthOptionsService,
-        private http: HttpClient) {
+        private userPermission: AuthOptionsService) {
     }
-  private apiUrl = environment.apiUrl;
-
-  login(credentials: any) {
-    const loginUrl = `${this.apiUrl}/api/Public/Login`;
-    return this.http.get(loginUrl, credentials);
-  }
 
     /**
      * Determines whether activate can
@@ -38,7 +28,7 @@ export class AuthLogin implements CanActivate {
             this.userPermission.clearUserPermission();
             return true;
         }
-        this.router.navigate(['/pages']); // navigating to LoginComponent
+        this.router.navigate(['/admin']); // navigating to LoginComponent
         return false;                // and canActivate returns false
     }
 }

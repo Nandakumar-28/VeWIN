@@ -1,20 +1,14 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { NbAuthJWTToken, NbAuthService } from "@nebular/auth";
-
-// Rxjs
-import { BehaviorSubject, Observable, throwError, of } from "rxjs";
-import { catchError, map, switchMap } from "rxjs/operators";
-
-// constant
-import { API_END_POINTS, getApiEndPoint } from "../../../shared/constants/api-constant";
-
+import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { API_END_POINTS, getApiEndPoint } from '../../../shared/constants/api-constant';
+import { switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UsersService {
-
+export class AnnouncementService {
     user = {};
 
   constructor(
@@ -45,9 +39,8 @@ export class UsersService {
    * @returns
    */
   getUserList(): Observable<any> {
-    let apiURL = getApiEndPoint(API_END_POINTS.USER.LIST);
-    const urlWithParams = `${apiURL}?status=Active And Inactive`;
-    return this.userServicehttp.get(urlWithParams).pipe(
+    let apiURL = getApiEndPoint(API_END_POINTS.ANNOUNCEMENT.LIST);
+    return this.userServicehttp.get(apiURL).pipe(
       switchMap((result: any) => {
         if (result) {
           return of(result);
@@ -64,8 +57,8 @@ export class UsersService {
    * @returns
    *
    */
-  deleteUser(userId: number): Observable<any> {
-    let apiURL = getApiEndPoint(`${API_END_POINTS.USER.DELETE}/${userId}`);
+  deleteUser(id: number): Observable<any> {
+    let apiURL = getApiEndPoint(`${API_END_POINTS.ANNOUNCEMENT.DELETE}?id=${id}`);
     return this.userServicehttp.put(apiURL,null).pipe(
      switchMap((result: any) => {
       if (result) {
@@ -77,24 +70,6 @@ export class UsersService {
     );
   }
 
-  /**
-   * Bllock/UnBlock User
-   * @param deleteData
-   * @returns
-   *
-   */
-  blockUnBlockUser(mobile: string, status: string): Observable<any> {
-    let apiURL = getApiEndPoint(API_END_POINTS.USER.APPROVAL);
-   return this.userServicehttp.put(`${apiURL}?mobile=${mobile}&Status=${status}`,{}).pipe(
-      switchMap((result: any) => {
-        if (result) {
-          return of(result);
-        } else {
-          return throwError(result);
-        }
-      })
-    );
-  }
 
   /**
    * Update User details
@@ -102,10 +77,9 @@ export class UsersService {
    * @returns
    *
    */
-  updateUser(user): Observable<any> {
-    let apiURL = getApiEndPoint(`${API_END_POINTS.USER.UPDATE}`);
-    console.log(user)
-    return this.userServicehttp.put(apiURL,user).pipe(
+  updateUser(requestBody): Observable<any> {
+    let apiURL = getApiEndPoint(`${API_END_POINTS.ANNOUNCEMENT.UPDATE}`);
+    return this.userServicehttp.put(apiURL,requestBody).pipe(
       switchMap((result: any) => {
         if (result) {
           return of(result);
@@ -119,14 +93,16 @@ export class UsersService {
 
 
   /**
-   * Add User
+   * Create User
    * @param Values
    * @returns
    *
    */
-  AddUserDetials(user_obj): Observable<any> {
-    let apiURL = (user_obj["flag"] == 0) ? getApiEndPoint(API_END_POINTS.USER.CREATE) : getApiEndPoint(API_END_POINTS.USER.UPDATE);
-    return this.userServicehttp.post(apiURL, user_obj).pipe(
+
+  CreateAnnouncement(requestBody): Observable<any> {
+    let apiURL = getApiEndPoint(`${API_END_POINTS.ANNOUNCEMENT.ADD}`);
+    console.log(requestBody)
+    return this.userServicehttp.post(apiURL,requestBody).pipe(
       switchMap((result: any) => {
         if (result) {
           return of(result);
@@ -136,4 +112,5 @@ export class UsersService {
       })
     );
   }
+
 }

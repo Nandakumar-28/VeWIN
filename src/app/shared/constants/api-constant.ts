@@ -11,14 +11,26 @@ export const API_END_POINTS = {
     BLOCK_UBLOCK: "company/blockUnblock",
   },
    USER: {
-    LIST: "api/User/GetUsers",
     CREATE: "user/create",
+    LIST: "api/User/GetUsers",
     DELETE: "api/User/Delete",
     UPDATE: "api/User/UpdateUser",
     APPROVAL: "api/User/UserApproval",
-    // BLOCK_UBLOCK: "user/blockUnblock",
-    // DECLINED: "user/decline",
   },
+  ANNOUNCEMENT:{
+    LIST:"api/Announcement/GetAnnouncement",
+    ADD: "api/Announcement/AddAnnouncement",
+    UPDATE: "api/Announcement/UpdateAnnouncement",
+    DELETE: "api/Announcement/Delete",
+  },
+  BESTPERFORMER:{
+    GET:"api/Bestperformer/GetBestperformer",
+    ADD: "api/Bestperformer/AddBestperformer",
+    UPDATE: "api/Bestperformer/UpdateBestperformer",
+    DELETE: "api/Bestperformer/Delete",
+  }
+
+
 };
 
 export function getApiEndPoint(path: string, data?: any) {

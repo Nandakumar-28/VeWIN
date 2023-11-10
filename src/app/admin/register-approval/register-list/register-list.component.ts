@@ -5,6 +5,7 @@ import { ConfirmationService } from 'primeng/api';
 import { RegisterService } from '../services/register.service';
 import { DialogDeclinedComponent } from './dialog-declined.component';
 import { DialogApprovalComponent } from './dialog-approval.component';
+import { HttpStatusCode } from '@angular/common/http';
 
 @Component({
   selector: 'ngx-register-list',
@@ -66,14 +67,14 @@ export class RegisterListComponent implements OnInit {
     this.userService.approveUser(mobile, status).subscribe(
       (response) => {
         this.userList();
-        if (response["statusCode"] != 200) {
-          this.toastrService.show(response["message"], "Warning", {
-            status: "warning",
+        if (HttpStatusCode.Ok) {
+          this.toastrService.show(response["message"], "Success", {
+            status: "success",
             duration: 8000,
           });
         } else {
-          this.toastrService.show(response["message"], "Success", {
-            status: "success",
+          this.toastrService.show(response["message"], "Warning", {
+            status: "warning",
             duration: 8000,
           });
         }
@@ -107,14 +108,14 @@ export class RegisterListComponent implements OnInit {
     this.userService.declinedUser(mobile,status).subscribe(
       (response) => {
         this.userList();
-        if (response["statusCode"] != 200) {
-          this.toastrService.show(response["message"], "Warning", {
-            status: "warning",
+        if (HttpStatusCode.Ok) {
+          this.toastrService.show(response["message"], "Success", {
+            status: "success",
             duration: 8000,
           });
         } else {
-          this.toastrService.show(response["message"], "Success", {
-            status: "success",
+          this.toastrService.show(response["message"], "Warning", {
+            status: "warning",
             duration: 8000,
           });
         }
@@ -172,16 +173,15 @@ export class RegisterListComponent implements OnInit {
 
     this.userService.getUserList().subscribe(
       (response) => {
-        this.users = response.user;
-        // this. users = response;
-        if (response["statusCode"] != 200) {
-          this.toastrService.show(response["message"], "Warning", {
-            status: "warning",
+        this.users = response;
+        if (HttpStatusCode.Ok) {
+          this.toastrService.show(response["message"], "Success", {
+            status: "success",
             duration: 8000,
           });
         } else {
-          this.toastrService.show(response["message"], "Success", {
-            status: "success",
+          this.toastrService.show(response["message"], "Warning", {
+            status: "warning",
             duration: 8000,
           });
         }

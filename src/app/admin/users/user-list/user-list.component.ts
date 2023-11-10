@@ -8,6 +8,7 @@ import { UsersService } from "../services/users.service";
 import { ROUTE_PATH } from "../../../shared/constants/route-path.constant";
 import { DialogDeleteComponent } from './dialog-delete.component';
 import { API_END_POINTS, getApiEndPoint } from '../../../shared/constants/api-constant';
+import { HttpStatusCode } from '@angular/common/http';
 
 @Component({
   selector: 'ngx-user-list',
@@ -53,7 +54,7 @@ export class UserListComponent implements OnInit {
    * @returns
    */
   editUser(user: any) {
-  this.userService.setUserDetails(user);
+  this.userService.setUserDetails(user); // Pass the selected user details to the service
   this.router.navigate([
     ROUTE_PATH.ADMIN, 
     ROUTE_PATH.USERS, 
@@ -85,14 +86,14 @@ export class UserListComponent implements OnInit {
    this.userService.deleteUser(userId).subscribe(
     (response: any) => {
         this.userList();
-        if (response["statusCode"] != 200) {
-          this.toastrService.show(response["message"], "Warning", {
-            status: "warning",
+        if (HttpStatusCode.Ok) {
+          this.toastrService.show(response["message"], "Success", {
+            status: "success",
             duration: 8000,
           });
         } else {
-          this.toastrService.show(response["message"], "Success", {
-            status: "success",
+          this.toastrService.show(response["message"], "Warning", {
+            status: "warning",
             duration: 8000,
           });
         }
@@ -101,46 +102,47 @@ export class UserListComponent implements OnInit {
 
   /**
    * Block/UnBlock Company confirmation
-   * @param userId, userName, action
+   * @param userId, userName, status
    * @returns
    */
-  confirmBlockUnBlock(user:any,action:any) {
+  confirmBlockUnBlock(user:any,status:string) {
     this.dialogConfirmService.confirm({
-      header: action + " - " +"confirmation",
+      header: status + " - " +"confirmation",
+      icon: 'alert-triangle-outline',
       message:
         "Are you sure that you want to <b>" +
-        action +
+        status +
         " - " +
         user.name +
         "</b>  ?",
       accept: () => {
-        this.blockUnBlockUser(user, action);
+        this.blockUnBlockUser(user, status);
       },
     });
   }
 
   /**
    * Block/UnBlock Company
-   * @param userId, action
+   * @param userId, status
    * @returns
    */
-  blockUnBlockUser(user:any, action:any) {
+  blockUnBlockUser(user:any, status:string) {
     // let blockUnBlockPostData = {
-    //   block: action == "Block" ? true : false,
+    //   block: status == "Block" ? true : false,
     // };
         const mobile = user.mobile;
-        const status = action === "Block" ? "Inactive" : "Active";
-    this.userService.blockUnBlockUser(mobile, status).subscribe(
+        const action = status === "Block" ? "Inactive" : "Active";
+    this.userService.blockUnBlockUser(mobile, action).subscribe(
       (response) => {
         this.userList();
-        if (response["statusCode"] != 200) {
-          this.toastrService.show(response["message"], "Warning", {
-            status: "warning",
+        if (HttpStatusCode.Ok) {
+          this.toastrService.show(response["message"], "Success", {
+            status: "success",
             duration: 8000,
           });
         } else {
-          this.toastrService.show(response["message"], "Success", {
-            status: "success",
+          this.toastrService.show(response["message"], "Warning", {
+            status: "warning",
             duration: 8000,
           });
         }
@@ -169,16 +171,16 @@ export class UserListComponent implements OnInit {
     //this.users  =this.staticUsers;
     this.userService.getUserList().subscribe(
      (response) => {
-       this.users = response.user;
-       //this.users = response;
-        if (response["statusCode"] != 200) {
-          this.toastrService.show(response["message"], "Warning", {
-            status: "warning",
+       this.users = response;
+       this.users = response;
+        if (HttpStatusCode.Ok) {
+          this.toastrService.show(response["message"], "Success", {
+            status: "success",
             duration: 8000,
           });
         } else {
-          this.toastrService.show(response["message"], "Success", {
-            status: "success",
+          this.toastrService.show(response["message"], "Warning", {
+            status: "warning",
             duration: 8000,
           });
         }

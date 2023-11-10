@@ -16,13 +16,13 @@ export const routes: Routes = [
     path: 'pages',
     loadChildren: () => import('./pages/pages.module')
       .then(m => m.PagesModule),
-      //canActivate: [AuthGuard]
+      canActivate: [AuthGuard]
   },  
    {
     path: 'admin',
     loadChildren: () => import('./admin/admin.module')
       .then(m => m.AdminModule),
-      //canActivate: [AuthGuard]
+      canActivate: [AuthGuard]
   },  
   {
     path: 'auth',

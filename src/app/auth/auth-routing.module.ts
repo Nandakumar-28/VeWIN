@@ -11,9 +11,9 @@ import { ResetPassMessage } from './reset-pass/reset-pass.component';
 import { RegisterComponent } from './register/register.component';
 
 const actions = [
-    { path: 'login', component: NgxLoginComponent,canActivate: [AuthLogin]},
+    { path: 'login', component: NgxLoginComponent},
     { path: 'logout', component: NbxLogoutComponent},
-    { path: 'request-password', component: RequestPassComponent,canActivate: [AuthLogin] },
+    { path: 'request-password', component: RequestPassComponent },
     { path: 'request-password-message', component: RequestMessage },
     { path: 'reset-password-message', component: ResetPassMessage },
     { path: 'reset-pass/:token', component: NbxResetPasswordComponent },

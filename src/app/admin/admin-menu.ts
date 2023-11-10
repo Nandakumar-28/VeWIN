@@ -16,11 +16,31 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/admin/register',
     home: true,
   },
-    {
-    title: 'Payments ',
-    icon: 'credit-card-outline',
-    link: '/admin/payments',
+  {
+    title: 'Announcement',
+    icon: 'volume-up-outline',
+    link: '/admin/announcement',
     home: true,
   },
+  {
+    title: 'Best Performer',
+    icon: 'award-outline',
+    link: '/admin/bestperformer',
+    home: true,
+  },
+
+  // {
+  //   title: 'Payment',
+  //   icon: 'credit-card-outline',
+  //   link: '/admin/payments',
+  //   home: true,
+  // },
+  {
+    title: 'Banner',
+    icon: 'image-outline',
+    link: '/admin/banner',
+    home: true,
+  }
+
 
 ]

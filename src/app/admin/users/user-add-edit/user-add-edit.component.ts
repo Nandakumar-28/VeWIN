@@ -5,6 +5,7 @@ import { NbToastrService } from '@nebular/theme';
 import { ROUTE_PATH } from '../../../shared/constants/route-path.constant';
 import { UsersService } from '../services/users.service';
 import { DatePipe } from '@angular/common';
+import { HttpParams, HttpStatusCode } from '@angular/common/http';
 
 
 @Component({
@@ -95,8 +96,9 @@ export class UserAddEditComponent implements OnInit {
     } // stop here if form is invalid
 
     if (this.router.url.indexOf("edit") !== -1) {
-      this.AddUserForm.value.userId =
-        this.aRoute.snapshot.paramMap.get("id");
+      // For editing, pass the user ID
+      this.AddUserForm.value.userId =this.userDetails.id;
+      this.aRoute.snapshot.paramMap.get("id");
       this.AddUserForm.value.flag = 1;
     } else {
       this.AddUserForm.value.flag = 0;
@@ -114,30 +116,39 @@ export class UserAddEditComponent implements OnInit {
     address: this.AddUserForm.value.address,
     pincode: this.AddUserForm.value.pincode,
     password: this.AddUserForm.value.password,
-    status:"string",
-    vcode: "string",
-    usertype:  "string",
-    createdby: "string",
-    createdon: this.userDetails.createdon,
     modifiedby: "admin" ,
-    modifiedon: modifiedDate,
-    isdeleted: "string"
+    modifiedon: modifiedDate
   }
+  // const userId = this.userDetails.id;
+  // Get the current date and time in the desired format
+  // const modifiedDate = this.datePipe.transform(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+ // Build the request parameters using HttpParams
+  // let params = new HttpParams();
+  // params = params.set('Name', this.AddUserForm.value.name);
+  // params = params.set('Mobile', this.AddUserForm.value.mobile);
+  // params = params.set('Email', this.AddUserForm.value.email);
+  // params = params.set('Address', this.AddUserForm.value.address);
+  // params = params.set('pincode', this.AddUserForm.value.pincode);
+  // params = params.set('Password', this.AddUserForm.value.password);
+  // params = params.set('Modifiedby', 'admin');
+  // params = params.set('Modifiedon', modifiedDate);
 
     this.userService.updateUser(user)
-      .subscribe((res) => {
+      .subscribe((response) => {
         this.backToUserList();
-        if (res["statusCode"] != 200) {
-          this.toastrService.show(res["message"], "Warning", {
-            status: "warning",
-            duration: 8000,
-          });
-        } else {
-          this.toastrService.show(res["message"], "Success", {
+        if (HttpStatusCode.Ok) {
+          this.toastrService.show(response["message"], "Success", {
             status: "success",
             duration: 8000,
           });
+        } else {
+          this.toastrService.show(response["message"], "Warning", {
+            status: "warning",
+            duration: 8000,
+          });
         }
+        this.router.navigate([ROUTE_PATH.ADMIN, ROUTE_PATH.USERS,ROUTE_PATH.USERES.LIST,]);
       });
   }
 

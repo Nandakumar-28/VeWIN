@@ -14,11 +14,25 @@ export const ROUTE_PATH = {
     EDIT: "edit",
    },
 
-   PAYMENT:"payments",
+   PAYMENT:"payment",
    PAYMENTS:{
     COMPLETE: "complete",
     REQUEST: "request" 
    },
+
+   ANNOUNCEMENT:"announcement",
+   ANNOUNCEMENTS:{
+    LIST:"list",
+    EDIT: "edit",
+    CREATE: "create"
+   },
+   BANNER:"banner",
+   BANNERS:{
+    GET:"get",
+    EDIT: "edit",
+    CREATE: "create"
+   },
+
 
    REGISTER:"register",
    REGISTERS:{

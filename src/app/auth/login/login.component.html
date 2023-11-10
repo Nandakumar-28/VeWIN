@@ -18,15 +18,15 @@
 <form (ngSubmit)="login()" #loginform="ngForm" aria-labelledby="title">
 
   <div class="form-control-group">
-    <label class="label UserName" for="input-username">User Name:</label>
-    <input nbInput fullWidth [(ngModel)]="user.username" #username="ngModel" name="username" id="input-username" 
+    <label class="label Mobile" for="input-mobile"> Mobile Number:</label>
+    <input nbInput fullWidth [(ngModel)]="user.mobile" #mobile="ngModel" name="mobile" id="input-mobile" 
       placeholder="User Name" fieldSize="large" autofocus
-      [status]="username.dirty ? (username.invalid  ? 'danger' : 'success') : ''"
-      [required]="getConfigValue('forms.validation.username.required')"
-      [attr.aria-invalid]="username.invalid && username.touched ? true : null">
-    <ng-container *ngIf="username.invalid && username.touched">
-      <p class="caption status-danger" *ngIf="username.errors?.required">
-        User Name required!
+      [status]="mobile.dirty ? (mobile.invalid  ? 'danger' : 'success') : ''"
+      [required]="getConfigValue('forms.validation.mobile.required')"
+      [attr.aria-invalid]="mobile.invalid && mobile.touched ? true : null">
+    <ng-container *ngIf="mobile.invalid && mobile.touched">
+      <p class="caption status-danger" *ngIf="mobile.errors?.required">
+        Mobile Number required!
       </p>
     </ng-container>
   </div>

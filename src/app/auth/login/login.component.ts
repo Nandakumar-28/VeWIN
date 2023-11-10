@@ -1,17 +1,14 @@
 /** 
 * This file contains login related functions
-* author: Nanda kumar
+* author: Gowtham rangaraju
 */
 
 import { NbLoginComponent, NbAuthResult, NbAuthSocialLink, NbAuthService, NB_AUTH_OPTIONS } from '@nebular/auth';
 import { Router } from '@angular/router';
 import { getDeepFromObject } from '../helpers/helpers';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject,ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { AuthOptionsService } from '../services/auth-options.service';
 import { ActivatedRoute } from '@angular/router';
-import { AuthLogin } from '../services/auth-login.service';
-import { HttpHeaders,HttpClient,HttpParams } from '@angular/common/http';
-import { NgForm } from '@angular/forms';
 
 
 @Component({
@@ -22,9 +19,6 @@ import { NgForm } from '@angular/forms';
 
 /*  extended NbLoginComponent for our custom login design*/
 export class NgxLoginComponent {
-
- @ViewChild('loginform') loginform: NgForm; // Import NgForm from @angular/forms
-
   forget_path = "company"; //for redirecting company and admin when login
   redirectDelay: number = 0;
   showMessages: any = {};
@@ -36,7 +30,6 @@ export class NgxLoginComponent {
   submitted: boolean = false;
   socialLinks: NbAuthSocialLink[] = [];
   rememberMe = false;
-  
 
 
    
@@ -46,9 +39,7 @@ export class NgxLoginComponent {
         protected cd: ChangeDetectorRef,
         protected router: Router,
         private authService: AuthOptionsService,
-        private route: ActivatedRoute,
-        private apiService: AuthLogin,
-        private http: HttpClient) {
+        private route: ActivatedRoute) {
 
         this.redirectDelay = this.getConfigValue('forms.login.redirectDelay');
         this.showMessages = this.getConfigValue('forms.login.showMessages');
@@ -80,82 +71,32 @@ export class NgxLoginComponent {
    * This function is used to check login with backend with values given in app.module
    * @return void
    */
+  login(): void {
+    this.errors = [];
+    this.messages = [];
+    this.submitted = true;
+    this.user["role"] = this.forget_path;
+    /* ngx-auth service has been used authenticate user */
+    this.service
+      .authenticate(this.strategy, this.user)
+      .subscribe((result: NbAuthResult) => {
+        console.log(result);
+        this.submitted = false;
 
-   
-// login(): void {
-//  const credentials = {
-//       Email: this.user.username,
-//       Password: this.user.password ,
-//     };
+            if (result.isSuccess()) {
+                //  this.messages = result.getMessages();
+                // this.authService.setUserPermissons(result["response"].body.data.userPermission);
 
-//   // Construct the API URL with query parameters
-//   const apiUrl = `https://eac3-2409-408d-4d86-bbed-c157-31ae-7ef-7ac2.ngrok-free.app/api/Public/Login`;
+            } else {
+                this.errors = result.getErrors();
+            }
 
-//   // Define HTTP headers if needed
-//   let headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
-//   headers = headers.append('ngrok-skip-browser-warning', '69420');
-
-//   // Make the GET request
-//   this.http.post(apiUrl,{params:credentials,headers}).subscribe(
-//     (response) => {
-//       // Handle successful login response
-//       console.log(response);
-//     },
-//     (error) => {
-//       // Handle login error
-//       console.error(error);
-//     }
-// );
-  login(){
-     const credentials = {
-      Email: this.user.username,
-      Password: this.user.password ,
-    };
-      let headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
-      headers = headers.append('ngrok-skip-browser-warning', '69420');
-    this.apiService.login({params:credentials,headers}).subscribe(
-      (response) => {
-        // Handle successful login response
-        console.log(response);
-        alert("Register Successfull");
-        this.loginform.resetForm();
-        this.router.navigate(['pages/company']);
-      },
-      (error) => {
-        // Handle login error
-        console.error(error);
-        alert("Something went wrong")
-
-      }
-    );
-  
-
-
-  //   this.errors = [];
-  //   this.messages = [];
-  //   this.submitted = true;
-  //   this.user["role"] = this.forget_path;
-  //   /* ngx-auth service has been used authenticate user */
-  //   this.service
-  //     .authenticate(this.strategy, this.user)
-  //     .subscribe((result: NbAuthResult) => {
-  //       console.log(result);
-  //       this.submitted = false;
-
-  //           if (result.isSuccess()) {
-  //               //  this.messages = result.getMessages();
-  //               this.authService.setUserPermissons(result["response"].body.data.userPermission);
-
-  //           } else {
-  //               this.errors = result.getErrors();
-  //           }
-
-  //       const redirect = result.getRedirect();
-  //       if (redirect) {
-  //         return this.router.navigateByUrl(redirect);
-  //       }
-  //       this.cd.detectChanges();
-  //     });
+        const redirect = result.getRedirect();
+        if (redirect) {
+          return this.router.navigateByUrl(redirect);
+        }
+        this.cd.detectChanges();
+      });
   }
 
   getConfigValue(key: string): any {

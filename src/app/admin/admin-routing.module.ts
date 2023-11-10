@@ -18,6 +18,21 @@ const routes: Routes = [
         loadChildren: () => import('./register-approval/register-approval.module')
           .then(m => m.RegisterApprovalModule),
       },
+      {
+        path: 'announcement',
+        loadChildren: () => import('./Announcement/announcement.module')
+          .then(m => m.AnnouncementModule),
+      },
+     {
+        path: 'bestperformer',
+        loadChildren: () => import('./bestperformer/bestperformer.module')
+          .then(m => m.BestperformerModule),
+      },
+     {
+        path: 'banner',
+        loadChildren: () => import('./Banner/banner.module')
+          .then(m => m.BannerModule),
+      },
       // {
       //   path: 'payments',
       //   loadChildren: () => import('./payments/payments.module')
