@@ -25,11 +25,19 @@ export const API_END_POINTS = {
   },
   BESTPERFORMER:{
     GET:"api/Bestperformer/GetBestperformer",
+    GETAll:"api/Bestperformer/GetAllBestperformer",
+    REFID:"api/Bestperformer/GetReferralId",
     ADD: "api/Bestperformer/AddBestperformer",
     UPDATE: "api/Bestperformer/UpdateBestperformer",
     DELETE: "api/Bestperformer/Delete",
-  }
+  },
+  BANNER:{
+    GET:"api/Banner/GetOfferBanners",
+    ADD: "api/Banner/AddOfferBanners",
+    UPDATE: "api/Banner/Updatebanner",
+    DELETE: "api/Banner/Delete",
 
+  }
 
 };
 

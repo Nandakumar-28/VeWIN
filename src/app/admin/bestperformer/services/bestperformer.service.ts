@@ -38,8 +38,21 @@ export class BestperformerService {
    * User List
    * @returns
    */
+  getReferralIds(name: string): Observable<any[]> {
+    let apiURL = getApiEndPoint(`${API_END_POINTS.BESTPERFORMER.REFID}?name=${name}`);
+    return this.userServicehttp.get<any[]>(apiURL).pipe(
+      switchMap((result: any) => {
+        if (result) {
+          return of(result);
+        } else {
+          return throwError(result);
+        }
+      })
+    );
+  }
+
   getBestperformerList(): Observable<any> {
-    let apiURL = getApiEndPoint(API_END_POINTS.BESTPERFORMER.GET);
+    let apiURL = getApiEndPoint(API_END_POINTS.BESTPERFORMER.GETAll);
     return this.userServicehttp.get(apiURL).pipe(
       switchMap((result: any) => {
         if (result) {
@@ -58,7 +71,7 @@ export class BestperformerService {
    *
    */
   deleteUser(id: number): Observable<any> {
-    let apiURL = getApiEndPoint(`${API_END_POINTS.ANNOUNCEMENT.DELETE}?id=${id}`);
+    let apiURL = getApiEndPoint(`${API_END_POINTS.BESTPERFORMER.DELETE}?id=${id}`);
     return this.userServicehttp.put(apiURL,null).pipe(
      switchMap((result: any) => {
       if (result) {
@@ -78,7 +91,7 @@ export class BestperformerService {
    *
    */
   updateUser(requestBody): Observable<any> {
-    let apiURL = getApiEndPoint(`${API_END_POINTS.ANNOUNCEMENT.UPDATE}`);
+    let apiURL = getApiEndPoint(`${API_END_POINTS.BESTPERFORMER.UPDATE}`);
     return this.userServicehttp.put(apiURL,requestBody).pipe(
       switchMap((result: any) => {
         if (result) {
@@ -100,7 +113,7 @@ export class BestperformerService {
    */
 
   CreateAnnouncement(requestBody): Observable<any> {
-    let apiURL = getApiEndPoint(`${API_END_POINTS.ANNOUNCEMENT.ADD}`);
+    let apiURL = getApiEndPoint(`${API_END_POINTS.BESTPERFORMER.ADD}`);
     console.log(requestBody)
     return this.userServicehttp.post(apiURL,requestBody).pipe(
       switchMap((result: any) => {

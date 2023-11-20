@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BestperformerListComponent } from './bestperformer-list/bestperformer-list.component';
-import { BestperformerEditComponent } from './bestperformer-list/bestperformer-edit.component';
-import { BestperformerAddComponent } from './bestperformer-add/bestperformer-add.component';
+import { BestperformerAddEditComponent } from './bestperformer-add-edit/bestperformer-add-edit.component';
 
 const routes: Routes = [
   {
@@ -10,12 +9,12 @@ const routes: Routes = [
     component: BestperformerListComponent,
   },
   {
-    path: 'edit',
-    component: BestperformerAddComponent,
+    path: 'create',
+    component: BestperformerAddEditComponent,
   },
   {
     path: 'edit/:id',
-    component: BestperformerAddComponent,
+    component: BestperformerAddEditComponent,
   },
   {
     path: '',

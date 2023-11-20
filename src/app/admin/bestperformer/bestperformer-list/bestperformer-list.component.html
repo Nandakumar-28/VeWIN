@@ -13,14 +13,14 @@
 
         <div class="card">
             <p-table [value]="users" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true" [autoLayout]="true"
-                [rowsPerPageOptions]="itemsPerPage">
+                [rowsPerPageOptions]="itemsPerPage" >
                 <ng-template pTemplate="header">
                    <tr>
                     <ng-container *ngFor="let col of columns">
                             <th *ngIf="col.show" [pSortableColumn]="(col.sort==true)? col.field:false"
-                                [class]="col.field+'-campaigns'">
+                                [class]="col.field+'-campaigns'" class="text-center">
                                 <p-sortIcon *ngIf="col.sort==true" [field]="col.field" class="sort-icon"
-                                    [id]="col.field+'-sort'">
+                                    [id]="col.field+'-sort'" >
                                 </p-sortIcon>
                                 <span>{{col.header}}</span>
                             </th>
@@ -31,16 +31,17 @@
                 <ng-template pTemplate="body" let-user>
                     <!-- Body changes based on the new fields -->
                     <tr>
-                        <td>{{ user.photo }}</td>
-                        <td>{{ user.name }}</td>
-                        <td>{{ user.sale }}</td>
-                        <td>{{ user.remarks }}</td>
+                        <td class="text-center">{{ user.name }}</td>
+                        <td class="text-center">{{ user.sales }}</td>
+                        <td class="text-center" style="width: 38%;">{{ user.remarks }}</td>
+                        <td class="text-center">{{ user.fdate | date: 'dd/MM/yyyy' }}</td>
+                        <td class="text-center">{{ user.tdate | date: 'dd/MM/yyyy' }}</td>
                         <td class="text-center action">
                             <button (click)="editBestperformer(user)" routerLinkActive="router-link-active"
                                 nbTooltip="Edit" nbTooltipPlacement="top"
                                 class="btn btn-outline-primary btn-sm action-button">
                                 <nb-icon icon="edit" pack="eva" class="action-icons"></nb-icon>
-                            </button>&nbsp;<br><br>
+                            </button>&nbsp;
                             <button nbTooltip="Delete" (click)="confirmDelete(user)"
                                 nbTooltipPlacement="top" class="btn btn-outline-danger btn-sm action-button">
                                 <nb-icon icon="close" pack="eva" class="action-icons"></nb-icon>

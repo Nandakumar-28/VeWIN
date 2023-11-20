@@ -9,13 +9,13 @@ const routes: Routes = [
     component: BannerGetComponent,
   },
   {
-    path: 'edit',
+    path: 'create',
     component: BannerAddEditComponent,
   },
-  // {
-  //   path: 'edit/:id',
-  //   component: BannerAddEditComponent,
-  // },
+  {
+    path: 'edit/:id',
+    component: BannerAddEditComponent,
+  },
   {
     path: '',
     redirectTo: 'get', // Default route

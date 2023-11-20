@@ -5,6 +5,7 @@ import { ConfirmationService } from 'primeng/api';
 import { ROUTE_PATH } from '../../../shared/constants/route-path.constant';
 import { HttpStatusCode } from '@angular/common/http';
 import { BestperformerService } from '../services/bestperformer.service';
+import { BestperformerDeleteComponent } from './bestperformer-delete.component';
 
 @Component({
   selector: 'ngx-bestperformer-list',
@@ -32,10 +33,11 @@ export class BestperformerListComponent implements OnInit {
   ngOnInit() {
     // table   with their respective field name and header value
     this.columns = [
-      { field: "photo", header: "Photo", show: true, sort: true },
       { field: "name", header: "Name", show: true, sort: true },
       { field: "sale", header: "Sale",show: true, sort: true },
       { field: "remarks", header: "Remarks", show: true, sort: true },
+      { field: "fdate", header: "From Date", show: true, sort: true },
+      { field: "tdate", header: "To Date", show: true, sort: true },
     ];
 
     this.userList();
@@ -50,8 +52,8 @@ createBestperformer() {
     this.userService.setUserDetails(null);
     this.router.navigate([
         ROUTE_PATH.ADMIN,
-        ROUTE_PATH.BANNER,
-        ROUTE_PATH.BANNERS.EDIT,
+        ROUTE_PATH.BESTPERFORMER,
+        ROUTE_PATH.BESTPERFORMERS.CREATE,
     ]);
 }
 
@@ -61,12 +63,13 @@ createBestperformer() {
    * @returns
    */
   editBestperformer(user: any) {
-    // this.userService.setUserDetails(user); // Pass the selected user details to the service
+    this.userService.setUserDetails(user); // Pass the selected user details to the service
+    console.log(user)
     this.router.navigate([
       ROUTE_PATH.ADMIN,
-      ROUTE_PATH.BANNER,
-      ROUTE_PATH.BANNERS.EDIT,
-      // user.id
+      ROUTE_PATH.BESTPERFORMER,
+      ROUTE_PATH.BESTPERFORMERS.EDIT,
+       user.id
     ]);
   }
 
@@ -76,14 +79,14 @@ createBestperformer() {
    * @returns
    */
   confirmDelete(user: any) {
-    // this.dialogService.open(DialogDeleteComponent, {
-    //   context: { user },
-    // }).onClose.subscribe((result) => {
-    //   if (result) {
-    //     this.deleteUser(user.id);
-    //     console.log(user)
-    //   }
-    // });
+    this.dialogService.open(BestperformerDeleteComponent, {
+      context: { user },
+    }).onClose.subscribe((result) => {
+      if (result) {
+        this.deleteUser(user.id);
+        console.log(user)
+      }
+    });
   }
 
   /**
@@ -91,29 +94,29 @@ createBestperformer() {
    * @param userId
    * @returns
    */
-  // deleteUser(id) {
-  //   // let deletePostData = { userId: userId };
+  deleteUser(id) {
+    // let deletePostData = { userId: userId };
 
-  //   this.userService.deleteUser(id).subscribe(
-  //     (response) => {
-  //       this.userList();
-  //       if (HttpStatusCode.Ok) {
-  //         this.toastrService.show(response["message"], "Success", {
-  //           status: "success",
-  //           duration: 8000,
-  //         });
-  //       } else {
-  //         this.toastrService.show(response["message"], "Warning", {
-  //           status: "warning",
-  //           duration: 8000,
-  //         });
-  //       }
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //     }
-  //   );
-  // }
+    this.userService.deleteUser(id).subscribe(
+      (response) => {
+        this.userList();
+        if (HttpStatusCode.Ok) {
+          this.toastrService.show(response["message"], "Success", {
+            status: "success",
+            duration: 8000,
+          });
+        } else {
+          this.toastrService.show(response["message"], "Warning", {
+            status: "warning",
+            duration: 8000,
+          });
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 
   /**
    * Company List
@@ -121,18 +124,12 @@ createBestperformer() {
    * @returns
    */
 
-   // Define your static user data
-  staticUsers: any[] = [
-    { title: 'Vewin', description:'Apps'  },
-    { title: 'Google', description:'Daily News' },
-    { title: 'Instagram', description:'Online Application'  },
-  ];
-
   userList() {
 
     //this.users  =this.staticUsers;
     this.userService.getBestperformerList().subscribe(
      (response) => {
+      console.log(response)
        this.users = response;
         if (HttpStatusCode.Ok) {
           this.toastrService.show(response["message"], "Success", {

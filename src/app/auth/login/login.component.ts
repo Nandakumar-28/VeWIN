@@ -49,6 +49,7 @@ export class NgxLoginComponent {
     }
 
     ngOnInit() {
+        localStorage.clear()
         let setUser = "company";
         //To get the type of user, from which URL user access the login page
         try {

@@ -19,7 +19,12 @@ export const ROUTE_PATH = {
     COMPLETE: "complete",
     REQUEST: "request" 
    },
-
+   BESTPERFORMER:"bestperformer",
+   BESTPERFORMERS:{
+    LIST:"list",
+    EDIT: "edit",
+    CREATE: "create"
+   },
    ANNOUNCEMENT:"announcement",
    ANNOUNCEMENTS:{
     LIST:"list",

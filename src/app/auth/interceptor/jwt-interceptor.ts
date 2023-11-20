@@ -8,11 +8,14 @@ import { Observable, throwError } from 'rxjs';
 import { switchMap, retry, catchError } from 'rxjs/operators';
 import { NbAuthService, NbAuthToken } from '@nebular/auth';
 import { NbToastrService } from '@nebular/theme';
+import { Router } from '@angular/router';
+import { ROUTE_PATH } from '../../shared/constants/route-path.constant';
+
 
 @Injectable()
 export class NbAuthJWTInterceptor implements HttpInterceptor {
 
-    constructor(private injector: Injector) {
+    constructor(private injector: Injector,private router : Router) {
 
     }
 
@@ -55,13 +58,20 @@ export class NbAuthJWTInterceptor implements HttpInterceptor {
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
-    constructor(private toastrService: NbToastrService) { }
+    constructor(private toastrService: NbToastrService,private router : Router) { }
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(request)
             .pipe(
                 retry(0),
                 catchError((error: HttpErrorResponse) => {
+                    if (error.status ==401){
+                        this.toastrService.show("Unautherized", "Warn", { status: "warning", duration: 10000 });
+                        let user_type = localStorage.getItem('user_type');
+                        localStorage.clear()
+                        this.router.navigateByUrl('/auth/' + user_type+"/login");
 
+
+                    }
                     if (error.status != 401) {
                         window.confirm("Something Went Wrong! internal Server Error");
                     }

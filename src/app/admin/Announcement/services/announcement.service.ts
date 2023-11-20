@@ -9,38 +9,38 @@ import { switchMap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AnnouncementService {
-    user = {};
+    announcement = {};
 
   constructor(
-    private userServicehttp: HttpClient,
+    private announcementServicehttp: HttpClient,
     private authService: NbAuthService
   ) {
     this.authService.onTokenChange().subscribe((token: NbAuthJWTToken) => {
       if (token.isValid()) {
-        this.user = token.getPayload(); // here we receive a payload from the token and assigns it to our `user` variable
+        this.announcement = token.getPayload(); // here we receive a payload from the token and assigns it to our `announcement` variable
       }
     });
   }
 
-    //pass select user Details in User-Edit
+    //pass select Announcement Details in Announcement-Edit
 
-  private userDetails = new BehaviorSubject<any>(null);
+  private announcementDetails = new BehaviorSubject<any>(null);
 
-  setUserDetails(user: any) {
-    this.userDetails.next(user);
+  setAnnouncementDetails(user: any) {
+    this.announcementDetails.next(user);
   }
 
-  getUserDetails() {
-    return this.userDetails.asObservable();
+  getAnnouncementDetails() {
+    return this.announcementDetails.asObservable();
   }
 
   /**
-   * User List
+   * Announcement List
    * @returns
    */
-  getUserList(): Observable<any> {
+  getannouncementList(): Observable<any> {
     let apiURL = getApiEndPoint(API_END_POINTS.ANNOUNCEMENT.LIST);
-    return this.userServicehttp.get(apiURL).pipe(
+    return this.announcementServicehttp.get(apiURL).pipe(
       switchMap((result: any) => {
         if (result) {
           return of(result);
@@ -52,14 +52,14 @@ export class AnnouncementService {
   }
 
   /**
-   * Delete User
-   * @param userId
+   * Delete Announcement
+   * @param id
    * @returns
    *
    */
-  deleteUser(id: number): Observable<any> {
+  deleteAnnouncement(id: number): Observable<any> {
     let apiURL = getApiEndPoint(`${API_END_POINTS.ANNOUNCEMENT.DELETE}?id=${id}`);
-    return this.userServicehttp.put(apiURL,null).pipe(
+    return this.announcementServicehttp.put(apiURL,null).pipe(
      switchMap((result: any) => {
       if (result) {
         return of(result);
@@ -72,14 +72,14 @@ export class AnnouncementService {
 
 
   /**
-   * Update User details
-   * @param user
+   * Update Announcement details
+   * @param requestBody
    * @returns
    *
    */
-  updateUser(requestBody): Observable<any> {
+  updateAnnouncement(requestBody): Observable<any> {
     let apiURL = getApiEndPoint(`${API_END_POINTS.ANNOUNCEMENT.UPDATE}`);
-    return this.userServicehttp.put(apiURL,requestBody).pipe(
+    return this.announcementServicehttp.put(apiURL,requestBody).pipe(
       switchMap((result: any) => {
         if (result) {
           return of(result);
@@ -93,8 +93,8 @@ export class AnnouncementService {
 
 
   /**
-   * Create User
-   * @param Values
+   * Create Announcement
+   * @param requestBody
    * @returns
    *
    */
@@ -102,7 +102,7 @@ export class AnnouncementService {
   CreateAnnouncement(requestBody): Observable<any> {
     let apiURL = getApiEndPoint(`${API_END_POINTS.ANNOUNCEMENT.ADD}`);
     console.log(requestBody)
-    return this.userServicehttp.post(apiURL,requestBody).pipe(
+    return this.announcementServicehttp.post(apiURL,requestBody).pipe(
       switchMap((result: any) => {
         if (result) {
           return of(result);

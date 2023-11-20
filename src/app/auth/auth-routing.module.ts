@@ -33,7 +33,7 @@ export const routes: Routes = [
         path: 'company',
         component: NbAuthComponent,
         children: actions,},
-      { path: 'login', component: NgxLoginComponent,canActivate: [AuthLogin]},
+    { path: 'login', component: NgxLoginComponent,canActivate: [AuthLogin]},
     { path: 'logout', component: NbxLogoutComponent},
     { path: 'request-password', component: RequestPassComponent,canActivate: [AuthLogin] },
     { path: 'request-password-message', component: RequestMessage },
@@ -43,8 +43,8 @@ export const routes: Routes = [
     { path: 'register', component:RegisterComponent},
 
     // },  
-    { path: '', redirectTo: 'company/login', pathMatch: 'full'},
-    { path: '**', redirectTo: 'company/login', },
+    { path: '', redirectTo: 'admin/login', pathMatch: 'full'},
+    { path: '**', redirectTo: 'admin/login', },
 ];
 
 @NgModule({

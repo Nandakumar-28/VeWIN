@@ -15,7 +15,7 @@ import { HttpStatusCode } from '@angular/common/http';
 export class AnnouncementListComponent implements OnInit {
 
   itemsPerPage: any[] = [10, 25, 50];
-  users: any;
+  announcements: any;
   columns: any[]; // for table columns
 
   first = 0;
@@ -26,7 +26,7 @@ export class AnnouncementListComponent implements OnInit {
     private toastrService: NbToastrService,
     private router: Router,
     private aRoute: ActivatedRoute,
-    private userService: AnnouncementService,
+    private announcementService: AnnouncementService,
     private dialogService:NbDialogService
   ) {}
 
@@ -37,33 +37,32 @@ export class AnnouncementListComponent implements OnInit {
       { field: "description", header: "Description", show: true, sort: true },
       { field: "fdate", header: "From Date",show: true, sort: true },
       { field: "tdate", header: "To Date", show: true, sort: true },
-      //{ field: "active", header: "Status", show: true, sort: true },
     ];
 
     this.userList();
   }
     /**
-   * create Company
-   * @param
+   * create Announcement
+   * @param null
    * @returns
    */
-createAnnouncement() {
+  createAnnouncement() {
 
-    this.userService.setUserDetails(null);
+    this.announcementService.setAnnouncementDetails(null);
     this.router.navigate([
         ROUTE_PATH.ADMIN,
         ROUTE_PATH.ANNOUNCEMENT,
         ROUTE_PATH.ANNOUNCEMENTS.CREATE,
     ]);
-}
+  }
 
   /**
-   * Edit User
-   * @param user_id
+   * Edit announcement
+   * @param user
    * @returns
    */
-  editUser(user: any) {
-    this.userService.setUserDetails(user); // Pass the selected user details to the service
+  editAnnouncement(user: any) {
+    this.announcementService.setAnnouncementDetails(user); // Pass the selected user details to the service
     this.router.navigate([
       ROUTE_PATH.ADMIN,
       ROUTE_PATH.ANNOUNCEMENT,
@@ -73,8 +72,8 @@ createAnnouncement() {
   }
 
   /**
-   * Delete User confirmation
-   * @param userId, userName
+   * Delete Announcement confirmation
+   * @param user
    * @returns
    */
   confirmDelete(user: any) {
@@ -82,21 +81,21 @@ createAnnouncement() {
       context: { user },
     }).onClose.subscribe((result) => {
       if (result) {
-        this.deleteUser(user.id);
+        this.deleteAnnouncement(user.id);
         console.log(user)
       }
     });
   }
 
   /**
-   * Delete Company
+   * Delete Announcement
    * @param userId
    * @returns
    */
-  deleteUser(id) {
+  deleteAnnouncement(id) {
     // let deletePostData = { userId: userId };
 
-    this.userService.deleteUser(id).subscribe(
+    this.announcementService.deleteAnnouncement(id).subscribe(
       (response) => {
         this.userList();
         if (HttpStatusCode.Ok) {
@@ -118,7 +117,7 @@ createAnnouncement() {
   }
 
   /**
-   * Company List
+   * Announcement List
    * @param null
    * @returns
    */
@@ -133,9 +132,9 @@ createAnnouncement() {
   userList() {
 
     //this.users  =this.staticUsers;
-    this.userService.getUserList().subscribe(
+    this.announcementService.getannouncementList().subscribe(
      (response) => {
-       this.users = response;
+       this.announcements = response;
         if (HttpStatusCode.Ok) {
           this.toastrService.show(response["message"], "Success", {
             status: "success",

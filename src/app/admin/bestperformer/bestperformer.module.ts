@@ -44,17 +44,16 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 
 
-import { BestperformerAddComponent } from './bestperformer-add/bestperformer-add.component';
 import { BestperformerListComponent } from './bestperformer-list/bestperformer-list.component';
 import { BestperformerRoutingModule } from './bestperformer-routing.module';
 import { BestperformerDeleteComponent } from './bestperformer-list/bestperformer-delete.component';
-import { BestperformerEditComponent } from './bestperformer-list/bestperformer-edit.component';
+import { BestperformerAddEditComponent } from './bestperformer-add-edit/bestperformer-add-edit.component';
 
 
 
 
 @NgModule({
-  declarations: [BestperformerAddComponent,BestperformerListComponent,BestperformerDeleteComponent,BestperformerEditComponent, ],
+  declarations: [BestperformerListComponent,BestperformerDeleteComponent, BestperformerAddEditComponent, ],
   imports: [
     CommonModule,
     BestperformerRoutingModule,
@@ -98,4 +97,5 @@ import { BestperformerEditComponent } from './bestperformer-list/bestperformer-e
     { provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true }, 
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }
   ],
-})export class BestperformerModule { }
+})
+export class BestperformerModule { }

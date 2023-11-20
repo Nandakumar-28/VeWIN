@@ -16,7 +16,7 @@ import { Subscription } from 'rxjs';
 })
 export class AnnouncementAddEditComponent implements OnInit {
 
-  AddUserForm: FormGroup;
+  AddAnnouncementForm: FormGroup;
   submitted = false;
   //page_title: string;
   data_loading = false;
@@ -25,23 +25,23 @@ export class AnnouncementAddEditComponent implements OnInit {
   showPassword =true;
 
   //userlist pass user data
-  userDetails: any;
+  announcementDetails: any;
   page_title: string;
 
-private userSubscription: Subscription;
+private subscription: Subscription;
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private aRoute: ActivatedRoute,
-    private userService: AnnouncementService,
+    private announcementService: AnnouncementService,
     private toastrService: NbToastrService,
     private datePipe: DatePipe,
     
   ) {}
 
   ngOnInit(): void {
-    this.AddUserFormInitialize();
+    this.AddAnnouncementFormInitialize();
 
     if (this.router.url.indexOf("edit") !== -1) {
       // this.data_loading = true;
@@ -49,38 +49,38 @@ private userSubscription: Subscription;
       this.page_title = "Edit Announcement";
     } else {
       this.page_title = "Create Announcement";
-      this.AddUserForm.reset();
+      this.AddAnnouncementForm.reset();
     }
 
 
    // Check if user details are passed user list, service to user-edit
 
- this.userSubscription = this.userService.getUserDetails().subscribe(user => {     if (user) {
-      this.userDetails = user;
-      console.log(this.userDetails)
+ this.subscription = this.announcementService.getAnnouncementDetails().subscribe(user => {     if (user) {
+      this.announcementDetails = user;
+      console.log(this.announcementDetails)
       // Pre-fill the form with user details
-      this.AddUserForm.patchValue({
-        title: this.userDetails.title,
-        description: this.userDetails.description,
-        fdate: new Date(this.userDetails.fdate), // Assuming 'fdate' is a date field
-        tdate: new Date(this.userDetails.tdate),
+      this.AddAnnouncementForm.patchValue({
+        title: this.announcementDetails.title,
+        description: this.announcementDetails.description,
+        fdate: new Date(this.announcementDetails.fdate), // Assuming 'fdate' is a date field
+        tdate: new Date(this.announcementDetails.tdate),
        });
       }else {
-      this.AddUserForm.reset(); // Ensure the form is reset when no user details are present
+      this.AddAnnouncementForm.reset(); // Ensure the form is reset when no user details are present
       }
    });  
   } 
    ngOnDestroy(): void {
     // Unsubscribe to prevent multiple subscriptions when leaving the component
-      this.userSubscription.unsubscribe();
+      this.subscription.unsubscribe();
   }    
 
   /**
-   * User Form Initialize
+   * Announcement Form Initialize
    */
 
-  AddUserFormInitialize() {
-  this.AddUserForm = this.formBuilder.group({
+  AddAnnouncementFormInitialize() {
+  this.AddAnnouncementForm = this.formBuilder.group({
     title: ["", [Validators.required, Validators.maxLength(100)]],
     description: ["", [Validators.required, Validators.maxLength(500)]],
     fdate: [new Date(), [Validators.required]],
@@ -91,11 +91,11 @@ private userSubscription: Subscription;
 onSubmit() {
    this.submitted = true;
 
-  if (this.AddUserForm.invalid) {
+  if (this.AddAnnouncementForm.invalid) {
     return;
   }
 
-  const formData = this.AddUserForm.value;
+  const formData = this.AddAnnouncementForm.value;
   console.log(formData.fdate)
   
   // Format the date strings before sending them to the server
@@ -109,7 +109,7 @@ onSubmit() {
   if (this.router.url.indexOf("edit") !== -1) {
     // For editing, form a request body with put method fields
     const requestBody = {
-      id: this.userDetails.id,
+      id: this.announcementDetails.id,
       title: formData.title,
       description: formData.description,
       fdate: formattedFromDate,
@@ -121,7 +121,7 @@ onSubmit() {
       modifiedon: modifiedDate, // Similarly update these fields with appropriate values
     };
 
-    this.userService.updateUser(requestBody)
+    this.announcementService.updateAnnouncement(requestBody)
       .subscribe((response) => {
         // this.backToUserList();
         if (HttpStatusCode.Ok) {
@@ -153,7 +153,7 @@ onSubmit() {
       modifiedon: modifiedDate, 
     };
 
-    this.userService.CreateAnnouncement(requestBody)
+    this.announcementService.CreateAnnouncement(requestBody)
       .subscribe((response) => {
         if (HttpStatusCode.Ok) {
           this.toastrService.show(response["message"], "Success", {
@@ -174,11 +174,11 @@ onSubmit() {
 
 
   /**
-   * Back to User List
+   * Back to Announcement List
    * @param
    * @returns
    */
-  backToUserList() {
+  backToAnnouncementList() {
     this.router.navigate([ROUTE_PATH.ADMIN, ROUTE_PATH.ANNOUNCEMENT,ROUTE_PATH.ANNOUNCEMENTS.LIST,]);
   }
 
