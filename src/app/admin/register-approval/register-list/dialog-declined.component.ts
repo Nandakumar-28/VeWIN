@@ -3,8 +3,8 @@ import { NbDialogRef } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-dialog-declined',
-  template: `
-    <nb-card>
+  template:
+  ` <nb-card>
       <nb-card-header class="text-center">
         <b>Declined Confirmation</b>
       </nb-card-header>
@@ -25,7 +25,8 @@ import { NbDialogRef } from '@nebular/theme';
         <button nbButton status="success" (click)="declineUser()">Declined</button>&nbsp;&nbsp;&nbsp;
         <button nbButton status="primary" (click)="close()">Cancel</button>
       </nb-card-footer>
-    </nb-card>`,
+    </nb-card>
+  `,
 })
 export class DialogDeclinedComponent implements OnInit {
 

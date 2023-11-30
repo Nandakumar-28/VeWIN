@@ -6,16 +6,18 @@
 
                 <form [formGroup]="AddAnnouncementForm" (ngSubmit)="onSubmit()">
 
-                     <div class="form-group row">
+                    <div class="form-group row">
                         <label for="title" class="label col-sm-3 col-form-label"> Title *</label>
                         <div class="col-sm-9">
                             <input nbInput fullWidth type="text" formControlName="title">
-                            <ng-container *ngIf="AddAnnouncementForm.controls.title.touched && AddAnnouncementForm.controls.title.errors">
-                                <p class="caption status-danger" *ngIf="AddAnnouncementForm.controls.title.errors.required">
-                                     title is required</p>
+                            <ng-container
+                                *ngIf="AddAnnouncementForm.controls.title.touched && AddAnnouncementForm.controls.title.errors">
+                                <p class="caption status-danger"
+                                    *ngIf="AddAnnouncementForm.controls.title.errors.required">
+                                    title is required</p>
                             </ng-container>
                             <ng-container *ngIf="AddAnnouncementForm.get('title').hasError('maxlength')">
-                               <p class="caption status-danger">Title should not exceed 100 characters</p>
+                                <p class="caption status-danger">Title should not exceed 100 characters</p>
                             </ng-container>
                         </div>
                     </div>
@@ -24,13 +26,15 @@
                         <label for="description" class="label col-sm-3 col-form-label">Description *</label>
                         <div class="col-sm-9">
                             <!-- <input nbInput fullWidth type="text" formControlName="description"> -->
-                             <textarea nbInput fullWidth type="text" formControlName="description"></textarea>                           
-                            <ng-container *ngIf="AddAnnouncementForm.controls.description.touched && AddAnnouncementForm.controls.description.errors">
-                                <p class="caption status-danger" *ngIf="AddAnnouncementForm.controls.description.errors.required">
+                            <textarea nbInput fullWidth type="text" formControlName="description"></textarea>
+                            <ng-container
+                                *ngIf="AddAnnouncementForm.controls.description.touched && AddAnnouncementForm.controls.description.errors">
+                                <p class="caption status-danger"
+                                    *ngIf="AddAnnouncementForm.controls.description.errors.required">
                                     Description is required</p>
                             </ng-container>
                             <ng-container *ngIf="AddAnnouncementForm.get('description').hasError('maxlength')">
-                               <p class="caption status-danger">Description should not exceed 500 characters</p>
+                                <p class="caption status-danger">Description should not exceed 500 characters</p>
                             </ng-container>
 
                         </div>
@@ -39,27 +43,31 @@
                     <div class="form-group row">
                         <label for="fdate" class="label col-sm-3 col-form-label">From Date *</label>
                         <div class="col-sm-9">
-                           <input nbInput fullWidth [nbDatepicker]="fromDatepicker" formControlName="fdate">
-                           <nb-datepicker #fromDatepicker></nb-datepicker>
-                         <ng-container *ngIf="AddAnnouncementForm.controls.fdate.touched && AddAnnouncementForm.controls.fdate.errors">
-                            <p class="caption status-danger" *ngIf="AddAnnouncementForm.controls.fdate.errors.required">
-                             From Date is required  </p>
-                         </ng-container>
+                            <input nbInput fullWidth [nbDatepicker]="fromDatepicker" formControlName="fdate">
+                            <nb-datepicker #fromDatepicker></nb-datepicker>
+                            <ng-container
+                                *ngIf="AddAnnouncementForm.controls.fdate.touched && AddAnnouncementForm.controls.fdate.errors">
+                                <p class="caption status-danger"
+                                    *ngIf="AddAnnouncementForm.controls.fdate.errors.required">
+                                    From Date is required </p>
+                            </ng-container>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="tdate" class="label col-sm-3 col-form-label">To Date *</label>
                         <div class="col-sm-9">
-                           <input nbInput fullWidth [nbDatepicker]="toDatepicker" formControlName="tdate">
-                           <nb-datepicker #toDatepicker></nb-datepicker>
-                         <ng-container *ngIf="AddAnnouncementForm.controls.tdate.touched && AddAnnouncementForm.controls.tdate.errors">
-                           <p class="caption status-danger" *ngIf="AddAnnouncementForm.controls.tdate.errors.required">
-                             To Date is required </p>
-                         </ng-container>
-                         </div>
+                            <input nbInput fullWidth [nbDatepicker]="toDatepicker" formControlName="tdate">
+                            <nb-datepicker #toDatepicker></nb-datepicker>
+                            <ng-container
+                                *ngIf="AddAnnouncementForm.controls.tdate.touched && AddAnnouncementForm.controls.tdate.errors">
+                                <p class="caption status-danger"
+                                    *ngIf="AddAnnouncementForm.controls.tdate.errors.required">
+                                    To Date is required </p>
+                            </ng-container>
+                        </div>
                     </div>
-    
+
                     <div class="form-group row">
                         <div class="offset-sm-3 col-sm-9">
                             <button type="submit" nbButton status="primary"

@@ -9,6 +9,7 @@ import { ROUTE_PATH } from "../../../shared/constants/route-path.constant";
 import { DialogDeleteComponent } from './dialog-delete.component';
 import { API_END_POINTS, getApiEndPoint } from '../../../shared/constants/api-constant';
 import { HttpStatusCode } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'ngx-user-list',
@@ -31,15 +32,16 @@ export class UserListComponent implements OnInit {
     private router: Router,
     private aRoute: ActivatedRoute,
     private userService: UsersService,
-    private dialogService:NbDialogService
-  ) {}
+    private dialogService: NbDialogService,
+    private datePipe: DatePipe
+  ) { }
 
   ngOnInit() {
     // table   with their respective field name and header value
     this.columns = [
       { field: "name", header: "Name", show: true, sort: true },
       { field: "mobile", header: "Phone Number", show: true, sort: true },
-      { field: "email", header: "E-mail",show: true, sort: true },
+      { field: "email", header: "E-mail", show: true, sort: true },
       { field: "address", header: "Address", show: true, sort: true },
       { field: "active", header: "Status", show: true, sort: true },
     ];
@@ -54,11 +56,11 @@ export class UserListComponent implements OnInit {
    * @returns
    */
   editUser(user: any) {
-  this.userService.setUserDetails(user); // Pass the selected user details to the service
-  this.router.navigate([
-    ROUTE_PATH.ADMIN, 
-    ROUTE_PATH.USERS, 
-    ROUTE_PATH.USERES.EDIT
+    this.userService.setUserDetails(user); // Pass the selected user details to the service
+    this.router.navigate([
+      ROUTE_PATH.ADMIN,
+      ROUTE_PATH.USERS,
+      ROUTE_PATH.USERES.EDIT
     ]);
   }
 
@@ -80,11 +82,11 @@ export class UserListComponent implements OnInit {
   }
 
   deleteUser(user: any) {
-   const userId = user.id;
-   console.log('User to delete:', user);
+    const userId = user.id;
+    console.log('User to delete:', user);
 
-   this.userService.deleteUser(userId).subscribe(
-    (response: any) => {
+    this.userService.deleteUser(userId).subscribe(
+      (response: any) => {
         this.userList();
         if (HttpStatusCode.Ok) {
           this.toastrService.show(response["message"], "Success", {
@@ -97,7 +99,7 @@ export class UserListComponent implements OnInit {
             duration: 8000,
           });
         }
-    })
+      })
   }
 
   /**
@@ -105,9 +107,9 @@ export class UserListComponent implements OnInit {
    * @param userId, userName, status
    * @returns
    */
-  confirmBlockUnBlock(user:any,status:string) {
+  confirmBlockUnBlock(user: any, status: string) {
     this.dialogConfirmService.confirm({
-      header: status + " - " +"confirmation",
+      header: status + " - " + "confirmation",
       icon: 'alert-triangle-outline',
       message:
         "Are you sure that you want to <b>" +
@@ -126,13 +128,20 @@ export class UserListComponent implements OnInit {
    * @param userId, status
    * @returns
    */
-  blockUnBlockUser(user:any, status:string) {
+  blockUnBlockUser(user: any, status: string) {
     // let blockUnBlockPostData = {
     //   block: status == "Block" ? true : false,
     // };
-        const mobile = user.mobile;
-        const action = status === "Block" ? "Inactive" : "Active";
-    this.userService.blockUnBlockUser(mobile, action).subscribe(
+    // Get the current date and time in the desired format
+    const modifiedDate = this.datePipe.transform(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+    const BlockUnblocK = {
+      mobile: user.mobile,
+      status: status === "Block" ? "Inactive" : "Active",
+      modifiedby: "Admin",
+      modifiedon: modifiedDate
+    }
+    this.userService.blockUnBlockUser(BlockUnblocK).subscribe(
       (response) => {
         this.userList();
         if (HttpStatusCode.Ok) {
@@ -161,32 +170,32 @@ export class UserListComponent implements OnInit {
 
   // Define your static user data
   staticUsers: any[] = [
-    { username: 'Nanda Kumar', phone_number: '9674662433',decsignation:'Driver', address: 'Pollachi', active: true },
-    { username: 'Karuppu Swamy', phone_number: '7536462774',decsignation:'Driver', address: 'pollachi', active: false },
-    { username: 'Sudarsan', phone_number: '7536462774',decsignation:'Driver', address: 'coimbatore', active: true },
+    { username: 'Nanda Kumar', phone_number: '9674662433', decsignation: 'Driver', address: 'Pollachi', active: true },
+    { username: 'Karuppu Swamy', phone_number: '7536462774', decsignation: 'Driver', address: 'pollachi', active: false },
+    { username: 'Sudarsan', phone_number: '7536462774', decsignation: 'Driver', address: 'coimbatore', active: true },
   ];
 
   userList() {
 
     //this.users  =this.staticUsers;
     this.userService.getUserList().subscribe(
-     (response) => {
-       this.users = response;
-       this.users = response;
-        if (HttpStatusCode.Ok) {
-          this.toastrService.show(response["message"], "Success", {
-            status: "success",
-            duration: 8000,
-          });
-        } else {
-          this.toastrService.show(response["message"], "Warning", {
-            status: "warning",
-            duration: 8000,
-          });
-        }
-     },
-    (error) => {
-      console.log(error);
+      (response) => {
+        this.users = response;
+        this.users = response;
+        // if (HttpStatusCode.Ok) {
+        //   this.toastrService.show(response["message"], "Success", {
+        //     status: "success",
+        //     duration: 8000,
+        //   });
+        // } else {
+        //   this.toastrService.show(response["message"], "Warning", {
+        //     status: "warning",
+        //     duration: 8000,
+        //   });
+        // }
+      },
+      (error) => {
+        console.log(error);
       }
     );
   }

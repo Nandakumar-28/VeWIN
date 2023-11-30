@@ -27,14 +27,14 @@ export class BestperformerListComponent implements OnInit {
     private router: Router,
     private aRoute: ActivatedRoute,
     private userService: BestperformerService,
-    private dialogService:NbDialogService
-  ) {}
+    private dialogService: NbDialogService
+  ) { }
 
   ngOnInit() {
     // table   with their respective field name and header value
     this.columns = [
       { field: "name", header: "Name", show: true, sort: true },
-      { field: "sale", header: "Sale",show: true, sort: true },
+      { field: "sale", header: "Sale", show: true, sort: true },
       { field: "remarks", header: "Remarks", show: true, sort: true },
       { field: "fdate", header: "From Date", show: true, sort: true },
       { field: "tdate", header: "To Date", show: true, sort: true },
@@ -42,20 +42,20 @@ export class BestperformerListComponent implements OnInit {
 
     this.userList();
   }
-    /**
-   * create Company
-   * @param
-   * @returns
-   */
-createBestperformer() {
+  /**
+ * create Company
+ * @param
+ * @returns
+ */
+  createBestperformer() {
 
     this.userService.setUserDetails(null);
     this.router.navigate([
-        ROUTE_PATH.ADMIN,
-        ROUTE_PATH.BESTPERFORMER,
-        ROUTE_PATH.BESTPERFORMERS.CREATE,
+      ROUTE_PATH.ADMIN,
+      ROUTE_PATH.BESTPERFORMER,
+      ROUTE_PATH.BESTPERFORMERS.CREATE,
     ]);
-}
+  }
 
   /**
    * Edit User
@@ -69,7 +69,7 @@ createBestperformer() {
       ROUTE_PATH.ADMIN,
       ROUTE_PATH.BESTPERFORMER,
       ROUTE_PATH.BESTPERFORMERS.EDIT,
-       user.id
+      user.id
     ]);
   }
 
@@ -128,23 +128,23 @@ createBestperformer() {
 
     //this.users  =this.staticUsers;
     this.userService.getBestperformerList().subscribe(
-     (response) => {
-      console.log(response)
-       this.users = response;
-        if (HttpStatusCode.Ok) {
-          this.toastrService.show(response["message"], "Success", {
-            status: "success",
-            duration: 8000,
-          });
-        } else {
-          this.toastrService.show(response["message"], "Warning", {
-            status: "warning",
-            duration: 8000,
-          });
-        }
-     },
-    (error) => {
-      console.log(error);
+      (response) => {
+        console.log(response)
+        this.users = response;
+        // if (HttpStatusCode.Ok) {
+        //   this.toastrService.show(response["message"], "Success", {
+        //     status: "success",
+        //     duration: 8000,
+        //   });
+        // } else {
+        //   this.toastrService.show(response["message"], "Warning", {
+        //     status: "warning",
+        //     duration: 8000,
+        //   });
+        // }
+      },
+      (error) => {
+        console.log(error);
       }
     );
   }

@@ -27,32 +27,32 @@ export class AnnouncementListComponent implements OnInit {
     private router: Router,
     private aRoute: ActivatedRoute,
     private announcementService: AnnouncementService,
-    private dialogService:NbDialogService
-  ) {}
+    private dialogService: NbDialogService
+  ) { }
 
   ngOnInit() {
     // table   with their respective field name and header value
     this.columns = [
       { field: "title", header: "Title", show: true, sort: true },
       { field: "description", header: "Description", show: true, sort: true },
-      { field: "fdate", header: "From Date",show: true, sort: true },
+      { field: "fdate", header: "From Date", show: true, sort: true },
       { field: "tdate", header: "To Date", show: true, sort: true },
     ];
 
     this.userList();
   }
-    /**
-   * create Announcement
-   * @param null
-   * @returns
-   */
+  /**
+ * create Announcement
+ * @param null
+ * @returns
+ */
   createAnnouncement() {
 
     this.announcementService.setAnnouncementDetails(null);
     this.router.navigate([
-        ROUTE_PATH.ADMIN,
-        ROUTE_PATH.ANNOUNCEMENT,
-        ROUTE_PATH.ANNOUNCEMENTS.CREATE,
+      ROUTE_PATH.ADMIN,
+      ROUTE_PATH.ANNOUNCEMENT,
+      ROUTE_PATH.ANNOUNCEMENTS.CREATE,
     ]);
   }
 
@@ -122,33 +122,33 @@ export class AnnouncementListComponent implements OnInit {
    * @returns
    */
 
-   // Define your static user data
+  // Define your static user data
   staticUsers: any[] = [
-    { title: 'Vewin', description:'Apps'  },
-    { title: 'Google', description:'Daily News' },
-    { title: 'Instagram', description:'Online Application'  },
+    { title: 'Vewin', description: 'Apps' },
+    { title: 'Google', description: 'Daily News' },
+    { title: 'Instagram', description: 'Online Application' },
   ];
 
   userList() {
 
     //this.users  =this.staticUsers;
     this.announcementService.getannouncementList().subscribe(
-     (response) => {
-       this.announcements = response;
-        if (HttpStatusCode.Ok) {
-          this.toastrService.show(response["message"], "Success", {
-            status: "success",
-            duration: 8000,
-          });
-        } else {
-          this.toastrService.show(response["message"], "Warning", {
-            status: "warning",
-            duration: 8000,
-          });
-        }
-     },
-    (error) => {
-      console.log(error);
+      (response) => {
+        this.announcements = response;
+        // if (HttpStatusCode.Ok) {
+        //   this.toastrService.show(response["message"], "Success", {
+        //     status: "success",
+        //     duration: 8000,
+        //   });
+        // } else {
+        //   this.toastrService.show(response["message"], "Warning", {
+        //     status: "warning",
+        //     duration: 8000,
+        //   });
+        // }
+      },
+      (error) => {
+        console.log(error);
       }
     );
   }

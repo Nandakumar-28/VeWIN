@@ -4,12 +4,13 @@ import { MENU_ITEMS } from './admin-menu';
 @Component({
   selector: 'ngx-admin',
   styleUrls: ['./admin.component.scss'],
-  template: `   
+  template:
+ `   
     <ngx-one-column-layout>
       <nb-menu [items]="menu"></nb-menu>
       <router-outlet></router-outlet>
     </ngx-one-column-layout>
-`,
+ `,
 })
 export class AdminComponent implements OnInit {
 
@@ -17,5 +18,5 @@ export class AdminComponent implements OnInit {
 
   ngOnInit(): void {
   }
- menu = MENU_ITEMS;
+  menu = MENU_ITEMS;
 }

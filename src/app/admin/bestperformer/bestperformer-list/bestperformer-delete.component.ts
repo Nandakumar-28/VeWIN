@@ -3,8 +3,8 @@ import { NbDialogRef } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-bestperformer-delete',
-  template: 
-  `      <nb-card>
+  template:
+ `  <nb-card>
       <nb-card-header class="text-center">
         <b>Delete Confirmation</b>
       </nb-card-header>
@@ -12,7 +12,10 @@ import { NbDialogRef } from '@nebular/theme';
         <p>Are you sure that you want to delete this <b>{{ user.name }}</b>?</p>
         <ul>
           <li><strong>Name:</strong> {{ user.name }}</li>
-          <li><strong>sales:</strong> {{ user.sale }}</li>
+          <li><strong>Sales:</strong> {{ user.sales }}</li>
+          <li><strong>Remarks:</strong> {{ user.remarks }}</li>
+          <li><strong>From Date:</strong> {{ user.fdate | date: 'dd/MM/yyyy' }}</li>
+          <li><strong>To Date:</strong> {{ user.tdate  | date: 'dd/MM/yyyy'  }}</li>
         </ul>
       </nb-card-body>
       <nb-card-footer class="text-center">
@@ -23,11 +26,11 @@ import { NbDialogRef } from '@nebular/theme';
 `})
 export class BestperformerDeleteComponent implements OnInit {
 
-   user: any;
+  user: any;
 
-   constructor(protected dialogRef: NbDialogRef<BestperformerDeleteComponent>) {}
+  constructor(protected dialogRef: NbDialogRef<BestperformerDeleteComponent>) { }
 
-   ngOnInit(): void {}
+  ngOnInit(): void { }
 
   close() {
     this.dialogRef.close(false); // Close the delete dialog without approving

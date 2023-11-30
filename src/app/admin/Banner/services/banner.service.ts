@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
@@ -10,7 +10,7 @@ import { switchMap } from 'rxjs/operators';
 })
 export class BannerService {
 
-    banner = {};
+  banner = {};
 
   constructor(
     private bannerServicehttp: HttpClient,
@@ -23,7 +23,7 @@ export class BannerService {
     });
   }
 
-    //pass select banner Details in banner-Edit
+  //pass select banner Details in banner-Edit
 
   private bannerDetails = new BehaviorSubject<any>(null);
 
@@ -61,14 +61,14 @@ export class BannerService {
    */
   deleteBanner(id: number): Observable<any> {
     let apiURL = getApiEndPoint(`${API_END_POINTS.BANNER.DELETE}?id=${id}`);
-    return this.bannerServicehttp.put(apiURL,null).pipe(
-     switchMap((result: any) => {
-      if (result) {
-        return of(result);
-      } else {
-        return throwError(result);
-      }
-     })
+    return this.bannerServicehttp.put(apiURL, null).pipe(
+      switchMap((result: any) => {
+        if (result) {
+          return of(result);
+        } else {
+          return throwError(result);
+        }
+      })
     );
   }
 
@@ -79,9 +79,9 @@ export class BannerService {
    * @returns
    *
    */
-  updateBanner(requestBody): Observable<any> {
+  updateBanner(formData): Observable<any> {
     let apiURL = getApiEndPoint(`${API_END_POINTS.BANNER.UPDATE}`);
-    return this.bannerServicehttp.put(apiURL,requestBody).pipe(
+    return this.bannerServicehttp.put(apiURL, formData).pipe(
       switchMap((result: any) => {
         if (result) {
           return of(result);
@@ -96,15 +96,14 @@ export class BannerService {
 
   /**
    * Create Banner
-   * @param requestBody
+   * @param formData
    * @returns
    *
    */
 
-  CreateBanner(requestBody): Observable<any> {
+  CreateBanner(formData): Observable<any> {
     let apiURL = getApiEndPoint(`${API_END_POINTS.BANNER.ADD}`);
-    console.log(requestBody)
-    return this.bannerServicehttp.post(apiURL,requestBody).pipe(
+    return this.bannerServicehttp.post(apiURL, formData).pipe(
       switchMap((result: any) => {
         if (result) {
           return of(result);

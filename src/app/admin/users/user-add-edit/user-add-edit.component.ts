@@ -19,9 +19,9 @@ export class UserAddEditComponent implements OnInit {
   submitted = false;
   //page_title: string;
   data_loading = false;
-  
+
   //show password
-  showPassword =true;
+  showPassword = true;
 
   //userlist pass user data
   userDetails: any;
@@ -33,48 +33,48 @@ export class UserAddEditComponent implements OnInit {
     private userService: UsersService,
     private toastrService: NbToastrService,
     private datePipe: DatePipe
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.AddUserFormInitialize();
 
-   // Check if user details are passed user list, service to user-edit
+    // Check if user details are passed user list, service to user-edit
 
-   this.userService.getUserDetails().subscribe(user => {
-     if (user) {
-      this.userDetails = user;
-      // Pre-fill the form with user details
-      this.AddUserForm.patchValue({
-        name: this.userDetails.name,
-        mobile: this.userDetails.mobile,
-        email: this.userDetails.email,
-        address: this.userDetails.address,
-        pincode: this.userDetails.pincode,
-        password: this.userDetails.password,
-       });
+    this.userService.getUserDetails().subscribe(user => {
+      if (user) {
+        this.userDetails = user;
+        // Pre-fill the form with user details
+        this.AddUserForm.patchValue({
+          name: this.userDetails.name,
+          mobile: this.userDetails.mobile,
+          email: this.userDetails.email,
+          address: this.userDetails.address,
+          pincode: this.userDetails.pincode,
+          password: this.userDetails.password,
+        });
       }
-   });  
-  }  
-     
+    });
+  }
+
 
   /**
    * User Form Initialize
    */
 
   AddUserFormInitialize() {
-  const emailRegex = "[a-z0-9]+@[a-z]+.[a-z]{2,3}";
-  this.AddUserForm = this.formBuilder.group({
-    name: ["", [Validators.required]],
-    mobile: ["", [Validators.required]],
-    email: ["", [Validators.required, Validators.pattern(emailRegex)]],
-    address: ["", [Validators.required]],
-    pincode: ["", [Validators.required]],
-    password: ["", [Validators.required]],
-  });
-}
+    const emailRegex = "[a-z0-9]+@[a-z]+.[a-z]{2,3}";
+    this.AddUserForm = this.formBuilder.group({
+      name: ["", [Validators.required]],
+      mobile: ["", [Validators.required, Validators.maxLength(10)]],
+      email: ["", [Validators.required, Validators.pattern(emailRegex)]],
+      address: ["", [Validators.required]],
+      pincode: ["", [Validators.required]],
+      password: ["", [Validators.required]],
+    });
+  }
 
   //Show Password
-   getInputType() {
+  getInputType() {
     if (this.showPassword) {
       return 'text';
     }
@@ -97,42 +97,42 @@ export class UserAddEditComponent implements OnInit {
 
     if (this.router.url.indexOf("edit") !== -1) {
       // For editing, pass the user ID
-      this.AddUserForm.value.userId =this.userDetails.id;
+      this.AddUserForm.value.userId = this.userDetails.id;
       this.aRoute.snapshot.paramMap.get("id");
       this.AddUserForm.value.flag = 1;
     } else {
       this.AddUserForm.value.flag = 0;
     }
-  
-   // Get the current date and time in the desired format
-  const modifiedDate = this.datePipe.transform(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
-  // Prepare the user object with updated details
-  const user = {
-    id:this.userDetails.id ,
-    name: this.AddUserForm.value.name,
-    mobile: this.AddUserForm.value.mobile,
-    email: this.AddUserForm.value.email,
-    address: this.AddUserForm.value.address,
-    pincode: this.AddUserForm.value.pincode,
-    password: this.AddUserForm.value.password,
-    modifiedby: "admin" ,
-    modifiedon: modifiedDate
-  }
-  // const userId = this.userDetails.id;
-  // Get the current date and time in the desired format
-  // const modifiedDate = this.datePipe.transform(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    // Get the current date and time in the desired format
+    const modifiedDate = this.datePipe.transform(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
- // Build the request parameters using HttpParams
-  // let params = new HttpParams();
-  // params = params.set('Name', this.AddUserForm.value.name);
-  // params = params.set('Mobile', this.AddUserForm.value.mobile);
-  // params = params.set('Email', this.AddUserForm.value.email);
-  // params = params.set('Address', this.AddUserForm.value.address);
-  // params = params.set('pincode', this.AddUserForm.value.pincode);
-  // params = params.set('Password', this.AddUserForm.value.password);
-  // params = params.set('Modifiedby', 'admin');
-  // params = params.set('Modifiedon', modifiedDate);
+    // Prepare the user object with updated details
+    const user = {
+      id: this.userDetails.id,
+      name: this.AddUserForm.value.name,
+      mobile: this.AddUserForm.value.mobile,
+      email: this.AddUserForm.value.email,
+      address: this.AddUserForm.value.address,
+      pincode: this.AddUserForm.value.pincode,
+      password: this.AddUserForm.value.password,
+      modifiedby: "admin",
+      modifiedon: modifiedDate
+    }
+    // const userId = this.userDetails.id;
+    // Get the current date and time in the desired format
+    // const modifiedDate = this.datePipe.transform(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+    // Build the request parameters using HttpParams
+    // let params = new HttpParams();
+    // params = params.set('Name', this.AddUserForm.value.name);
+    // params = params.set('Mobile', this.AddUserForm.value.mobile);
+    // params = params.set('Email', this.AddUserForm.value.email);
+    // params = params.set('Address', this.AddUserForm.value.address);
+    // params = params.set('pincode', this.AddUserForm.value.pincode);
+    // params = params.set('Password', this.AddUserForm.value.password);
+    // params = params.set('Modifiedby', 'admin');
+    // params = params.set('Modifiedon', modifiedDate);
 
     this.userService.updateUser(user)
       .subscribe((response) => {
@@ -148,7 +148,7 @@ export class UserAddEditComponent implements OnInit {
             duration: 8000,
           });
         }
-        this.router.navigate([ROUTE_PATH.ADMIN, ROUTE_PATH.USERS,ROUTE_PATH.USERES.LIST,]);
+        this.router.navigate([ROUTE_PATH.ADMIN, ROUTE_PATH.USERS, ROUTE_PATH.USERES.LIST,]);
       });
   }
 
@@ -158,6 +158,6 @@ export class UserAddEditComponent implements OnInit {
    * @returns
    */
   backToUserList() {
-    this.router.navigate([ROUTE_PATH.ADMIN, ROUTE_PATH.USERS,ROUTE_PATH.USERES.LIST,]);
+    this.router.navigate([ROUTE_PATH.ADMIN, ROUTE_PATH.USERS, ROUTE_PATH.USERES.LIST,]);
   }
 }

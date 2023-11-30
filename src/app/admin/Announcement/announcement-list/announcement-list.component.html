@@ -13,11 +13,11 @@
     <nb-card-body>
 
         <div class="card">
-            <p-table [value]="announcements" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true" [autoLayout]="true"
-                [rowsPerPageOptions]="itemsPerPage">
+            <p-table [value]="announcements" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true"
+                [autoLayout]="true" [rowsPerPageOptions]="itemsPerPage">
                 <ng-template pTemplate="header">
-                   <tr>
-                    <ng-container *ngFor="let col of columns">
+                    <tr>
+                        <ng-container *ngFor="let col of columns">
                             <th *ngIf="col.show" [pSortableColumn]="(col.sort==true)? col.field:false"
                                 [class]="col.field+'-campaigns'" class="text-center">
                                 <p-sortIcon *ngIf="col.sort==true" [field]="col.field" class="sort-icon"
@@ -25,14 +25,14 @@
                                 </p-sortIcon>
                                 <span>{{col.header}}</span>
                             </th>
-                         </ng-container>
-                         <th class="text-center">Actions</th>
-                   </tr>
+                        </ng-container>
+                        <th class="text-center">Actions</th>
+                    </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-user>
                     <tr>
                         <td class="text-center" style="width: 25%;">{{user.title}}</td>
-                        <td class="text-center" style="width: 35%;" >{{user.description}}</td>
+                        <td class="text-center" style="width: 35%;">{{user.description}}</td>
                         <td class="text-center">{{ user.fdate | date: 'dd/MM/yyyy' }}</td>
                         <td class="text-center">{{ user.tdate | date: 'dd/MM/yyyy' }}</td>
                         <!-- <td>{{user.active == true ? 'Active' : 'InActive'}}</td> -->
@@ -42,8 +42,8 @@
                                 class="btn btn-outline-primary btn-sm action-button">
                                 <nb-icon icon="edit" pack="eva" class="action-icons"></nb-icon>
                             </button>&nbsp;
-                            <button nbTooltip="Delete" (click)="confirmDelete(user)"
-                                nbTooltipPlacement="top" class="btn btn-outline-danger btn-sm action-button">
+                            <button nbTooltip="Delete" (click)="confirmDelete(user)" nbTooltipPlacement="top"
+                                class="btn btn-outline-danger btn-sm action-button">
                                 <nb-icon icon="close" pack="eva" class="action-icons"></nb-icon>
                             </button>&nbsp;
                         </td>

@@ -15,7 +15,7 @@ import { API_END_POINTS, getApiEndPoint } from "../../../shared/constants/api-co
 })
 export class RegisterService {
 
-    user = {};
+  user = {};
 
   constructor(
     private userServicehttp: HttpClient,
@@ -51,11 +51,11 @@ export class RegisterService {
    * @returns
    *
    */
-  approveUser(mobile: string, status: string): Observable<any> {
-    
-      let apiURL = getApiEndPoint(API_END_POINTS.USER.APPROVAL)
-      return this.userServicehttp.put(`${apiURL}?mobile=${mobile}&Status=${status}`,{}).pipe(
-        switchMap((result: any) => {
+  approveUser(approvalUser): Observable<any> {
+
+    let apiURL = getApiEndPoint(API_END_POINTS.USER.APPROVAL)
+    return this.userServicehttp.put(apiURL, approvalUser).pipe(
+      switchMap((result: any) => {
         if (result) {
           return of(result);
         } else {
@@ -64,7 +64,7 @@ export class RegisterService {
       })
     );
   }
- 
+
 
 
   /**
@@ -75,17 +75,17 @@ export class RegisterService {
    */
 
 
-  declinedUser(mobile: string, status: string): Observable<any> {
-   let apiURL = getApiEndPoint(API_END_POINTS.USER.APPROVAL);
-   return this.userServicehttp.put(`${apiURL}?mobile=${mobile}&Status=${status}`,{}).pipe(
-    switchMap((result: any) => {
-      if (result) {
-        return of(result);
-      } else {
-        return throwError(result);
-      }
-    })
-   );
+  declinedUser(declinedUser): Observable<any> {
+    let apiURL = getApiEndPoint(API_END_POINTS.USER.APPROVAL);
+    return this.userServicehttp.put(apiURL, declinedUser).pipe(
+      switchMap((result: any) => {
+        if (result) {
+          return of(result);
+        } else {
+          return throwError(result);
+        }
+      })
+    );
   }
 
   /**

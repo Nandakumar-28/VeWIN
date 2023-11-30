@@ -6,6 +6,7 @@ import { RegisterService } from '../services/register.service';
 import { DialogDeclinedComponent } from './dialog-declined.component';
 import { DialogApprovalComponent } from './dialog-approval.component';
 import { HttpStatusCode } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'ngx-register-list',
@@ -27,16 +28,16 @@ export class RegisterListComponent implements OnInit {
     private router: Router,
     private aRoute: ActivatedRoute,
     private userService: RegisterService,
-    private dialogConfirmService:NbDialogService
-
-  ) {}
+    private dialogConfirmService: NbDialogService,
+    private datePipe: DatePipe
+  ) { }
 
   ngOnInit() {
     // table   with their respective field name and header value
     this.columns = [
       { field: "name", header: "Name", show: true, sort: true },
       { field: "mobile", header: "Phone Number", show: true, sort: true },
-      { field: "email", header: "E-mail",show: true, sort: true },
+      { field: "email", header: "E-mail", show: true, sort: true },
       { field: "address", header: "Address", show: true, sort: true },
       { field: "active", header: "Status", show: true, sort: true },
     ];
@@ -49,7 +50,7 @@ export class RegisterListComponent implements OnInit {
    * @param user
    * @returns
    */
-  approvalUser(user:any) {
+  approvalUser(user: any) {
     this.dialogConfirmService.open(DialogApprovalComponent, {
       context: { user },
     }).onClose.subscribe((result) => {
@@ -60,11 +61,16 @@ export class RegisterListComponent implements OnInit {
   }
 
   approveUser(user: any) {
-    // You can access user properties like mobile and status here
-    const mobile = user.mobile;
-    const status = 'Active'; // Assuming you want to set the status to 'Active'
+    const modifiedDate = this.datePipe.transform(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
-    this.userService.approveUser(mobile, status).subscribe(
+    const approvalUser = {
+      mobile: user.mobile,
+      status: "Active",
+      modifiedby: "Admin",
+      modifiedon: modifiedDate
+    }
+
+    this.userService.approveUser(approvalUser).subscribe(
       (response) => {
         this.userList();
         if (HttpStatusCode.Ok) {
@@ -84,15 +90,15 @@ export class RegisterListComponent implements OnInit {
       }
     );
   }
-  
+
 
   /**
    * Declined Company
    * @param user
    * @returns
    */
-  declinedUser(user:any) {
-   this.dialogConfirmService.open(DialogDeclinedComponent, {
+  declinedUser(user: any) {
+    this.dialogConfirmService.open(DialogDeclinedComponent, {
       context: { user },
     }).onClose.subscribe((result) => {
       if (result) {
@@ -100,12 +106,18 @@ export class RegisterListComponent implements OnInit {
       }
     });
   }
- 
-  declineUser(user: any) {
 
-    const mobile = user.mobile;
-    const status = 'Decline'; // Assuming you want to set the status to 'Active'
-    this.userService.declinedUser(mobile,status).subscribe(
+  declineUser(user: any) {
+    const modifiedDate = this.datePipe.transform(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+    const declinedUser = {
+      mobile: user.mobile,
+      status: 'Decline',
+      modifiedby: "Admin",
+      modifiedon: modifiedDate
+    }
+
+    this.userService.declinedUser(declinedUser).subscribe(
       (response) => {
         this.userList();
         if (HttpStatusCode.Ok) {
@@ -132,7 +144,7 @@ export class RegisterListComponent implements OnInit {
    * @param null
    * @returns
    */
-    // Define your static user data
+  // Define your static user data
   //  staticUsers: any[] = [
   //   { name: 'Nanda Kumar', mobile: '9674662433', email: 'nanda@example.com', address: 'Pollachi', active: true },
   //   { name: 'Karuppu Swamy', mobile: '7536462774', email: 'karuppu@example.com', address: 'pollachi', active: false },
@@ -169,22 +181,22 @@ export class RegisterListComponent implements OnInit {
 
   userList() {
 
-      //this.users = this.staticUsers;
+    //this.users = this.staticUsers;
 
     this.userService.getUserList().subscribe(
       (response) => {
         this.users = response;
-        if (HttpStatusCode.Ok) {
-          this.toastrService.show(response["message"], "Success", {
-            status: "success",
-            duration: 8000,
-          });
-        } else {
-          this.toastrService.show(response["message"], "Warning", {
-            status: "warning",
-            duration: 8000,
-          });
-        }
+        // if (HttpStatusCode.Ok) {
+        //   this.toastrService.show(response["message"], "Success", {
+        //     status: "success",
+        //     duration: 8000,
+        //   });
+        // } else {
+        //   this.toastrService.show(response["message"], "Warning", {
+        //     status: "warning",
+        //     duration: 8000,
+        //   });
+        //}
       },
       (error) => {
         console.log(error);

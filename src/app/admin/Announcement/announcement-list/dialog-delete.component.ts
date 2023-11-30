@@ -4,8 +4,8 @@ import { NbDialogRef } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-dialog-delete',
-  template: 
-`      <nb-card>
+  template:
+`   <nb-card>
       <nb-card-header class="text-center">
         <b>Delete Confirmation</b>
       </nb-card-header>
@@ -14,6 +14,8 @@ import { NbDialogRef } from '@nebular/theme';
         <ul>
           <li><strong>Title:</strong> {{ user.title }}</li>
           <li><strong>Description:</strong> {{ user.description }}</li>
+          <li><strong>From Date:</strong> {{ user.fdate | date: 'dd/MM/yyyy' }}</li>
+          <li><strong>To Date:</strong> {{ user.tdate | date: 'dd/MM/yyyy'  }}</li>
         </ul>
       </nb-card-body>
       <nb-card-footer class="text-center">
@@ -24,11 +26,11 @@ import { NbDialogRef } from '@nebular/theme';
 `})
 export class DialogDeleteComponent implements OnInit {
 
-   user: any;
+  user: any;
 
-   constructor(protected dialogRef: NbDialogRef<DialogDeleteComponent>) {}
+  constructor(protected dialogRef: NbDialogRef<DialogDeleteComponent>) { }
 
-   ngOnInit(): void {}
+  ngOnInit(): void { }
 
   close() {
     this.dialogRef.close(false); // Close the delete dialog without approving

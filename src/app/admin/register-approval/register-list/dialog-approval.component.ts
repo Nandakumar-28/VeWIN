@@ -3,8 +3,8 @@ import { NbDialogRef } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-dialog-approval',
-  template: `
-    <nb-card>
+  template:
+  ` <nb-card>
       <nb-card-header class="text-center">
         <b>Approval Confirmation</b>
       </nb-card-header>
@@ -31,9 +31,9 @@ import { NbDialogRef } from '@nebular/theme';
 export class DialogApprovalComponent implements OnInit {
   user: any;
 
-  constructor(protected dialogRef: NbDialogRef<DialogApprovalComponent>) {}
+  constructor(protected dialogRef: NbDialogRef<DialogApprovalComponent>) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   close() {
     this.dialogRef.close(false); // Close the approval dialog without approving

@@ -9,7 +9,7 @@ import { switchMap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AnnouncementService {
-    announcement = {};
+  announcement = {};
 
   constructor(
     private announcementServicehttp: HttpClient,
@@ -22,7 +22,7 @@ export class AnnouncementService {
     });
   }
 
-    //pass select Announcement Details in Announcement-Edit
+  //pass select Announcement Details in Announcement-Edit
 
   private announcementDetails = new BehaviorSubject<any>(null);
 
@@ -59,14 +59,14 @@ export class AnnouncementService {
    */
   deleteAnnouncement(id: number): Observable<any> {
     let apiURL = getApiEndPoint(`${API_END_POINTS.ANNOUNCEMENT.DELETE}?id=${id}`);
-    return this.announcementServicehttp.put(apiURL,null).pipe(
-     switchMap((result: any) => {
-      if (result) {
-        return of(result);
-      } else {
-        return throwError(result);
-      }
-     })
+    return this.announcementServicehttp.put(apiURL, null).pipe(
+      switchMap((result: any) => {
+        if (result) {
+          return of(result);
+        } else {
+          return throwError(result);
+        }
+      })
     );
   }
 
@@ -79,7 +79,7 @@ export class AnnouncementService {
    */
   updateAnnouncement(requestBody): Observable<any> {
     let apiURL = getApiEndPoint(`${API_END_POINTS.ANNOUNCEMENT.UPDATE}`);
-    return this.announcementServicehttp.put(apiURL,requestBody).pipe(
+    return this.announcementServicehttp.put(apiURL, requestBody).pipe(
       switchMap((result: any) => {
         if (result) {
           return of(result);
@@ -102,7 +102,7 @@ export class AnnouncementService {
   CreateAnnouncement(requestBody): Observable<any> {
     let apiURL = getApiEndPoint(`${API_END_POINTS.ANNOUNCEMENT.ADD}`);
     console.log(requestBody)
-    return this.announcementServicehttp.post(apiURL,requestBody).pipe(
+    return this.announcementServicehttp.post(apiURL, requestBody).pipe(
       switchMap((result: any) => {
         if (result) {
           return of(result);

@@ -9,7 +9,7 @@ import { switchMap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class BestperformerService {
-    user = {};
+  user = {};
 
   constructor(
     private userServicehttp: HttpClient,
@@ -22,12 +22,13 @@ export class BestperformerService {
     });
   }
 
-    //pass select user Details in User-Edit
+  //pass select user Details in User-Edit
 
   private userDetails = new BehaviorSubject<any>(null);
 
   setUserDetails(user: any) {
     this.userDetails.next(user);
+    console.log(user)
   }
 
   getUserDetails() {
@@ -72,14 +73,14 @@ export class BestperformerService {
    */
   deleteUser(id: number): Observable<any> {
     let apiURL = getApiEndPoint(`${API_END_POINTS.BESTPERFORMER.DELETE}?id=${id}`);
-    return this.userServicehttp.put(apiURL,null).pipe(
-     switchMap((result: any) => {
-      if (result) {
-        return of(result);
-      } else {
-        return throwError(result);
-      }
-     })
+    return this.userServicehttp.put(apiURL, null).pipe(
+      switchMap((result: any) => {
+        if (result) {
+          return of(result);
+        } else {
+          return throwError(result);
+        }
+      })
     );
   }
 
@@ -92,7 +93,7 @@ export class BestperformerService {
    */
   updateUser(requestBody): Observable<any> {
     let apiURL = getApiEndPoint(`${API_END_POINTS.BESTPERFORMER.UPDATE}`);
-    return this.userServicehttp.put(apiURL,requestBody).pipe(
+    return this.userServicehttp.put(apiURL, requestBody).pipe(
       switchMap((result: any) => {
         if (result) {
           return of(result);
@@ -115,7 +116,7 @@ export class BestperformerService {
   CreateAnnouncement(requestBody): Observable<any> {
     let apiURL = getApiEndPoint(`${API_END_POINTS.BESTPERFORMER.ADD}`);
     console.log(requestBody)
-    return this.userServicehttp.post(apiURL,requestBody).pipe(
+    return this.userServicehttp.post(apiURL, requestBody).pipe(
       switchMap((result: any) => {
         if (result) {
           return of(result);

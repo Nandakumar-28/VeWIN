@@ -16,42 +16,41 @@
             <p-table [value]="users" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true" [autoLayout]="true"
                 [rowsPerPageOptions]="itemsPerPage">
                 <ng-template pTemplate="header">
-                   <tr>
-                    <ng-container *ngFor="let col of columns" >
+                    <tr>
+                        <ng-container *ngFor="let col of columns">
                             <th *ngIf="col.show" [pSortableColumn]="(col.sort==true)? col.field:false"
                                 [class]="col.field+'-campaigns'" class="text-center">
                                 <p-sortIcon *ngIf="col.sort==true" [field]="col.field" class="sort-icon"
-                                    [id]="col.field+'-sort'" >
+                                    [id]="col.field+'-sort'">
                                 </p-sortIcon>
                                 <span>{{col.header}}</span>
                             </th>
-                         </ng-container>
-                         <th class="text-center">Actions</th>
-                   </tr>
+                        </ng-container>
+                        <th class="text-center">Actions</th>
+                    </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-user>
                     <tr>
                         <td class="text-center">{{user.name}}</td>
                         <td class="text-center" style="width: 15%;">{{user.mobile}}</td>
-                        <td class="text-center">{{user.email}}</td>                       
+                        <td class="text-center">{{user.email}}</td>
                         <td class="text-center">{{user.address}}</td>
                         <td class="text-center">{{user.status}}</td>
                         <td class="text-center action">
-                            <button (click)="editUser(user)" routerLinkActive="router-link-active"
-                                nbTooltip="Edit" nbTooltipPlacement="top"
-                                class="btn btn-outline-primary btn-sm action-button">
+                            <button (click)="editUser(user)" routerLinkActive="router-link-active" nbTooltip="Edit"
+                                nbTooltipPlacement="top" class="btn btn-outline-primary btn-sm action-button">
                                 <nb-icon icon="edit" pack="eva" class="action-icons"></nb-icon>
                             </button>&nbsp;
-                            <button nbTooltip="Delete" (click)="confirmDelete(user)"
-                                nbTooltipPlacement="top" class="btn btn-outline-danger btn-sm action-button">
+                            <button nbTooltip="Delete" (click)="confirmDelete(user)" nbTooltipPlacement="top"
+                                class="btn btn-outline-danger btn-sm action-button">
                                 <nb-icon icon="close-circle-outline" pack="eva" class="action-icons"></nb-icon>
                             </button>&nbsp;
-                            <button [nbTooltip]="user.status == 'Active' ? 'Block' : 'Unblock'" (click)="confirmBlockUnBlock(user, user.status == 'Active' ? 'Block' : 'UnBlock' )"
+                            <button [nbTooltip]="user.status == 'Active' ? 'Block' : 'Unblock'"
+                                (click)="confirmBlockUnBlock(user, user.status == 'Active' ? 'Block' : 'UnBlock' )"
                                 nbTooltipPlacement="top"
                                 [ngClass]="user.status =='Active' ? 'btn btn-outline-danger btn-sm action-button':'btn btn-outline-success btn-sm action-button'">
-                                <nb-icon
-                                    [icon]="user.status =='Active' ? 'lock-outline':'unlock-outline'"
-                                    pack="eva" class="action-icons"></nb-icon>
+                                <nb-icon [icon]="user.status =='Active' ? 'lock-outline':'unlock-outline'" pack="eva"
+                                    class="action-icons"></nb-icon>
                             </button>&nbsp;
 
                         </td>

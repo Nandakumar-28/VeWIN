@@ -11,8 +11,8 @@ import { NbDialogRef } from '@nebular/theme';
       <nb-card-body>
         <p>Are you sure that you want to delete this <b>{{ user.name }}</b>?</p>
         <ul>
-          <li><strong>From Date:</strong> {{ user.fdate }}</li>
-          <li><strong>To date:</strong> {{ user.tdate }}</li>
+          <li><strong>From Date:</strong> {{ user.fdate | date: 'dd/MM/yyyy' }}</li>
+          <li><strong>To date:</strong> {{ user.tdate | date: 'dd/MM/yyyy' }}</li>
         </ul>
       </nb-card-body>
       <nb-card-footer class="text-center">

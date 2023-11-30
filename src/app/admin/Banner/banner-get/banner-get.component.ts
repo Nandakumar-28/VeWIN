@@ -28,33 +28,33 @@ export class BannerGetComponent implements OnInit {
     private router: Router,
     private aRoute: ActivatedRoute,
     private bannerservice: BannerService,
-    private dialogService:NbDialogService
-  ) {}
+    private dialogService: NbDialogService
+  ) { }
 
   ngOnInit() {
     // table   with their respective field name and header value
     this.columns = [
-      { field: "photo", header: "Photo", show: true, sort: true,  },
+      { field: "photo", header: "Photo", show: true, sort: true, },
       { field: "fdate", header: "From Date", show: true, sort: true, },
-      { field: "tdate", header: "To Date", show: true, sort:true ,  },
+      { field: "tdate", header: "To Date", show: true, sort: true, },
     ];
 
     this.bannerList();
   }
-    /**
-   * create Banner
-   * @param
-   * @returns
-   */
-createBanner() {
+  /**
+ * create Banner
+ * @param
+ * @returns
+ */
+  createBanner() {
 
     this.bannerservice.setBannerDetails(null);
     this.router.navigate([
-        ROUTE_PATH.ADMIN,
-        ROUTE_PATH.BANNER,
-        ROUTE_PATH.BANNERS.CREATE,
+      ROUTE_PATH.ADMIN,
+      ROUTE_PATH.BANNER,
+      ROUTE_PATH.BANNERS.CREATE,
     ]);
-}
+  }
 
   /**
    * Edit Banner
@@ -126,23 +126,23 @@ createBanner() {
 
     //this.banner  =this.staticUsers;
     this.bannerservice.getBannerList().subscribe(
-     (response) => {
-      console.log(response)
-       this.banner = response;
-        if (HttpStatusCode.Ok) {
-          this.toastrService.show(response["message"], "Success", {
-            status: "success",
-            duration: 8000,
-          });
-        } else {
-          this.toastrService.show(response["message"], "Warning", {
-            status: "warning",
-            duration: 8000,
-          });
-        }
-     },
-    (error) => {
-      console.log(error);
+      (response) => {
+        console.log(response)
+        this.banner = response;
+        // if (HttpStatusCode.Ok) {
+        //   this.toastrService.show(response["message"], "Success", {
+        //     status: "success",
+        //     duration: 8000,
+        //   });
+        // } else {
+        //   this.toastrService.show(response["message"], "Warning", {
+        //     status: "warning",
+        //     duration: 8000,
+        //   });
+        // }
+      },
+      (error) => {
+        console.log(error);
       }
     );
   }

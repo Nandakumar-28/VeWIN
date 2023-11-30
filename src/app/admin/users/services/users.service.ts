@@ -15,7 +15,7 @@ import { API_END_POINTS, getApiEndPoint } from "../../../shared/constants/api-co
 })
 export class UsersService {
 
-    user = {};
+  user = {};
 
   constructor(
     private userServicehttp: HttpClient,
@@ -28,7 +28,7 @@ export class UsersService {
     });
   }
 
-    //pass select user Details in User-Edit
+  //pass select user Details in User-Edit
 
   private userDetails = new BehaviorSubject<any>(null);
 
@@ -66,14 +66,14 @@ export class UsersService {
    */
   deleteUser(userId: number): Observable<any> {
     let apiURL = getApiEndPoint(`${API_END_POINTS.USER.DELETE}/${userId}`);
-    return this.userServicehttp.put(apiURL,null).pipe(
-     switchMap((result: any) => {
-      if (result) {
-        return of(result);
-      } else {
-        return throwError(result);
-      }
-     })
+    return this.userServicehttp.put(apiURL, null).pipe(
+      switchMap((result: any) => {
+        if (result) {
+          return of(result);
+        } else {
+          return throwError(result);
+        }
+      })
     );
   }
 
@@ -83,9 +83,9 @@ export class UsersService {
    * @returns
    *
    */
-  blockUnBlockUser(mobile: string, status: string): Observable<any> {
+  blockUnBlockUser(blockUnBlock): Observable<any> {
     let apiURL = getApiEndPoint(API_END_POINTS.USER.APPROVAL);
-   return this.userServicehttp.put(`${apiURL}?mobile=${mobile}&Status=${status}`,{}).pipe(
+    return this.userServicehttp.put(apiURL, blockUnBlock).pipe(
       switchMap((result: any) => {
         if (result) {
           return of(result);
@@ -105,7 +105,7 @@ export class UsersService {
   updateUser(user): Observable<any> {
     let apiURL = getApiEndPoint(`${API_END_POINTS.USER.UPDATE}`);
     console.log(user)
-    return this.userServicehttp.put(apiURL,user).pipe(
+    return this.userServicehttp.put(apiURL, user).pipe(
       switchMap((result: any) => {
         if (result) {
           return of(result);

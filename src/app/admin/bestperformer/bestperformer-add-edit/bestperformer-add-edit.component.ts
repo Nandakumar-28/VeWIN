@@ -20,9 +20,9 @@ export class BestperformerAddEditComponent implements OnInit {
   submitted = false;
   //page_title: string;
   data_loading = false;
-  
+
   //show password
-  showPassword =true;
+  showPassword = true;
 
   //userlist pass user data
   userDetails: any;
@@ -39,7 +39,7 @@ export class BestperformerAddEditComponent implements OnInit {
     private userService: BestperformerService,
     private toastrService: NbToastrService,
     private datePipe: DatePipe,
-    
+
   ) { }
 
 
@@ -56,52 +56,53 @@ export class BestperformerAddEditComponent implements OnInit {
     }
 
 
-   // Check if user details are passed user list, service to user-edit
+    // Check if user details are passed user list, service to user-edit
 
-   this.userSubscription = this.userService.getUserDetails().subscribe(user => {     if (user) {
-      this.userDetails = user;
-      console.log(this.userDetails)
-      // Pre-fill the form with user details
-      this.AddUserForm.patchValue({
-        name: this.userDetails.name,
-        sales: this.userDetails.sales,
-        remarks: this.userDetails.remarks,
-        fdate: new Date(this.userDetails.fdate), // Assuming 'fdate' is a date field
-        tdate: new Date(this.userDetails.tdate),
-       });
-      }else {
-      this.AddUserForm.reset(); // Ensure the form is reset when no user details are present
+    this.userSubscription = this.userService.getUserDetails().subscribe(user => {
+      if (user) {
+        this.userDetails = user;
+        console.log(this.userDetails)
+        // Pre-fill the form with user details
+        this.AddUserForm.patchValue({
+          name: this.userDetails.name,
+          sales: this.userDetails.sales,
+          remarks: this.userDetails.remarks,
+          fdate: new Date(this.userDetails.fdate), // Assuming 'fdate' is a date field
+          tdate: new Date(this.userDetails.tdate),
+        });
+      } else {
+        this.AddUserForm.reset(); // Ensure the form is reset when no user details are present
       }
-   });
-   
+    });
+
     // Subscribe to changes in the 'name' control and make API requests
     this.AddUserForm.get('name').valueChanges.pipe(
       debounceTime(300),
       switchMap((name) => {
         // Make the API request only if the name has at least 3 characters
-        if (name.length >= 4) {
+        if (name.length >= 3) {
           return this.userService.getReferralIds(name);
         } else {
           // Return an empty observable if the input length is less than 3 characters
           return of([]);
         }
-      })  
-        ).subscribe((response) => {
+      })
+    ).subscribe((response) => {
       this.results = response;
     });
-  
-  } 
+
+  }
 
   ngOnDestroy(): void {
     // Unsubscribe to prevent multiple subscriptions when leaving the component
-      this.userSubscription.unsubscribe();
+    this.userSubscription.unsubscribe();
   }
 
   onNameInputChange() {
     const name = this.AddUserForm.get('name').value;
 
     // Make the API request only if the name has at least 3 characters
-    if (name.length >= 4) {
+    if (name.length >= 3) {
       this.userService.getReferralIds(name).subscribe((response) => {
         this.results = response;
       });
@@ -111,12 +112,12 @@ export class BestperformerAddEditComponent implements OnInit {
     }
   }
 
-  
+
   selectResult(result: any) {
-    // Handle the selected result, for example, populate the 'name' control and store the corresponding ID
     this.AddUserForm.patchValue({
       name: result.idAndName,
-      refid: result.idAndName.split('-')[0], // Extract the ID from the result
+      // refid: result.idAndName.split('-')[0] , // Extract the ID from the result
+      refid: result.idAndName,
     });
     this.results = []; // Clear the results after selection
   }
@@ -126,102 +127,102 @@ export class BestperformerAddEditComponent implements OnInit {
    */
 
   AddUserFormInitialize() {
-  this.AddUserForm = this.formBuilder.group({
-    name: ["", [Validators.required]],
-    sales: ["", [Validators.required]],
-    remarks: ["", [Validators.required, Validators.maxLength(100)]],
-    fdate: [new Date(), [Validators.required]],
-    tdate: [new Date(), [Validators.required]],
-    refid: [0], // Add the refid control
-  });
-}
-
-onSubmit() {
-  //  this.submitted = true;
-
-  if (this.AddUserForm.invalid) {
-    return;
+    this.AddUserForm = this.formBuilder.group({
+      name: ["", [Validators.required]],
+      sales: ["", [Validators.required]],
+      remarks: ["", [Validators.required, Validators.maxLength(100)]],
+      fdate: [new Date(), [Validators.required]],
+      tdate: [new Date(), [Validators.required]],
+      // refid: [0], // Add the refid control
+    });
   }
 
-  const formData = this.AddUserForm.value;
-  console.log(formData.fdate)
-  
-  // Format the date strings before sending them to the server
-  const formattedFromDate = this.datePipe.transform(formData.fdate, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-  const formattedToDate = this.datePipe.transform(formData.tdate, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+  onSubmit() {
+    this.submitted = true;
 
-  // Get the current date and time in the desired format
-  const modifiedDate = this.datePipe.transform(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    if (this.AddUserForm.invalid) {
+      return;
+    }
 
-  // Check if the URL contains 'edit' to differentiate between create and edit actions
-  if (this.router.url.indexOf("edit") !== -1) {
-    // For editing, form a request body with put method fields
-    const requestBody = {
-      id: this.userDetails.id,
-      refid:formData.name,
-      sales: formData.sales,
-      remarks: formData.remarks,
-      fdate: formattedFromDate,
-      tdate: formattedToDate,
-      isdeleted: "string",
-      createdby: "Admin",
-      createdon: modifiedDate, // You might want to update these fields
-      modifiedby: "Admin",
-      modifiedon: modifiedDate, // Similarly update these fields with appropriate values
-    };
+    // const formData = this.AddUserForm.value;
+    // console.log(formData.fdate)
 
-    this.userService.updateUser(requestBody)
-      .subscribe((response) => {
-        // this.backToUserList();
-        if (HttpStatusCode.Ok) {
-          this.toastrService.show(response["message"], "Success", {
-            status: "success",
-            duration: 8000,
-          });
-        } else {
-          this.toastrService.show(response["message"], "Warning", {
-            status: "warning",
-            duration: 8000,
-          });
-        }
-        this.router.navigate([ROUTE_PATH.ADMIN, ROUTE_PATH.BESTPERFORMER,ROUTE_PATH.BESTPERFORMERS.LIST,]);
-      });
-  
+    // Format the date strings before sending them to the server
+    const formattedFromDate = this.datePipe.transform(this.AddUserForm.value.fdate, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    const formattedToDate = this.datePipe.transform(this.AddUserForm.value.tdate, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
-  } else {
-    // For creating a new announcement
-    const requestBody = {
-      refid:formData.name,
-      sales: formData.sales,
-      remarks: formData.remarks,
-      fdate: formattedFromDate,
-      tdate: formattedToDate,
-      isdeleted: "string",
-      createdby: "Admin",
-      createdon: modifiedDate, // You might want to update these fields
-      modifiedby: "string",
-      modifiedon: modifiedDate, // Similarly update these fields with appropriate values
+    // Get the current date and time in the desired format
+    const modifiedDate = this.datePipe.transform(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
-    };
+    // Check if the URL contains 'edit' to differentiate between create and edit actions
+    if (this.router.url.indexOf("edit") !== -1) {
+      // For editing, form a request body with put method fields
+      const requestBody = {
+        id: this.userDetails.id,
+        refid: this.AddUserForm.value.name,
+        sales: this.AddUserForm.value.sales,
+        remarks: this.AddUserForm.value.remarks,
+        fdate: formattedFromDate,
+        tdate: formattedToDate,
+        isdeleted: "string",
+        createdby: "Admin",
+        createdon: modifiedDate, // You might want to update these fields
+        modifiedby: "Admin",
+        modifiedon: modifiedDate, // Similarly update these fields with appropriate values
+      };
 
-    this.userService.CreateAnnouncement(requestBody)
-      .subscribe((response) => {
-        if (HttpStatusCode.Ok) {
-          this.toastrService.show(response["message"], "Success", {
-            status: "success",
-            duration: 8000,
-          });
-        } else {
-          this.toastrService.show(response["message"], "Warning", {
-            status: "warning",
-            duration: 8000,
-          });
-        }
-        //  this.backToUserList();
-          this.router.navigate([ROUTE_PATH.ADMIN, ROUTE_PATH.BESTPERFORMER,ROUTE_PATH.BESTPERFORMERS.LIST,]);
-      });
+      this.userService.updateUser(requestBody)
+        .subscribe((response) => {
+          // this.backToUserList();
+          if (HttpStatusCode.Ok) {
+            this.toastrService.show(response["message"], "Success", {
+              status: "success",
+              duration: 8000,
+            });
+          } else {
+            this.toastrService.show(response["message"], "Warning", {
+              status: "warning",
+              duration: 8000,
+            });
+          }
+          this.router.navigate([ROUTE_PATH.ADMIN, ROUTE_PATH.BESTPERFORMER, ROUTE_PATH.BESTPERFORMERS.LIST,]);
+        });
+
+
+    } else {
+      // For creating a new announcement
+      const requestBody = {
+        refid: this.AddUserForm.value.name,
+        sales: this.AddUserForm.value.sales,
+        remarks: this.AddUserForm.value.remarks,
+        fdate: formattedFromDate,
+        tdate: formattedToDate,
+        isdeleted: "string",
+        createdby: "Admin",
+        createdon: modifiedDate, // You might want to update these fields
+        modifiedby: "string",
+        modifiedon: modifiedDate, // Similarly update these fields with appropriate values
+
+      };
+
+      this.userService.CreateAnnouncement(requestBody)
+        .subscribe((response) => {
+          if (HttpStatusCode.Ok) {
+            this.toastrService.show(response["message"], "Success", {
+              status: "success",
+              duration: 8000,
+            });
+          } else {
+            this.toastrService.show(response["message"], "Warning", {
+              status: "warning",
+              duration: 8000,
+            });
+          }
+          //  this.backToUserList();
+          this.router.navigate([ROUTE_PATH.ADMIN, ROUTE_PATH.BESTPERFORMER, ROUTE_PATH.BESTPERFORMERS.LIST,]);
+        });
+    }
   }
-}
 
 
   /**
@@ -230,34 +231,34 @@ onSubmit() {
    * @returns
    */
   backToUserList() {
-    this.router.navigate([ROUTE_PATH.ADMIN, ROUTE_PATH.BESTPERFORMER,ROUTE_PATH.BESTPERFORMERS.LIST,]);
+    this.router.navigate([ROUTE_PATH.ADMIN, ROUTE_PATH.BESTPERFORMER, ROUTE_PATH.BESTPERFORMERS.LIST,]);
   }
 
 }
 
 
-  // form: FormGroup;
-  // results: any[] = [];
+// form: FormGroup;
+// results: any[] = [];
 
-  // constructor(private fb: FormBuilder, private apiService: BestperformerService) {
-  //   this.form = this.fb.group({
-  //     name: [''],
-  //   });
-  //   // Listen to changes in the 'name' control and make API requests
-  //   this.form
-  //     .get('name')
-  //     .valueChanges.pipe(
-  //       debounceTime(300),
-  //       switchMap((name) => this.apiService.getReferralIds(name))
-  //     )
-  //     .subscribe((response) => {
-  //       this.results = response;
-  //     });
-  // }
+// constructor(private fb: FormBuilder, private apiService: BestperformerService) {
+//   this.form = this.fb.group({
+//     name: [''],
+//   });
+//   // Listen to changes in the 'name' control and make API requests
+//   this.form
+//     .get('name')
+//     .valueChanges.pipe(
+//       debounceTime(300),
+//       switchMap((name) => this.apiService.getReferralIds(name))
+//     )
+//     .subscribe((response) => {
+//       this.results = response;
+//     });
+// }
 
-  // selectResult(result: any) {
-  //   // Handle the selected result, for example, send it in another API request
-  //   console.log('Selected Result:', result);
-  // }
+// selectResult(result: any) {
+//   // Handle the selected result, for example, send it in another API request
+//   console.log('Selected Result:', result);
+// }
 
 

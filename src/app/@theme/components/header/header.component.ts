@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
+import { NbMediaBreakpointsService, NbMenuItem, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
 
 import { UserData } from '../../../@core/data/users';
 import { LayoutService } from '../../../@core/utils';
@@ -39,15 +39,25 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   currentTheme = 'default';
 
-  userMenu = [ { title: 'Profile' }, { title: 'Log out' } ];
+  userMenu: NbMenuItem[] = [
+    {
+      title: 'Profile',
+      link: '',
+      icon: 'person-outline',
+    },
+    {
+      title: 'Log out',
+      link: '/auth/admin/logout',
+      icon: 'unlock-outline',
+    }];
 
   constructor(private sidebarService: NbSidebarService,
-              private menuService: NbMenuService,
-              private themeService: NbThemeService,
-              private userService: UserData,
-              private layoutService: LayoutService,
-              private breakpointService: NbMediaBreakpointsService,
-              private router: Router, ) {
+    private menuService: NbMenuService,
+    private themeService: NbThemeService,
+    private userService: UserData,
+    private layoutService: LayoutService,
+    private breakpointService: NbMediaBreakpointsService,
+    private router: Router,) {
   }
 
   ngOnInit() {
@@ -92,11 +102,5 @@ export class HeaderComponent implements OnInit, OnDestroy {
   navigateHome() {
     this.menuService.navigateHome();
     return false;
-  }
-   onMenuItemClick(event: any) {
-    if (event.items.title == 'Log out') {
-      // Navigate to the logout component
-      this.router.navigateByUrl('/admin/logout');
-    }
   }
 }
