@@ -39,7 +39,7 @@ export class RegisterListComponent implements OnInit {
       { field: "mobile", header: "Phone Number", show: true, sort: true },
       { field: "email", header: "E-mail", show: true, sort: true },
       { field: "address", header: "Address", show: true, sort: true },
-      { field: "active", header: "Status", show: true, sort: true },
+      { field: "status", header: "Status", show: true, sort: true },
     ];
 
     this.userList();

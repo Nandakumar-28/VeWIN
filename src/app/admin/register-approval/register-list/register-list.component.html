@@ -35,7 +35,8 @@
                         <td class="text-center" style="width: 18%;">{{user.mobile}}</td>
                         <td class="text-center">{{user.email}}</td>
                         <td class="text-center">{{user.address}}</td>
-                        <td class="text-center">{{user.active == true ? 'Active' : 'InActive'}}</td>
+                        <td class="text-center">{{user.status}}</td>
+                        <!-- <td class="text-center">{{user.active == true ? 'Active' : 'InActive'}}</td> -->
                         <td class="text-center action">
                             <button (click)="approvalUser(user)" routerLinkActive="router-link-active"
                                 nbTooltip="Approval" nbTooltipPlacement="top"

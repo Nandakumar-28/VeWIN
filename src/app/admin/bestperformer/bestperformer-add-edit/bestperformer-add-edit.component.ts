@@ -64,7 +64,7 @@ export class BestperformerAddEditComponent implements OnInit {
         console.log(this.userDetails)
         // Pre-fill the form with user details
         this.AddUserForm.patchValue({
-          name: this.userDetails.name,
+          name: this.userDetails.refid,
           sales: this.userDetails.sales,
           remarks: this.userDetails.remarks,
           fdate: new Date(this.userDetails.fdate), // Assuming 'fdate' is a date field

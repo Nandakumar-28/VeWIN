@@ -17,7 +17,7 @@
                     <div class="form-group row">
                         <label for="photo" class="label col-sm-3 col-form-label">Photo *</label>
                         <div class="col-sm-9">
-                            <input type="file" id="photo" (change)="onPhotoChange($event)" formControlName="photo"
+                            <input nbInput fullWidth  type="file" id="photo" (change)="onPhotoChange($event)" formControlName="photo"
                                 accept="image/*" multiple="false">
                             <ng-container
                                 *ngIf="AddBannerForm.controls.photo.touched && AddBannerForm.controls.photo.errors">

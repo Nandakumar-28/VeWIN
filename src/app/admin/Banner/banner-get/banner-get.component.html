@@ -33,7 +33,8 @@
                     <!-- Body changes based on the new fields -->
                     <tr>
                         <td class="text-center">
-                            <img [src]="'data:image/jpeg;base64,' + user.image" width="100" height="100" loading="lazy" fetchpriority="high" />
+                            <img [src]="user.image" width="100" height="100" loading="lazy" fetchpriority="high" />
+                            <!-- 'data:image/jpeg;base64,' + user.image -->
                             <!-- data:image/jpeg;charset=utf-8;base64, -->
                         </td>
                         <td class="text-center">{{ user.fdate | date: 'dd/MM/yyyy' }}</td>

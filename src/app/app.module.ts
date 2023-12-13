@@ -74,7 +74,7 @@ import { environment } from '../environments/environment';
             }
           },
           logout: {
-            endpoint: "logsout",
+            endpoint: "logout",
             method: "post",
             redirect: {
               success: "auth/admin/login",

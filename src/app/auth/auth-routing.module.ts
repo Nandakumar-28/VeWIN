@@ -30,7 +30,7 @@ export const routes: Routes = [
         children: actions,
     },  
     {
-        path: 'company',
+        path: 'user',
         component: NbAuthComponent,
         children: actions,},
     { path: 'login', component: NgxLoginComponent,canActivate: [AuthLogin]},

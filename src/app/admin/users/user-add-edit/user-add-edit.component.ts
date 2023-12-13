@@ -116,7 +116,7 @@ export class UserAddEditComponent implements OnInit {
       address: this.AddUserForm.value.address,
       pincode: this.AddUserForm.value.pincode,
       password: this.AddUserForm.value.password,
-      modifiedby: "admin",
+      modifiedby: "Admin",
       modifiedon: modifiedDate
     }
     // const userId = this.userDetails.id;
