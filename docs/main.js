@@ -6861,7 +6861,7 @@ __webpack_require__.r(__webpack_exports__);
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 const environment = {
     production: false,
-    apiUrl: "https://vewin.vewinpro.com/"
+    apiUrl: " https://6c85-27-63-222-34.ngrok-free.app/"
 };
 
 
