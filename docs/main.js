@@ -2249,7 +2249,7 @@ class UserService extends _data_users__WEBPACK_IMPORTED_MODULE_0__.UserData {
             lee: { name: 'Lee Wong', picture: 'assets/images/lee.png' },
             alan: { name: 'Alan Thompson', picture: 'assets/images/alan.png' },
             kate: { name: 'Kate Martinez', picture: 'assets/images/kate.png' },
-            nanda: { name: 'Nanda Kumar', picture: 'assets/images/kate.png' },
+            nanda: { name: 'Admin', picture: 'assets/images/kate.png' },
         };
         this.types = {
             mobile: 'mobile',
@@ -6861,7 +6861,7 @@ __webpack_require__.r(__webpack_exports__);
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 const environment = {
     production: false,
-    apiUrl: "http://vewin.vewinpro.com/"
+    apiUrl: "https://vewin.vewinpro.com/"
 };
 
 
