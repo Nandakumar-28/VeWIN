@@ -204,7 +204,7 @@ class AnnouncementAddEditComponent {
                 isdeleted: "string",
                 createdby: "Admin",
                 createdon: modifiedDate,
-                modifiedby: "string",
+                modifiedby: "Admin",
                 modifiedon: modifiedDate,
             };
             this.announcementService.CreateAnnouncement(requestBody)
