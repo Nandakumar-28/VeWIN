@@ -199,8 +199,8 @@ class AnnouncementAddEditComponent {
             const requestBody = {
                 title: formData.title,
                 description: formData.description,
-                fdate: formData.formattedFromDate,
-                tdate: formData.formattedToDate,
+                fdate: formattedFromDate,
+                tdate: formattedToDate,
                 isdeleted: "string",
                 createdby: "Admin",
                 createdon: modifiedDate,
