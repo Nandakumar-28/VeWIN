@@ -14,7 +14,7 @@
 
         <div class="card">
             <p-table [value]="announcements" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true"
-                [autoLayout]="true" [rowsPerPageOptions]="itemsPerPage">
+                [autoLayout]="true" [rowsPerPageOptions]="itemsPerPage"[scrollable]="true" [scrollHeight]="'autoLayout'">
                 <ng-template pTemplate="header">
                     <tr>
                         <ng-container *ngFor="let col of columns">
@@ -31,7 +31,7 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-user>
                     <tr>
-                        <td class="text-center" style="width: 25%;">{{user.title}}</td>
+                        <td class="text-center" style="width: 25%">{{user.title}}</td>
                         <td class="text-center" style="width: 35%;">{{user.description}}</td>
                         <td class="text-center">{{ user.fdate | date: 'dd/MM/yyyy' }}</td>
                         <td class="text-center">{{ user.tdate | date: 'dd/MM/yyyy' }}</td>

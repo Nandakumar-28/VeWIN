@@ -9,9 +9,9 @@ import { NbDialogRef } from '@nebular/theme';
         <b>Delete Confirmation</b>
       </nb-card-header>
       <nb-card-body>
-        <p>Are you sure that you want to delete this <b>{{ user.name }}</b>?</p>
+        <p>Are you sure that you want to delete this <b>{{ user.refid }}</b>?</p>
         <ul>
-          <li><strong>Name:</strong> {{ user.name }}</li>
+          <li><strong>Name:</strong> {{ user.refid }}</li>
           <li><strong>Sales:</strong> {{ user.sales }}</li>
           <li><strong>Remarks:</strong> {{ user.remarks }}</li>
           <li><strong>From Date:</strong> {{ user.fdate | date: 'dd/MM/yyyy' }}</li>

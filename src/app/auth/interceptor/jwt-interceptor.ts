@@ -70,7 +70,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                         localStorage.clear()
                         this.router.navigateByUrl('/auth/' + user_type+"/login");
                     }
-                    if (error.status != 401) {
+                    if (error.status == 401) {
                         window.confirm("Something Went Wrong! internal Server Error");
                     }
                     if (error.status == 500) {

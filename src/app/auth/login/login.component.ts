@@ -1,6 +1,6 @@
 /** 
 * This file contains login related functions
-* author: Gowtham rangaraju
+* author: T.Nanda Kumar
 */
 
 import { NbLoginComponent, NbAuthResult, NbAuthSocialLink, NbAuthService, NB_AUTH_OPTIONS } from '@nebular/auth';
@@ -85,7 +85,7 @@ export class NgxLoginComponent {
         this.submitted = false;
 
             if (result.isSuccess()) {
-                //  this.messages = result.getMessages();
+                this.messages = result.getMessages();
                 // this.authService.setUserPermissons(result["response"].body.data.userPermission);
 
             } else {

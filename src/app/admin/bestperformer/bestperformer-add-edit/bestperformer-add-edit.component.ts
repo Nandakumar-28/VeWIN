@@ -200,7 +200,7 @@ export class BestperformerAddEditComponent implements OnInit {
         isdeleted: "string",
         createdby: "Admin",
         createdon: modifiedDate, // You might want to update these fields
-        modifiedby: "string",
+        modifiedby: "Admin",
         modifiedon: modifiedDate, // Similarly update these fields with appropriate values
 
       };

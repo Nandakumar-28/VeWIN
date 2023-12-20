@@ -145,12 +145,12 @@ export class AnnouncementAddEditComponent implements OnInit {
       const requestBody = {
         title: formData.title,
         description: formData.description,
-        fdate: formData.formattedFromDate,
-        tdate: formData.formattedToDate,
+        fdate: formattedFromDate,
+        tdate: formattedToDate,
         isdeleted: "string",
         createdby: "Admin",
         createdon: modifiedDate,
-        modifiedby: "string",
+        modifiedby: "Admin",
         modifiedon: modifiedDate,
       };
 

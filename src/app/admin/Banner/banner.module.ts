@@ -44,7 +44,6 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 
 
-
 import { BannerAddEditComponent } from './banner-add-edit/banner-add-edit.component';
 import { BannerGetComponent } from './banner-get/banner-get.component';
 import { BannerRoutingModule } from './banner-routing.module';

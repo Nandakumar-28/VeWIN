@@ -3,8 +3,8 @@
 <p class="sub-title">Hello! Log in with your Mobile Number and Password.</p>
 
 <nb-alert *ngIf="showMessages.error && errors?.length && !submitted" outline="danger" role="alert">
-<!--   <p class="alert-title"><b>Oh snap!</b></p>
- -->  <ul class="alert-message-list">
+<!--   <p class="alert-title"><b>Oh snap!</b></p> -->
+   <ul class="alert-message-list">
     <li *ngFor="let error of errors" class="alert-message">{{ error }}</li>
   </ul>
 </nb-alert>
@@ -34,7 +34,7 @@
   <div class="form-control-group">
     <span class="label-with-link">
       <label class="label Password" for="input-password">Password:</label>
-      <a class="forgot-password caption-2" routerLink="/auth/{{forget_path}}/request-password">Forgot Password?</a>
+      <!-- <a class="forgot-password caption-2" routerLink="/auth/{{forget_path}}/request-password">Forgot Password?</a> -->
     </span>
     <input nbInput fullWidth [(ngModel)]="user.password" #password="ngModel" name="password" type="password"
       id="input-password" placeholder="Password" fieldSize="large"
@@ -56,11 +56,11 @@
     </ng-container>
   </div>
 
-  <div class="form-control-group accept-group">
+  <!-- <div class="form-control-group accept-group">
     <nb-checkbox name="rememberMe"  [(ngModel)]="user.rememberMe" *ngIf="rememberMe"><span class="rememberMe">Remember me</span></nb-checkbox>
-  </div>
+  </div> -->
 
-  <button nbButton fullWidth status="primary" size="large" 
+  <button nbButton fullWidth status="primary" size="large" [disabled]="submitted || !loginform.valid"
     [class.btn-pulse]="submitted" >
     Log In
   </button>
@@ -70,11 +70,11 @@
   or enter with:
   <div class="socials">
     <ng-container *ngFor="let socialLink of socialLinks">
-      <!-- <a *ngIf="socialLink.link" [routerLink]="socialLink.link" [attr.target]="socialLink.target"
+      <a *ngIf="socialLink.link" [routerLink]="socialLink.link" [attr.target]="socialLink.target"
         [attr.class]="socialLink.icon" [class.with-icon]="socialLink.icon">
         <nb-icon *ngIf="socialLink.icon; else title" [icon]="socialLink.icon"></nb-icon>
         <ng-template #title>{{ socialLink.title }}</ng-template>
-      </a> -->
+      </a>
       <a *ngIf="socialLink.url" [attr.href]="socialLink.url" [attr.target]="socialLink.target"
         [attr.class]="socialLink.icon" [class.with-icon]="socialLink.icon">
         <nb-icon *ngIf="socialLink.icon; else title" [icon]="socialLink.icon"></nb-icon>
