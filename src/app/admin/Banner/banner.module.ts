@@ -42,7 +42,7 @@ import {ButtonModule} from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
-
+import { ImageModule } from 'primeng/image';
 
 import { BannerAddEditComponent } from './banner-add-edit/banner-add-edit.component';
 import { BannerGetComponent } from './banner-get/banner-get.component';
@@ -94,6 +94,7 @@ import { BannerDeleteComponent } from './banner-get/banner-delete.component';
     ButtonModule,
     ConfirmDialogModule,
     DialogModule,
+    ImageModule
   ],
   providers: [
     ConfirmationService, 

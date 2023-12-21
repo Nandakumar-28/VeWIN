@@ -5,12 +5,12 @@ import { NbDialogRef } from '@nebular/theme';
 @Component({
   selector: 'ngx-dialog-delete',
   template:
-`   <nb-card>
+`   <nb-card class="custom-dialog">
       <nb-card-header class="text-center">
         <b>Delete Confirmation</b>
       </nb-card-header>
-      <nb-card-body>
-        <p>Are you sure that you want to delete this <b>{{ user.name }}</b>?</p>
+      <nb-card-body >
+        <p class="text-center">Are you sure that you want to delete this ?</p>
         <ul>
           <li><strong>Title:</strong> {{ user.title }}</li>
           <li><strong>Description:</strong> {{ user.description }}</li>
@@ -23,7 +23,13 @@ import { NbDialogRef } from '@nebular/theme';
         <button nbButton status="primary" (click)="close()">Cancel</button>
       </nb-card-footer>
     </nb-card>,
-`})
+`,
+  styles: [`
+    .custom-dialog {
+      width: 600px;
+      hight: 450px
+    }
+  `]})
 export class DialogDeleteComponent implements OnInit {
 
   user: any;

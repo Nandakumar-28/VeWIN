@@ -27,8 +27,11 @@ export class BannerAddEditComponent implements OnInit {
   bannerDetails: any;
   page_title: string;
 
-  //selsct photo
+  //select photo
   selectedPhoto: File;
+
+  //
+  isEditMode: boolean = false;
 
 
   private subscription: Subscription;
@@ -50,6 +53,7 @@ export class BannerAddEditComponent implements OnInit {
       // this.data_loading = true;
       const id = this.aRoute.snapshot.paramMap.get("title");
       this.page_title = "Edit Banner";
+      this.isEditMode = true;
     } else {
       this.page_title = "Create Banner";
       this.AddBannerForm.reset();
@@ -78,110 +82,20 @@ export class BannerAddEditComponent implements OnInit {
     this.subscription.unsubscribe();
   }
 
+  //edit click to enable summit,add click to disable
+  isSubmitDisabled(): boolean {
+    // Disable the submit button when adding a new banner and no photo is selected
+    if (!this.isEditMode && !this.selectedPhoto) {
+      return true;
+    }
+
+    // Enable the submit button for other cases
+    return false;
+  }
+
   /**
    * User Form Initialize
    */
-
-
-  // onSubmit() {
-  //   //  debugger
-  //   //  this.submitted = true;
-  // console.log("hi")
-  //   if (this.AddBannerForm.invalid) {
-  //     return;
-  //   }
-
-  //   // const formData = this.AddBannerForm.value;
-  //   // console.log(formData.fdate)
-  //   const bannerformData = new FormData()
-  //   bannerformData.append('photo', this.selectedPhoto);
-  // console.log(this.bannerformData)
-
-  //   // Get the current date and time in the desired format
-  //   const modifiedDate = this.datePipe.transform(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-
-  //   // Format the date strings before sending them to the server
-  //   const formattedFromDate = this.datePipe.transform(this.AddBannerForm.controls.fdate.value, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-  //   const formattedToDate = this.datePipe.transform(this.AddBannerForm.controls.tdate.value, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-  //   // this.bannerformData.append("fdate",formattedFromDate)
-  //   // this.bannerformData.append("tdate",formattedToDate)
-  //   this.bannerformData.append("photo",this.selectedPhoto)
-  //   // this.bannerformData.append("id",this.bannerDetails.id)
-  //   // this.bannerformData.append("isdelected","string")
-  //   // this.bannerformData.append("createby","Admin")
-  //   // this.bannerformData.append("createon",modifiedDate)
-  //   // this.bannerformData.append("modifiedby","Admin")
-  //   // this.bannerformData.append("modifiedon",modifiedDate)
-
-
-  //   console.log(this.bannerformData)
-
-  //   // Check if the URL contains 'edit' to differentiate between create and edit actions
-  //   if (this.router.url.indexOf("edit") !== -1) {
-  //     // For editing, form a request body with put method fields
-  //     // const requestBody = {
-  //     //   id: this.bannerDetails.id,
-  //     //   photo: formData.photo,
-  //     //   // title: formData.title,
-  //     //   // description: formData.description,
-  //     //   fdate: formattedFromDate,
-  //     //   tdate: formattedToDate,
-  //     //   isdeleted: "string",
-  //     //   createdby: "Admin",
-  //     //   createdon: this.bannerDetails.createdon, // You might want to update these fields
-  //     //   modifiedby: "Admin",
-  //     //   modifiedon: modifiedDate, // Similarly update these fields with appropriate values
-  //     // };
-
-  //     this.bannerService.updateBanner(this.bannerformData)
-  //       .subscribe((response) => {
-  //         // this.backToUserList();
-  //         if (HttpStatusCode.Ok) {
-  //           this.toastrService.show(response["message"], "Success", {
-  //             status: "success",
-  //             duration: 8000,
-  //           });
-  //         } else {
-  //           this.toastrService.show(response["message"], "Warning", {
-  //             status: "warning",
-  //             duration: 8000,
-  //           });
-  //         }
-  //         this.backToBannerList();
-  //       });
-
-
-  //   } else {
-  //     // For creating a new announcement
-  //     // const requestBody = {
-  //     //   photo: formData.photo,
-  //     //   fdate: formData.fdate,
-  //     //   tdate: formData.tdate,
-  //     //   isdeleted: "string",
-  //     //   createdby: "Admin",
-  //     //   createdon: modifiedDate, 
-  //     //   modifiedby: "string",
-  //     //   modifiedon: "string", 
-  //     // };
-
-  //     this.bannerService.CreateBanner(bannerformData)
-  //       .subscribe((response) => {
-  //         if (HttpStatusCode.Ok) {
-  //           this.toastrService.show(response["message"], "Success", {
-  //             status: "success",
-  //             duration: 8000,
-  //           });
-  //         } else {
-  //           this.toastrService.show(response["message"], "Warning", {
-  //             status: "warning",
-  //             duration: 8000,
-  //           });
-  //         }
-  //          this.backToBannerList();
-  //       });
-  //   }
-  // }
-
 
   AddBannerFormInitialize() {
     this.AddBannerForm = this.formBuilder.group({
@@ -218,9 +132,9 @@ export class BannerAddEditComponent implements OnInit {
   bannerformData: any = new FormData()
 
   onSubmit() {
-    if (this.AddBannerForm.invalid || !this.selectedPhoto) {
-      return;
-    }
+    // if (this.AddBannerForm.invalid || !this.selectedPhoto) {
+    //   return;
+    // }
     // Format the date strings before sending them to the server
     const formattedFromDate = this.datePipe.transform(this.AddBannerForm.controls.fdate.value, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     const formattedToDate = this.datePipe.transform(this.AddBannerForm.controls.tdate.value, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
@@ -234,11 +148,7 @@ export class BannerAddEditComponent implements OnInit {
       formData.append('Fdate', formattedFromDate);
       formData.append('Tdate', formattedToDate);
       formData.append('ModifiedBy', 'Admin');
-      //formData.append('CreatedBy', 'Admin');
-      //formData.append('CreatedOn', this.bannerDetails.createdOn);
       formData.append('ModifiedOn', new Date().toISOString());
-
-      // Fetch banner ID or necessary details for editing
 
       // Assuming bannerId is available for editing
       const bannerId = this.bannerDetails.id; // Fetch the correct banner ID here

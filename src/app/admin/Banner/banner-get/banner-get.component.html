@@ -33,9 +33,13 @@
                     <!-- Body changes based on the new fields -->
                     <tr>
                         <td class="text-center">
-                            <img [src]="user.image" width="100" height="100" loading="lazy" fetchpriority="high" />
-                            <!-- 'data:image/jpeg;base64,' + user.image -->
-                            <!-- data:image/jpeg;charset=utf-8;base64, -->
+                            <div class="card flex justify-content-center">
+                                <p-image [src]="user.image" alt="Image" height="125" width="130"  [preview]="true" 
+                                loading="lazy" fetchpriority="high"></p-image>
+                            </div>
+                        <!-- <img [src]="user.image" width="100" height="100" loading="lazy" fetchpriority="high" /> -->
+                        <!-- 'data:image/jpeg;base64,' + user.image -->
+                        <!-- data:image/jpeg;charset=utf-8;base64, -->
                         </td>
                         <td class="text-center">{{ user.fdate | date: 'dd/MM/yyyy' }}</td>
                         <td class="text-center">{{ user.tdate | date: 'dd/MM/yyyy' }}</td>

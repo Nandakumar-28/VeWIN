@@ -9,7 +9,7 @@ import { NbDialogRef } from '@nebular/theme';
         <b>Approval Confirmation</b>
       </nb-card-header>
       <nb-card-body>
-        <p>Are you sure that you want to approve this <b>{{ user.name }}</b>?</p>
+        <p class="text-center">Are you sure that you want to approve this <b>{{ user.name }}</b>?</p>
         <ul>
           <li><strong>Name:</strong> {{ user.name }}</li>
           <li><strong>Mobile Number:</strong> {{ user.mobile }}</li>

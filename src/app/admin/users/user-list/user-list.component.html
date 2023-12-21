@@ -4,16 +4,13 @@
     <nb-card-header>
         <div class="row">
             <div class="col-md-12 text-center bold-text">Users List</div>
-            <!-- <div class="col-md-2">
-                <button class="btn btn-sm btn-success" (click)="createUser()">Create User</button>
-            </div> -->
         </div>
     </nb-card-header>
 
     <nb-card-body>
 
         <div class="card">
-            <p-table [value]="users" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true" [autoLayout]="true"
+            <p-table [value]="users" [scrollable]="true" scrollHeight="400px" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true" [autoLayout]="true"
                 [rowsPerPageOptions]="itemsPerPage">
                 <ng-template pTemplate="header">
                     <tr>
@@ -31,11 +28,11 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-user>
                     <tr>
-                        <td class="text-center">{{user.name}}</td>
-                        <td class="text-center" style="width: 15%;">{{user.mobile}}</td>
-                        <td class="text-center">{{user.email}}</td>
-                        <td class="text-center">{{user.address}}</td>
-                        <td class="text-center">{{user.status}}</td>
+                        <td class="text-center" style="min-width: 10%;">{{user.name}}</td>
+                        <td class="text-center" style="min-width: 8%;">{{user.mobile}}</td>
+                        <td class="text-center" style="min-width: 25%;">{{user.email}}</td>
+                        <td class="text-center" style="min-width: 10%;">{{user.address}}</td>
+                        <td class="text-center" style="min-width: 6%;">{{user.status}}</td>
                         <td class="text-center action">
                             <button (click)="editUser(user)" routerLinkActive="router-link-active" nbTooltip="Edit"
                                 nbTooltipPlacement="top" class="btn btn-outline-primary btn-sm action-button">
