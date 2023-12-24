@@ -42,7 +42,7 @@ import {ButtonModule} from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
-
+import {AutoCompleteModule} from 'primeng/autocomplete';
 
 import { BestperformerListComponent } from './bestperformer-list/bestperformer-list.component';
 import { BestperformerRoutingModule } from './bestperformer-routing.module';
@@ -58,6 +58,7 @@ import { BestperformerAddEditComponent } from './bestperformer-add-edit/bestperf
     CommonModule,
     BestperformerRoutingModule,
     HttpClientModule,
+    AutoCompleteModule,
     NbActionsModule,
     NbAlertModule,
     NbCalendarKitModule,

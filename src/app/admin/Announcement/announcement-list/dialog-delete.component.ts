@@ -29,7 +29,8 @@ import { NbDialogRef } from '@nebular/theme';
       width: 600px;
       hight: 450px
     }
-  `]})
+  `]
+  })
 export class DialogDeleteComponent implements OnInit {
 
   user: any;
