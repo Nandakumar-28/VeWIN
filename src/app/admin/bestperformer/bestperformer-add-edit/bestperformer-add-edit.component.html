@@ -16,14 +16,16 @@
                     <div class="form-group row">
                         <label for="name" class="label col-sm-3 col-form-label"> Name *</label>
                         <div class="col-sm-9">
-                            <input nbInput fullWidth type="text" formControlName="name" (input)="onNameInputChange()">
-                            <div *ngFor="let result of results" (click)="selectResult(result)">
-                                {{ result.idAndName }}
-                            </div>
-                            <!-- <ng-container *ngIf="AddUserForm.controls.name.touched && AddUserForm.controls.name.errors">
+                            <span class="p-fluid">
+                                <p-autoComplete formControlName="name" [suggestions]="results" [forceSelection]="true"
+                                    (completeMethod)="onNameInputChange($event)" [minLength]="3"
+                                    placeholder=" Type to search the Bestperformer name">
+                                </p-autoComplete>
+                            </span>
+                            <ng-container *ngIf="AddUserForm.controls.name.touched && AddUserForm.controls.name.errors">
                                 <p class="caption status-danger" *ngIf="AddUserForm.controls.name.errors.required">
-                                     Name is required</p>
-                            </ng-container> -->
+                                    Name is required / Only select search User Name</p>
+                            </ng-container>
                         </div>
                     </div>
 
@@ -48,6 +50,10 @@
                                 <p class="caption status-danger" *ngIf="AddUserForm.controls.remarks.errors.required">
                                     Remarks is required</p>
                             </ng-container>
+                            <ng-container *ngIf="AddUserForm.get('remarks').hasError('maxlength')">
+                                <p class="caption status-danger">Remarks should not exceed 100 characters</p>
+                            </ng-container>
+
                         </div>
                     </div>
 

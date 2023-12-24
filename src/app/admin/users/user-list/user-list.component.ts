@@ -169,11 +169,11 @@ export class UserListComponent implements OnInit {
    */
 
   // Define your static user data
-  staticUsers: any[] = [
-    { username: 'Nanda Kumar', phone_number: '9674662433', decsignation: 'Driver', address: 'Pollachi', active: true },
-    { username: 'Karuppu Swamy', phone_number: '7536462774', decsignation: 'Driver', address: 'pollachi', active: false },
-    { username: 'Sudarsan', phone_number: '7536462774', decsignation: 'Driver', address: 'coimbatore', active: true },
-  ];
+  // staticUsers: any[] = [
+  //   { username: 'Nanda Kumar', phone_number: '9674662433', decsignation: 'Driver', address: 'Pollachi', active: true },
+  //   { username: 'Karuppu Swamy', phone_number: '7536462774', decsignation: 'Driver', address: 'pollachi', active: false },
+  //   { username: 'Sudarsan', phone_number: '7536462774', decsignation: 'Driver', address: 'coimbatore', active: true },
+  // ];
 
   userList() {
 

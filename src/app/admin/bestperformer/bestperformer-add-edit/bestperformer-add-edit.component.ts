@@ -28,7 +28,8 @@ export class BestperformerAddEditComponent implements OnInit {
   userDetails: any;
   page_title: string;
 
-  results: any[] = [];
+  results: string[];
+  text: string;
 
   private userSubscription: Subscription;
 
@@ -61,7 +62,6 @@ export class BestperformerAddEditComponent implements OnInit {
     this.userSubscription = this.userService.getUserDetails().subscribe(user => {
       if (user) {
         this.userDetails = user;
-        console.log(this.userDetails)
         // Pre-fill the form with user details
         this.AddUserForm.patchValue({
           name: this.userDetails.refid,
@@ -98,13 +98,16 @@ export class BestperformerAddEditComponent implements OnInit {
     this.userSubscription.unsubscribe();
   }
 
-  onNameInputChange() {
-    const name = this.AddUserForm.get('name').value;
-
+  onNameInputChange(event: any) {
+    const name = event.query
     // Make the API request only if the name has at least 3 characters
     if (name.length >= 3) {
       this.userService.getReferralIds(name).subscribe((response) => {
-        this.results = response;
+        let data = []
+        response.forEach((item: any) => {
+          data.push(item.idAndName)
+        })
+        this.results = data
       });
     } else {
       // Clear the results if the input length is less than 3 characters
@@ -237,28 +240,5 @@ export class BestperformerAddEditComponent implements OnInit {
 }
 
 
-// form: FormGroup;
-// results: any[] = [];
-
-// constructor(private fb: FormBuilder, private apiService: BestperformerService) {
-//   this.form = this.fb.group({
-//     name: [''],
-//   });
-//   // Listen to changes in the 'name' control and make API requests
-//   this.form
-//     .get('name')
-//     .valueChanges.pipe(
-//       debounceTime(300),
-//       switchMap((name) => this.apiService.getReferralIds(name))
-//     )
-//     .subscribe((response) => {
-//       this.results = response;
-//     });
-// }
-
-// selectResult(result: any) {
-//   // Handle the selected result, for example, send it in another API request
-//   console.log('Selected Result:', result);
-// }
 
 

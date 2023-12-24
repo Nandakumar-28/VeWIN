@@ -17,8 +17,8 @@
                     <div class="form-group row">
                         <label for="photo" class="label col-sm-3 col-form-label">Photo *</label>
                         <div class="col-sm-9">
-                            <input nbInput fullWidth  type="file" id="photo" (change)="onPhotoChange($event)" formControlName="photo"
-                                accept="image/*" multiple="false">
+                            <input nbInput fullWidth type="file" id="photo" (change)="onPhotoChange($event)"
+                                formControlName="photo" accept="image/*" multiple="false">
                             <ng-container
                                 *ngIf="AddBannerForm.controls.photo.touched && AddBannerForm.controls.photo.errors">
                                 <p class="caption status-danger" *ngIf="AddBannerForm.controls.photo.errors.required">
@@ -58,7 +58,7 @@
                     <div class="form-group row">
                         <div class="offset-sm-3 col-sm-9">
                             <button type="submit" nbButton status="primary"
-                                 [disabled]="isSubmitDisabled()">Submit</button>
+                                [disabled]="isSubmitDisabled()">Submit</button>
                             &nbsp;&nbsp;
                             <button nbButton status="danger" (click)="backToBannerList()"
                                 routerLinkActive="router-link-active"><b>
