@@ -5541,7 +5541,6 @@ class NgxLoginComponent {
         this.service
             .authenticate(this.strategy, this.user)
             .subscribe((result) => {
-            console.log(result);
             this.submitted = false;
             if (result.isSuccess()) {
                 this.messages = result.getMessages();
@@ -5549,6 +5548,9 @@ class NgxLoginComponent {
             }
             else {
                 this.errors = result.getErrors();
+                if (this.errors.includes('Login/Email combination is not correct, please try again.')) {
+                    this.errors[0].replace('Login/Email combination is not correct', 'Invalid Mobile number / Password');
+                }
             }
             const redirect = result.getRedirect();
             if (redirect) {
