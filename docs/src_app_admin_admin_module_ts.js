@@ -120,12 +120,12 @@ const routes = [
             },
             {
                 path: 'payment',
-                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_constants_api-constant_ts-node_modules_primeng_fesm2015_primeng-confir-06b307"), __webpack_require__.e("default-src_app_admin_bestperformer_services_bestperformer_service_ts-src_app_shared_constant-66e0b5"), __webpack_require__.e("src_app_admin_payments_payments_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./payments/payments.module */ 6835))
+                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_constants_api-constant_ts-node_modules_primeng_fesm2015_primeng-confir-06b307"), __webpack_require__.e("default-src_app_admin_bestperformer_services_bestperformer_service_ts-src_app_shared_constant-66e0b5"), __webpack_require__.e("common"), __webpack_require__.e("src_app_admin_payments_payments_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./payments/payments.module */ 6835))
                     .then(m => m.PaymentsModule),
             },
             {
                 path: 'sale',
-                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_constants_api-constant_ts-node_modules_primeng_fesm2015_primeng-confir-06b307"), __webpack_require__.e("default-src_app_admin_bestperformer_services_bestperformer_service_ts-src_app_shared_constant-66e0b5"), __webpack_require__.e("src_app_admin_sales_sales_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./sales/sales.module */ 4239))
+                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_constants_api-constant_ts-node_modules_primeng_fesm2015_primeng-confir-06b307"), __webpack_require__.e("default-src_app_admin_bestperformer_services_bestperformer_service_ts-src_app_shared_constant-66e0b5"), __webpack_require__.e("common"), __webpack_require__.e("src_app_admin_sales_sales_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./sales/sales.module */ 4239))
                     .then(m => m.SalesModule),
             },
             {

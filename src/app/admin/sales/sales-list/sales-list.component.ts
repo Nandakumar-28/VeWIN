@@ -9,6 +9,7 @@ import { BestperformerService } from '../../bestperformer/services/bestperformer
 import { debounceTime, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { SalesService } from '../services/sales.service';
+import { PaymentsService } from '../../payments/services/payments.service';
 @Component({
   selector: 'ngx-sales-list',
   templateUrl: './sales-list.component.html',
@@ -41,7 +42,7 @@ export class SalesListComponent implements OnInit {
     private dialogService: NbDialogService,
     private formBuilder: FormBuilder,
     private userService: BestperformerService,
-
+    private paymentService: PaymentsService,
   ) { }
 
   ngOnInit() {
@@ -106,6 +107,7 @@ export class SalesListComponent implements OnInit {
    * @returns
    */
   makePayment() {
+     this.paymentService.setUserDetails(null);
     this.router.navigate([
       ROUTE_PATH.ADMIN,
       ROUTE_PATH.PAYMENT,
