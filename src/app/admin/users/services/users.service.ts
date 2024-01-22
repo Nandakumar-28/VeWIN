@@ -104,7 +104,6 @@ export class UsersService {
    */
   updateUser(user): Observable<any> {
     let apiURL = getApiEndPoint(`${API_END_POINTS.USER.UPDATE}`);
-    console.log(user)
     return this.userServicehttp.put(apiURL, user).pipe(
       switchMap((result: any) => {
         if (result) {

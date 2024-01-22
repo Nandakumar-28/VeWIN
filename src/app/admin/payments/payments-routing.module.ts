@@ -1,24 +1,33 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { PaymentRequestComponent } from './payment-request/payment-request.component';
-import { CompletePaymentsComponent } from './complete-payments/complete-payments.component';
+import { PaymentsListComponent } from './payments-list/payments-list.component';
+import { PaymentAddEditComponent } from './payment-add-edit/payment-add-edit.component';
 
 
 const routes: Routes = [
   {
-    path: 'payment-request',
-    component: PaymentRequestComponent,
+    path: 'create',
+    component: PaymentAddEditComponent,
   },
   {
-    path: 'complete-payments',
-    component: CompletePaymentsComponent,
+    path: 'edit/:id',
+    component: PaymentAddEditComponent,
+  },
+  {
+    path: 'list',
+    component: PaymentsListComponent,
   },
   {
     path: '',
-    redirectTo: 'payment-request', // Default route
+    redirectTo: 'list', // Default route
     pathMatch: 'full',
   },
+  {
+    path: '**',
+    redirectTo: 'list', // Default route
+    pathMatch: 'full',
+  },
+
 ];
 
 @NgModule({

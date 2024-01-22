@@ -1,3 +1,8 @@
+/** 
+* This file contains user add-edit related functions
+* dev: T.Nanda Kumar
+*/
+
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -158,6 +163,6 @@ export class UserAddEditComponent implements OnInit {
    * @returns
    */
   backToUserList() {
-    this.router.navigate([ROUTE_PATH.ADMIN, ROUTE_PATH.USERS, ROUTE_PATH.USERES.LIST,]);
+    this.router.navigate([ROUTE_PATH.ADMIN, ROUTE_PATH.DASHBOARD]);
   }
 }

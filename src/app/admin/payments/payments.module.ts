@@ -8,6 +8,7 @@ import {
   NbCalendarKitModule,
   NbCalendarModule,
   NbCalendarRangeModule,
+  NbDatepickerModule,
   NbFormFieldModule,
   NbProgressBarModule,
   NbSpinnerModule,
@@ -26,7 +27,7 @@ import {
   NbInputModule,
   NbTreeGridModule,
   NbSelectModule,
-  NbToggleModule, 
+  NbToggleModule,
   NbContextMenuModule,
 } from '@nebular/theme';
 
@@ -37,22 +38,26 @@ import { NbAuthJWTInterceptor, HttpErrorInterceptor } from '../../auth/intercept
 
 // Primeng
 import { TableModule } from 'primeng/table';
-import {ButtonModule} from 'primeng/button';
+import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 
-import { PaymentRequestComponent } from './payment-request/payment-request.component';
-import { CompletePaymentsComponent } from './complete-payments/complete-payments.component';
 import { PaymentsRoutingModule } from './payments-routing.module';
+import { PaymentsListComponent } from './payments-list/payments-list.component';
+import { PaymentAddEditComponent } from './payment-add-edit/payment-add-edit.component';
+import { PaymentDeleteComponent } from './payments-list/payment-delete.component';
+import { CalendarModule } from 'primeng/calendar';
 
 
 
 @NgModule({
   declarations: [
-    PaymentRequestComponent,
-    CompletePaymentsComponent
+    PaymentsListComponent,
+    PaymentAddEditComponent,
+    PaymentDeleteComponent
   ],
   imports: [
     CommonModule,
@@ -63,6 +68,7 @@ import { PaymentsRoutingModule } from './payments-routing.module';
     NbCalendarKitModule,
     NbCalendarModule,
     NbCalendarRangeModule,
+    NbDatepickerModule.forRoot(),
     NbFormFieldModule,
     NbProgressBarModule,
     NbSpinnerModule,
@@ -90,10 +96,12 @@ import { PaymentsRoutingModule } from './payments-routing.module';
     ButtonModule,
     ConfirmDialogModule,
     DialogModule,
+    AutoCompleteModule,
+    CalendarModule,
   ],
   providers: [
-    ConfirmationService, 
-    { provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true }, 
+    ConfirmationService,
+    { provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }
   ],
 })

@@ -1,3 +1,8 @@
+/** 
+* This file contains announcement list related functions
+* dev: T.Nanda Kumar
+*/
+
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NbDialogService, NbToastrService } from '@nebular/theme';
@@ -82,7 +87,6 @@ export class AnnouncementListComponent implements OnInit {
     }).onClose.subscribe((result) => {
       if (result) {
         this.deleteAnnouncement(user.id);
-        console.log(user)
       }
     });
   }

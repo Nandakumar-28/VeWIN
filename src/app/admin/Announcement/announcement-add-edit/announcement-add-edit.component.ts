@@ -1,3 +1,8 @@
+/** 
+* This file contains announcement add-edit  related functions
+* dev: T.Nanda Kumar
+*/
+
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -58,7 +63,6 @@ export class AnnouncementAddEditComponent implements OnInit {
     this.subscription = this.announcementService.getAnnouncementDetails().subscribe(user => {
       if (user) {
         this.announcementDetails = user;
-        console.log(this.announcementDetails)
         // Pre-fill the form with user details
         this.AddAnnouncementForm.patchValue({
           title: this.announcementDetails.title,
@@ -97,7 +101,6 @@ export class AnnouncementAddEditComponent implements OnInit {
     }
 
     const formData = this.AddAnnouncementForm.value;
-    console.log(formData.fdate)
 
     // Format the date strings before sending them to the server
     const formattedFromDate = this.datePipe.transform(formData.fdate, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
@@ -180,7 +183,7 @@ export class AnnouncementAddEditComponent implements OnInit {
    * @returns
    */
   backToAnnouncementList() {
-    this.router.navigate([ROUTE_PATH.ADMIN, ROUTE_PATH.ANNOUNCEMENT, ROUTE_PATH.ANNOUNCEMENTS.LIST,]);
+    this.router.navigate([ROUTE_PATH.ADMIN, ROUTE_PATH.DASHBOARD]);
   }
 
 }

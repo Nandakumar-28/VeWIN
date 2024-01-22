@@ -1,3 +1,8 @@
+/** 
+* This file contains banner list related functions
+* dev: T.Nanda Kumar
+*/
+
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NbDialogService, NbToastrService } from '@nebular/theme';
@@ -82,7 +87,6 @@ export class BannerGetComponent implements OnInit {
     }).onClose.subscribe((result) => {
       if (result) {
         this.deleteBanner(user.id);
-        console.log(user)
       }
     });
   }
@@ -127,7 +131,6 @@ export class BannerGetComponent implements OnInit {
     //this.banner  =this.staticUsers;
     this.bannerservice.getBannerList().subscribe(
       (response) => {
-        console.log(response)
         this.banner = response;
         // if (HttpStatusCode.Ok) {
         //   this.toastrService.show(response["message"], "Success", {

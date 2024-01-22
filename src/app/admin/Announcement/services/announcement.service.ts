@@ -101,7 +101,6 @@ export class AnnouncementService {
 
   CreateAnnouncement(requestBody): Observable<any> {
     let apiURL = getApiEndPoint(`${API_END_POINTS.ANNOUNCEMENT.ADD}`);
-    console.log(requestBody)
     return this.announcementServicehttp.post(apiURL, requestBody).pipe(
       switchMap((result: any) => {
         if (result) {

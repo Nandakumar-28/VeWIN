@@ -2,14 +2,6 @@
 import { environment } from "../../../environments/environment";
 
 export const API_END_POINTS = {
-  COMPANY: {
-    LIST: "company/view",
-    CREATE: "company/create",
-    DELETE: "company/delete",
-    UPDATE: "company/update",
-    FETCH: "company/fetch",
-    BLOCK_UBLOCK: "company/blockUnblock",
-  },
    USER: {
     CREATE: "user/create",
     LIST: "api/User/GetUsers",
@@ -36,9 +28,17 @@ export const API_END_POINTS = {
     ADD: "api/Banner/AddOfferBanners",
     UPDATE: "api/Banner/Updatebanner",
     DELETE: "api/Banner/Delete",
-
+  },
+  PAYMENTS:{
+    GET:"api/Payment/GetPayment",
+    ADD: "api/Payment/AddPayment",
+    UPDATE: "api/Payment/UpdatePayment",
+    DELETE: "api/Payment/DeletePayment",
+  },
+  SALES:{
+    GET:"api/Sales/GetSalesForAdmin",
+    TOTALSALES:"api/Sales/GetTotalSalesForAdmin"
   }
-
 };
 
 export function getApiEndPoint(path: string, data?: any) {

@@ -1,5 +1,10 @@
+/** 
+* This file contains user list related functions
+* dev: T.Nanda Kumar
+*/
+
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ROUTER_CONFIGURATION } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import { NbToastrService } from "@nebular/theme";
 import { ConfirmationService } from 'primeng/api';
 import { NbDialogService } from '@nebular/theme';
@@ -7,7 +12,6 @@ import { NbDialogService } from '@nebular/theme';
 import { UsersService } from "../services/users.service";
 import { ROUTE_PATH } from "../../../shared/constants/route-path.constant";
 import { DialogDeleteComponent } from './dialog-delete.component';
-import { API_END_POINTS, getApiEndPoint } from '../../../shared/constants/api-constant';
 import { HttpStatusCode } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 
@@ -75,7 +79,6 @@ export class UserListComponent implements OnInit {
       context: { user },
     }).onClose.subscribe((result) => {
       if (result) {
-        // console.log(result)
         this.deleteUser(result);
       }
     });
@@ -83,7 +86,6 @@ export class UserListComponent implements OnInit {
 
   deleteUser(user: any) {
     const userId = user.id;
-    console.log('User to delete:', user);
 
     this.userService.deleteUser(userId).subscribe(
       (response: any) => {
@@ -181,18 +183,6 @@ export class UserListComponent implements OnInit {
     this.userService.getUserList().subscribe(
       (response) => {
         this.users = response;
-        this.users = response;
-        // if (HttpStatusCode.Ok) {
-        //   this.toastrService.show(response["message"], "Success", {
-        //     status: "success",
-        //     duration: 8000,
-        //   });
-        // } else {
-        //   this.toastrService.show(response["message"], "Warning", {
-        //     status: "warning",
-        //     duration: 8000,
-        //   });
-        // }
       },
       (error) => {
         console.log(error);

@@ -1,3 +1,8 @@
+/** 
+* This file contains bestperformer list related functions
+* dev: T.Nanda Kumar
+*/
+
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NbDialogService, NbToastrService } from '@nebular/theme';
@@ -64,7 +69,6 @@ export class BestperformerListComponent implements OnInit {
    */
   editBestperformer(user: any) {
     this.userService.setUserDetails(user); // Pass the selected user details to the service
-    console.log(user)
     this.router.navigate([
       ROUTE_PATH.ADMIN,
       ROUTE_PATH.BESTPERFORMER,
@@ -84,7 +88,6 @@ export class BestperformerListComponent implements OnInit {
     }).onClose.subscribe((result) => {
       if (result) {
         this.deleteUser(user.id);
-        console.log(user)
       }
     });
   }

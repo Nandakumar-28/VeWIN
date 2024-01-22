@@ -1,7 +1,7 @@
 "use strict";
 (self["webpackChunkngx_admin_demo"] = self["webpackChunkngx_admin_demo"] || []).push([["src_app_admin_admin_module_ts"],{
 
-/***/ 88236:
+/***/ 8236:
 /*!*************************************!*\
   !*** ./src/app/admin/admin-menu.ts ***!
   \*************************************/
@@ -12,12 +12,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "MENU_ITEMS": () => (/* binding */ MENU_ITEMS)
 /* harmony export */ });
 const MENU_ITEMS = [
-    // {
-    //   title:'Nanda Kumar'
-    // },
+    {
+        title: 'Dashboard',
+        icon: 'home-outline',
+        link: '/admin/dashboard',
+        home: true,
+    },
     {
         title: 'Users List',
-        icon: 'list-outline',
+        icon: 'person-done-outline',
         link: '/admin/users',
         home: true,
     },
@@ -39,24 +42,30 @@ const MENU_ITEMS = [
         link: '/admin/bestperformer',
         home: true,
     },
-    // {
-    //   title: 'Payment',
-    //   icon: 'credit-card-outline',
-    //   link: '/admin/payments',
-    //   home: true,
-    // },
     {
         title: 'Banner',
         icon: 'image-outline',
         link: '/admin/banner',
         home: true,
-    }
+    },
+    {
+        title: 'Payment',
+        icon: 'credit-card-outline',
+        link: '/admin/payment',
+        home: true,
+    },
+    {
+        title: 'Sales',
+        icon: 'bar-chart-2-outline',
+        link: '/admin/sale',
+        home: true,
+    },
 ];
 
 
 /***/ }),
 
-/***/ 13176:
+/***/ 3176:
 /*!***********************************************!*\
   !*** ./src/app/admin/admin-routing.module.ts ***!
   \***********************************************/
@@ -66,78 +75,87 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AdminRoutingModule": () => (/* binding */ AdminRoutingModule)
 /* harmony export */ });
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ 52816);
-/* harmony import */ var _admin_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./admin.component */ 31034);
-/* harmony import */ var _pages_miscellaneous_not_found_not_found_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../pages/miscellaneous/not-found/not-found.component */ 55477);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ 2816);
+/* harmony import */ var _admin_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./admin.component */ 1034);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ 3184);
 
 
 
 
-
+// import { NotFoundComponent } from '../pages/miscellaneous/not-found/not-found.component';
 const routes = [
     {
         path: '',
         component: _admin_component__WEBPACK_IMPORTED_MODULE_0__.AdminComponent,
         children: [
             {
+                path: 'dashboard',
+                loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_admin_dashboard_dashboard_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./dashboard/dashboard.module */ 1052))
+                    .then(m => m.DashboardModule)
+            },
+            {
                 path: 'users',
-                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_constants_api-constant_ts-node_modules_primeng_fesm2015_primeng-confir-06b307"), __webpack_require__.e("common"), __webpack_require__.e("src_app_admin_users_users_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./users/users.module */ 19190))
+                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_constants_api-constant_ts-node_modules_primeng_fesm2015_primeng-confir-06b307"), __webpack_require__.e("src_app_admin_users_users_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./users/users.module */ 9190))
                     .then(m => m.UsersModule),
             },
             {
                 path: 'register',
-                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_constants_api-constant_ts-node_modules_primeng_fesm2015_primeng-confir-06b307"), __webpack_require__.e("src_app_admin_register-approval_register-approval_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./register-approval/register-approval.module */ 20740))
+                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_constants_api-constant_ts-node_modules_primeng_fesm2015_primeng-confir-06b307"), __webpack_require__.e("src_app_admin_register-approval_register-approval_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./register-approval/register-approval.module */ 740))
                     .then(m => m.RegisterApprovalModule),
             },
             {
                 path: 'announcement',
-                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_constants_api-constant_ts-node_modules_primeng_fesm2015_primeng-confir-06b307"), __webpack_require__.e("common"), __webpack_require__.e("src_app_admin_Announcement_announcement_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./Announcement/announcement.module */ 80560))
+                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_constants_api-constant_ts-node_modules_primeng_fesm2015_primeng-confir-06b307"), __webpack_require__.e("src_app_admin_Announcement_announcement_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./Announcement/announcement.module */ 560))
                     .then(m => m.AnnouncementModule),
             },
             {
                 path: 'bestperformer',
-                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_constants_api-constant_ts-node_modules_primeng_fesm2015_primeng-confir-06b307"), __webpack_require__.e("common"), __webpack_require__.e("src_app_admin_bestperformer_bestperformer_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./bestperformer/bestperformer.module */ 55077))
+                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_constants_api-constant_ts-node_modules_primeng_fesm2015_primeng-confir-06b307"), __webpack_require__.e("default-src_app_admin_bestperformer_services_bestperformer_service_ts-src_app_shared_constant-66e0b5"), __webpack_require__.e("src_app_admin_bestperformer_bestperformer_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./bestperformer/bestperformer.module */ 5077))
                     .then(m => m.BestperformerModule),
             },
             {
                 path: 'banner',
-                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_constants_api-constant_ts-node_modules_primeng_fesm2015_primeng-confir-06b307"), __webpack_require__.e("common"), __webpack_require__.e("src_app_admin_Banner_banner_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./Banner/banner.module */ 56866))
+                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_constants_api-constant_ts-node_modules_primeng_fesm2015_primeng-confir-06b307"), __webpack_require__.e("src_app_admin_Banner_banner_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./Banner/banner.module */ 6866))
                     .then(m => m.BannerModule),
             },
-            // {
-            //   path: 'payments',
-            //   loadChildren: () => import('./payments/payments.module')
-            //     .then(m => m.PaymentsModule),
-            // },
+            {
+                path: 'payment',
+                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_constants_api-constant_ts-node_modules_primeng_fesm2015_primeng-confir-06b307"), __webpack_require__.e("default-src_app_admin_bestperformer_services_bestperformer_service_ts-src_app_shared_constant-66e0b5"), __webpack_require__.e("src_app_admin_payments_payments_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./payments/payments.module */ 6835))
+                    .then(m => m.PaymentsModule),
+            },
+            {
+                path: 'sale',
+                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_constants_api-constant_ts-node_modules_primeng_fesm2015_primeng-confir-06b307"), __webpack_require__.e("default-src_app_admin_bestperformer_services_bestperformer_service_ts-src_app_shared_constant-66e0b5"), __webpack_require__.e("src_app_admin_sales_sales_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./sales/sales.module */ 4239))
+                    .then(m => m.SalesModule),
+            },
             {
                 path: '',
-                redirectTo: 'users',
+                redirectTo: 'dashboard',
                 pathMatch: 'full',
             },
+            // {
+            // path: '**',
+            // component: NotFoundComponent,
+            // },
             {
                 path: '**',
-                component: _pages_miscellaneous_not_found_not_found_component__WEBPACK_IMPORTED_MODULE_1__.NotFoundComponent,
+                redirectTo: 'dashboard',
+                pathMatch: 'full',
             },
-            // {
-            //   path: '**',
-            //   redirectTo: 'users',
-            //   pathMatch: 'full',
-            // },
         ],
     },
 ];
 class AdminRoutingModule {
 }
 AdminRoutingModule.ɵfac = function AdminRoutingModule_Factory(t) { return new (t || AdminRoutingModule)(); };
-AdminRoutingModule.ɵmod = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdefineNgModule"]({ type: AdminRoutingModule });
-AdminRoutingModule.ɵinj = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdefineInjector"]({ imports: [[_angular_router__WEBPACK_IMPORTED_MODULE_3__.RouterModule.forChild(routes)], _angular_router__WEBPACK_IMPORTED_MODULE_3__.RouterModule] });
-(function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵsetNgModuleScope"](AdminRoutingModule, { imports: [_angular_router__WEBPACK_IMPORTED_MODULE_3__.RouterModule], exports: [_angular_router__WEBPACK_IMPORTED_MODULE_3__.RouterModule] }); })();
+AdminRoutingModule.ɵmod = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineNgModule"]({ type: AdminRoutingModule });
+AdminRoutingModule.ɵinj = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjector"]({ imports: [[_angular_router__WEBPACK_IMPORTED_MODULE_2__.RouterModule.forChild(routes)], _angular_router__WEBPACK_IMPORTED_MODULE_2__.RouterModule] });
+(function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsetNgModuleScope"](AdminRoutingModule, { imports: [_angular_router__WEBPACK_IMPORTED_MODULE_2__.RouterModule], exports: [_angular_router__WEBPACK_IMPORTED_MODULE_2__.RouterModule] }); })();
 
 
 /***/ }),
 
-/***/ 31034:
+/***/ 1034:
 /*!******************************************!*\
   !*** ./src/app/admin/admin.component.ts ***!
   \******************************************/
@@ -147,11 +165,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AdminComponent": () => (/* binding */ AdminComponent)
 /* harmony export */ });
-/* harmony import */ var _admin_menu__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./admin-menu */ 88236);
+/* harmony import */ var _admin_menu__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./admin-menu */ 8236);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 3184);
 /* harmony import */ var _theme_layouts_one_column_one_column_layout__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../@theme/layouts/one-column/one-column.layout */ 6405);
-/* harmony import */ var _nebular_theme__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @nebular/theme */ 68253);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ 52816);
+/* harmony import */ var _nebular_theme__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @nebular/theme */ 8253);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ 2816);
 
 
 
@@ -177,7 +195,7 @@ AdminComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_2__[
 
 /***/ }),
 
-/***/ 77095:
+/***/ 7095:
 /*!***************************************!*\
   !*** ./src/app/admin/admin.module.ts ***!
   \***************************************/
@@ -187,11 +205,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AdminModule": () => (/* binding */ AdminModule)
 /* harmony export */ });
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ 36362);
-/* harmony import */ var _admin_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./admin.component */ 31034);
-/* harmony import */ var _nebular_theme__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @nebular/theme */ 68253);
-/* harmony import */ var _theme_theme_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../@theme/theme.module */ 80268);
-/* harmony import */ var _admin_routing_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./admin-routing.module */ 13176);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ 6362);
+/* harmony import */ var _admin_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./admin.component */ 1034);
+/* harmony import */ var _nebular_theme__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @nebular/theme */ 8253);
+/* harmony import */ var _theme_theme_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../@theme/theme.module */ 268);
+/* harmony import */ var _admin_routing_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./admin-routing.module */ 3176);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 3184);
 
 

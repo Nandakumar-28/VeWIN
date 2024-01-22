@@ -1,3 +1,8 @@
+/** 
+* This file contains Admin related functions and HTML
+* dev: T.Nanda Kumar
+*/
+
 import { Component, OnInit } from '@angular/core';
 import { MENU_ITEMS } from './admin-menu';
 

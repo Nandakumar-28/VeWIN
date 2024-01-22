@@ -1,0 +1,88 @@
+<nb-card class="inline-form-card full-card">
+
+    <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+    <nb-card-header>
+        <div class="row">
+            <div class="col-md-9 text-center bold-text">Sales List</div>
+            <div class="col-md-3">
+                <button class="btn btn-sm btn-success" (click)="makePayment()">Make Payment</button>
+            </div>
+        </div><br>
+        <div class="card  text-center">
+            <form [formGroup]="AddSaleForm" (ngSubmit)="onSubmit()"> <br>
+                <div class="form-group row">
+                    <label for="name" class="label col-sm-3 col-form-label"> Search Customer Name *</label>
+                    <div class="col-sm-3">
+                        <span class="p-fluid">
+                            <p-autoComplete formControlName="name" [suggestions]="results" [forceSelection]="true"
+                                (completeMethod)="onNameInputChange($event)" [minLength]="3">
+                            </p-autoComplete>
+                        </span>
+                        <ng-container *ngIf="AddSaleForm.controls.name.touched && AddSaleForm.controls.name.errors">
+                            <p class="caption status-danger" *ngIf="AddSaleForm.controls.name.errors.required">
+                                Name is required / Only select Name</p>
+                        </ng-container>
+                    </div>
+
+
+                    <label for="monthAndYear" class="label col-sm-2 col-form-label"> Select Year-Month *</label>
+                    <div class="col-sm-2">
+                        <p-calendar formControlName="monthAndYear" view="month" dateFormat="mm/yy"
+                            [readonlyInput]="true"></p-calendar>
+                        <ng-container
+                            *ngIf="AddSaleForm.controls.monthAndYear.touched && AddSaleForm.controls.monthAndYear.errors">
+                            <p class="caption status-danger" *ngIf="AddSaleForm.controls.monthAndYear.errors.required">
+                                Year-Month is required </p>
+                        </ng-container>
+                    </div>
+
+                    <div class=" col-sm-2">
+                        <button type="submit" nbButton outline status="success" size="small">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div><br>
+    </nb-card-header>
+    <nb-card-body>
+        <div class="text-center" *ngIf="!users || users.length === 0">
+            <h5>No Data Found !</h5>
+        </div>
+        <div class="card" *ngIf="users && users.length > 0">
+            <div class="card">
+                <p-table [value]="users" [resizableColumns]="true" [paginator]="true" [rows]="rows"
+                    [showCurrentPageReport]="true" [autoLayout]="true" [rowsPerPageOptions]="itemsPerPage"
+                    [scrollable]="true" scrollHeight="400px">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <ng-container *ngFor="let col of columns">
+                                <th *ngIf="col.show" pResizableColumn
+                                    [pSortableColumn]="(col.sort==true)? col.field:false"
+                                    [class]="col.field+'-campaigns'" class="text-center">
+                                    <p-sortIcon *ngIf="col.sort==true" [field]="col.field" class="sort-icon"
+                                        [id]="col.field+'-sort'">
+                                    </p-sortIcon>
+                                    <span>{{col.header}}</span>
+                                </th>
+                            </ng-container>
+                            <!-- <th class="text-center">Actions</th> -->
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-user>
+                        <tr>
+                            <td nbTooltip="{{ user.date }}" nbTooltipPlacement="top">{{ user.date }}</td>
+                            <td nbTooltip="{{ user.app }}" nbTooltipPlacement="top">{{ user.app }}</td>
+                            <td nbTooltip="{{ user.sales }}" nbTooltipPlacement="top">{{ user.sales }}</td>
+                            <td nbTooltip="{{ user.salesReturn }}" nbTooltipPlacement="top">{{ user.salesReturn }}</td>                           
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="3" class="text-center">No Data Found.</td>
+
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </nb-card-body>
+</nb-card>

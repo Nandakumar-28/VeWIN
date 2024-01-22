@@ -1,6 +1,6 @@
 /** 
 * This file contains register related functions
-* author: Nanda kumar
+* author: T.Nanda kumar
 */
 import { Component, OnInit,ViewChild } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';

@@ -5,6 +5,7 @@ import { NbMenuModule } from '@nebular/theme';
 
 import { ThemeModule } from '../@theme/theme.module';
 import { AdminRoutingModule } from './admin-routing.module';
+import { SalesListComponent } from './sales/sales-list/sales-list.component';
 
 
 @NgModule({

@@ -13,13 +13,13 @@
 
                 <form [formGroup]="AddUserForm" (ngSubmit)="onSubmit()">
 
-                    <div class="form-group row">
-                        <label for="name" class="label col-sm-3 col-form-label"> Name *</label>
-                        <div class="col-sm-9">
+                    <div class="form-group row  justify-content-center">
+                        <label for="name" class="label col-sm-3 col-form-label"> Search Name *</label>
+                        <div class="col-sm-7">
                             <span class="p-fluid">
                                 <p-autoComplete formControlName="name" [suggestions]="results" [forceSelection]="true"
                                     (completeMethod)="onNameInputChange($event)" [minLength]="3"
-                                    placeholder=" Type to search the Bestperformer name">
+                                    placeholder=" Type to search the bestperformer name">
                                 </p-autoComplete>
                             </span>
                             <ng-container *ngIf="AddUserForm.controls.name.touched && AddUserForm.controls.name.errors">
@@ -29,9 +29,9 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
+                    <div class="form-group row justify-content-center">
                         <label for="sales" class="label col-sm-3 col-form-label">Sale *</label>
-                        <div class="col-sm-9">
+                        <div class="col-sm-7">
                             <input nbInput fullWidth type="text" formControlName="sales">
                             <ng-container
                                 *ngIf="AddUserForm.controls.sales.touched && AddUserForm.controls.sales.errors">
@@ -41,9 +41,9 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
+                    <div class="form-group row justify-content-center">
                         <label for="remarks" class="label col-sm-3 col-form-label">Remarks *</label>
-                        <div class="col-sm-9">
+                        <div class="col-sm-7">
                             <input nbInput fullWidth type="text" formControlName="remarks">
                             <ng-container
                                 *ngIf="AddUserForm.controls.remarks.touched && AddUserForm.controls.remarks.errors">
@@ -57,9 +57,9 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
+                    <div class="form-group row justify-content-center">
                         <label for="fdate" class="label col-sm-3 col-form-label">From Date *</label>
-                        <div class="col-sm-9">
+                        <div class="col-sm-7">
                             <input nbInput fullWidth [nbDatepicker]="fromDatepicker" formControlName="fdate">
                             <nb-datepicker #fromDatepicker></nb-datepicker>
                             <ng-container
@@ -70,9 +70,9 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
+                    <div class="form-group row justify-content-center">
                         <label for="tdate" class="label col-sm-3 col-form-label">To Date *</label>
-                        <div class="col-sm-9">
+                        <div class="col-sm-7">
                             <input nbInput fullWidth [nbDatepicker]="toDatepicker" formControlName="tdate">
                             <nb-datepicker #toDatepicker></nb-datepicker>
                             <ng-container
@@ -83,16 +83,14 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
-                        <div class="offset-sm-3 col-sm-9">
-                            <button type="submit" nbButton status="primary"
-                                [disabled]="submitted || !AddUserForm.valid || data_loading">Submit</button>
-                            &nbsp;&nbsp;
-                            <button nbButton status="danger" (click)="backToUserList()"
-                                routerLinkActive="router-link-active"><b>
-                                    Cancel
-                                </b></button>
-                        </div>
+                    <div class="form-group row justify-content-center">
+                        <button type="submit" nbButton status="primary"
+                            [disabled]="submitted || !AddUserForm.valid || data_loading">Submit</button>
+                        &nbsp;&nbsp;
+                        <button nbButton status="danger" (click)="backToUserList()"
+                            routerLinkActive="router-link-active"><b>
+                                Cancel
+                            </b></button>
                     </div>
                 </form>
 

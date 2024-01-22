@@ -29,6 +29,7 @@ import {
   NbToggleModule, 
   NbContextMenuModule,
   NbDatepickerModule,
+  NbAutocompleteModule,
 } from '@nebular/theme';
 
 import { ThemeModule } from '../../@theme/theme.module';
@@ -58,8 +59,8 @@ import { BestperformerAddEditComponent } from './bestperformer-add-edit/bestperf
     CommonModule,
     BestperformerRoutingModule,
     HttpClientModule,
-    AutoCompleteModule,
     NbActionsModule,
+    NbAutocompleteModule,
     NbAlertModule,
     NbCalendarKitModule,
     NbCalendarModule,
@@ -92,6 +93,7 @@ import { BestperformerAddEditComponent } from './bestperformer-add-edit/bestperf
     ButtonModule,
     ConfirmDialogModule,
     DialogModule,
+    AutoCompleteModule,
   ],
   providers: [
     ConfirmationService, 

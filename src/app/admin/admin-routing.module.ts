@@ -1,13 +1,18 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { AdminComponent } from './admin.component';
-import { NotFoundComponent } from '../pages/miscellaneous/not-found/not-found.component';
+// import { NotFoundComponent } from '../pages/miscellaneous/not-found/not-found.component';
 
 const routes: Routes = [
   {
     path: '',
     component: AdminComponent,
     children: [
+      {
+        path: 'dashboard',
+        loadChildren: () => import ('./dashboard/dashboard.module')
+        .then(m =>m.DashboardModule)
+      },
       {
         path: 'users',
         loadChildren: () => import('./users/users.module')
@@ -33,27 +38,31 @@ const routes: Routes = [
         loadChildren: () => import('./Banner/banner.module')
           .then(m => m.BannerModule),
       },
-      // {
-      //   path: 'payments',
-      //   loadChildren: () => import('./payments/payments.module')
-      //     .then(m => m.PaymentsModule),
-      // },
+      {
+        path: 'payment',
+        loadChildren: () => import('./payments/payments.module')
+          .then(m => m.PaymentsModule),
+      },
+      {
+        path: 'sale',
+        loadChildren: () => import('./sales/sales.module')
+          .then(m => m.SalesModule),
+      },
       {
         path: '',
-        redirectTo: 'users',
+        redirectTo: 'dashboard',
         pathMatch: 'full',
       },
-      {
-      path: '**',
-      component: NotFoundComponent,
-
-      },
-
       // {
-      //   path: '**',
-      //   redirectTo: 'users',
-      //   pathMatch: 'full',
+      // path: '**',
+      // component: NotFoundComponent,
       // },
+
+      {
+        path: '**',
+        redirectTo: 'dashboard',
+        pathMatch: 'full',
+      },
     ],
   },
 ];

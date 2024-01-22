@@ -1,3 +1,8 @@
+/** 
+* This file contains bestperformer add-edit related functions
+* dev: T.Nanda Kumar
+*/
+
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BestperformerService } from '../services/bestperformer.service';
@@ -18,18 +23,13 @@ export class BestperformerAddEditComponent implements OnInit {
 
   AddUserForm: FormGroup;
   submitted = false;
-  //page_title: string;
   data_loading = false;
-
-  //show password
-  showPassword = true;
 
   //userlist pass user data
   userDetails: any;
   page_title: string;
 
   results: string[];
-  text: string;
 
   private userSubscription: Subscription;
 
@@ -148,7 +148,6 @@ export class BestperformerAddEditComponent implements OnInit {
     }
 
     // const formData = this.AddUserForm.value;
-    // console.log(formData.fdate)
 
     // Format the date strings before sending them to the server
     const formattedFromDate = this.datePipe.transform(this.AddUserForm.value.fdate, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
@@ -208,7 +207,7 @@ export class BestperformerAddEditComponent implements OnInit {
 
       };
 
-      this.userService.CreateAnnouncement(requestBody)
+      this.userService.Createbestperformer(requestBody)
         .subscribe((response) => {
           if (HttpStatusCode.Ok) {
             this.toastrService.show(response["message"], "Success", {
@@ -234,7 +233,7 @@ export class BestperformerAddEditComponent implements OnInit {
    * @returns
    */
   backToUserList() {
-    this.router.navigate([ROUTE_PATH.ADMIN, ROUTE_PATH.BESTPERFORMER, ROUTE_PATH.BESTPERFORMERS.LIST,]);
+    this.router.navigate([ROUTE_PATH.ADMIN, ROUTE_PATH.DASHBOARD]);
   }
 
 }

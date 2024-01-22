@@ -1,3 +1,8 @@
+/** 
+* This file contains bestperformer delete related functions and HTML
+* dev: T.Nanda Kumar
+*/
+
 import { Component, OnInit } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 

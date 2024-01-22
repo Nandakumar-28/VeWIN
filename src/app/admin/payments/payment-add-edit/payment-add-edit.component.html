@@ -1,0 +1,150 @@
+<div class="row">
+    <div class="col-md-12">
+        <nb-card>
+            <nb-card-header class="text-center bold-text">{{page_title}}
+                <div class="text-center">
+                    <form [formGroup]="GetSalesForm" (ngSubmit)="totalSales()"> <br>
+                        <div class="form-group row">
+                            <label for="cid" class="label col-sm-3 col-form-label"> Search Customer Name *</label>
+                            <div class=" flex justify-content-center">
+                                <span class="p-float-label">
+                                    <p-autoComplete formControlName="cid" [suggestions]="results"
+                                        [forceSelection]="true" (completeMethod)="onNameInputChange($event)"
+                                        [minLength]="3"
+                                        [attr.disabled]="GetSalesForm.get('cid').disabled ? true : null">
+                                    </p-autoComplete>
+                                    <!-- <label for="float-label">Search Name *</label> -->
+                                </span>
+                                <ng-container
+                                    *ngIf="GetSalesForm.controls.cid.touched && GetSalesForm.controls.cid.errors">
+                                    <p class="caption status-danger" *ngIf="GetSalesForm.controls.cid.errors.required">
+                                        Name is required / Only select Name</p>
+                                </ng-container>
+                            </div>
+
+
+                            <label for="monthAndYear" class="label col-sm-2 col-form-label"> Select Year-Month *</label>
+                            <div class="col-sm-2">
+                                <!-- <nb-select nbSelect placeholder="Select" [size]="small" formControlName="monthAndYear">
+                            <nb-option value="January">January</nb-option>
+                            <nb-option value="February">February</nb-option>
+                            <nb-option value="March">March</nb-option>
+                            <nb-option value="April">April</nb-option>
+                            <nb-option value="May">May</nb-option>
+                            <nb-option value="June">June</nb-option>
+                            <nb-option value="July">July</nb-option>
+                            <nb-option value="August">August</nb-option>
+                            <nb-option value="September">September</nb-option>
+                            <nb-option value="October">October</nb-option>
+                            <nb-option value="November">November</nb-option>
+                            <nb-option value="December">December</nb-option>
+
+                        </nb-select> -->
+                                <p-calendar formControlName="monthAndYear" view="month" dateFormat="mm/yy"
+                                    [readonlyInput]="true"
+                                    [attr.disabled]="GetSalesForm.get('monthAndYear').disabled ? true : null"></p-calendar>
+                                <ng-container
+                                    *ngIf="GetSalesForm.controls.monthAndYear.touched && GetSalesForm.controls.monthAndYear.errors">
+                                    <p class="caption status-danger"
+                                        *ngIf="GetSalesForm.controls.monthAndYear.errors.required">
+                                        Year-Month is required </p>
+                                </ng-container>
+                            </div>
+
+                            <div class=" col-sm-2">
+                                <button type="submit" nbButton outline status="success" size="small"
+                                    [disabled]="!GetSalesForm.valid || submitted || data_loading">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </nb-card-header>
+            <nb-card-body [nbSpinner]="data_loading" nbSpinnerStatus="info">
+
+                <form [formGroup]="AddPaymentForm" (ngSubmit)="onSubmit()">
+
+                    <div class="form-group row justify-content-center">
+                        <label for="salesAmount" class="label col-sm-3 col-form-label">Sales Amount *</label>
+                        <div class="col-sm-7">
+                            <input nbInput fullWidth type="text" formControlName="salesAmount" disabled>
+                            <ng-container
+                                *ngIf="AddPaymentForm.controls.salesAmount.touched && AddPaymentForm.controls.salesAmount.errors">
+                                <p class="caption status-danger"
+                                    *ngIf="AddPaymentForm.controls.salesAmount.errors.required">
+                                    Amount is required</p>
+                            </ng-container>
+                        </div>
+                    </div>
+
+                    <div class="form-group row justify-content-center">
+                        <label for="dateOfPayment" class="label col-sm-3 col-form-label"> Date of payment *</label>
+                        <div class="col-sm-7">
+                            <input nbInput fullWidth [nbDatepicker]="fromDatepicker" formControlName="dateOfPayment">
+                            <nb-datepicker #fromDatepicker></nb-datepicker>
+                            <ng-container
+                                *ngIf="AddPaymentForm.controls.dateOfPayment.touched && AddPaymentForm.controls.dateOfPayment.errors">
+                                <p class="caption status-danger"
+                                    *ngIf="AddPaymentForm.controls.dateOfPayment.errors.required">
+                                    Date of payment is required </p>
+                            </ng-container>
+                        </div>
+                    </div>
+
+                    <div class="form-group row justify-content-center">
+                        <label for="bank" class="label col-sm-3 col-form-label">Bank *</label>
+                        <div class="col-sm-7">
+                            <input nbInput fullWidth type="text" formControlName="bank">
+                            <ng-container
+                                *ngIf="AddPaymentForm.controls.bank.touched && AddPaymentForm.controls.bank.errors">
+                                <p class="caption status-danger" *ngIf="AddPaymentForm.controls.bank.errors.required">
+                                    Bank is required</p>
+                            </ng-container>
+                        </div>
+                    </div>
+
+                    <div class="form-group row justify-content-center">
+                        <label for="paymentDetails" class="label col-sm-3 col-form-label">Payment details *</label>
+                        <div class="col-sm-7">
+                            <input nbInput fullWidth type="text" formControlName="paymentDetails">
+                            <ng-container
+                                *ngIf="AddPaymentForm.controls.paymentDetails.touched && AddPaymentForm.controls.paymentDetails.errors">
+                                <p class="caption status-danger"
+                                    *ngIf="AddPaymentForm.controls.paymentDetails.errors.required">
+                                    Payment details is required</p>
+                            </ng-container>
+                        </div>
+                    </div>
+
+                    <div class="form-group row justify-content-center">
+                        <label for="remarks" class="label col-sm-3 col-form-label">Remarks *</label>
+                        <div class="col-sm-7">
+                            <input nbInput fullWidth type="text" formControlName="remarks">
+                            <ng-container
+                                *ngIf="AddPaymentForm.controls.remarks.touched && AddPaymentForm.controls.remarks.errors">
+                                <p class="caption status-danger"
+                                    *ngIf="AddPaymentForm.controls.remarks.errors.required">
+                                    Remarks is required</p>
+                            </ng-container>
+                            <ng-container *ngIf="AddPaymentForm.get('remarks').hasError('maxlength')">
+                                <p class="caption status-danger">Remarks should not exceed 100 characters</p>
+                            </ng-container>
+
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row justify-content-center">
+                        <button type="submit" nbButton status="primary"
+                            [disabled]="submitted || !AddPaymentForm.valid || data_loading">Submit</button>
+                        &nbsp;&nbsp;
+                        <button nbButton status="danger" (click)="backToPaymentList()"
+                            routerLinkActive="router-link-active"><b>
+                                Cancel
+                            </b></button>
+                    </div>
+                </form>
+
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

@@ -21,6 +21,11 @@ const routes: Routes = [
     redirectTo: 'list', // Default route
     component: AnnouncementListComponent,
   },
+  {
+    path: '**',
+    redirectTo: 'list', // Default route
+    pathMatch: 'full',
+  },
 
 ];
 

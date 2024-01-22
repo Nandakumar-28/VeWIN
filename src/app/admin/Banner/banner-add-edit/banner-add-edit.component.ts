@@ -1,3 +1,8 @@
+/** 
+* This file contains banner add-edit related functions
+* dev: T.Nanda Kumar
+*/
+
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -65,7 +70,6 @@ export class BannerAddEditComponent implements OnInit {
     this.subscription = this.bannerService.getBannerDetails().subscribe(user => {
       if (user) {
         this.bannerDetails = user;
-        console.log(this.bannerDetails)
         // Pre-fill the form with user details
         this.AddBannerForm.patchValue({
           photo: this.bannerDetails.photo,
@@ -80,17 +84,6 @@ export class BannerAddEditComponent implements OnInit {
   ngOnDestroy(): void {
     // Unsubscribe to prevent multiple subscriptions when leaving the component
     this.subscription.unsubscribe();
-  }
-
-  //edit click to enable summit,add click to disable
-  isSubmitDisabled(): boolean {
-    // Disable the submit button when adding a new banner and no photo is selected
-    if (!this.isEditMode && !this.selectedPhoto) {
-      return true;
-    }
-
-    // Enable the submit button for other cases
-    return false;
   }
 
   /**
@@ -132,9 +125,11 @@ export class BannerAddEditComponent implements OnInit {
   bannerformData: any = new FormData()
 
   onSubmit() {
-    // if (this.AddBannerForm.invalid || !this.selectedPhoto) {
-    //   return;
-    // }
+    this.submitted = true;
+
+    if (this.AddBannerForm.invalid || !this.selectedPhoto) {
+      return;
+    }
     // Format the date strings before sending them to the server
     const formattedFromDate = this.datePipe.transform(this.AddBannerForm.controls.fdate.value, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     const formattedToDate = this.datePipe.transform(this.AddBannerForm.controls.tdate.value, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
@@ -213,7 +208,7 @@ export class BannerAddEditComponent implements OnInit {
    * @returns
    */
   backToBannerList() {
-    this.router.navigate([ROUTE_PATH.ADMIN, ROUTE_PATH.BANNER, ROUTE_PATH.BANNERS.GET,]);
+    this.router.navigate([ROUTE_PATH.ADMIN, ROUTE_PATH.DASHBOARD]);
   }
 
 }

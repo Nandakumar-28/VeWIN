@@ -28,7 +28,6 @@ export class BestperformerService {
 
   setUserDetails(user: any) {
     this.userDetails.next(user);
-    console.log(user)
   }
 
   getUserDetails() {
@@ -113,9 +112,8 @@ export class BestperformerService {
    *
    */
 
-  CreateAnnouncement(requestBody): Observable<any> {
+  Createbestperformer(requestBody): Observable<any> {
     let apiURL = getApiEndPoint(`${API_END_POINTS.BESTPERFORMER.ADD}`);
-    console.log(requestBody)
     return this.userServicehttp.post(apiURL, requestBody).pipe(
       switchMap((result: any) => {
         if (result) {
