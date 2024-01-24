@@ -176,18 +176,18 @@ export class BestperformerAddEditComponent implements OnInit {
       this.userService.updateUser(requestBody)
         .subscribe((response) => {
           // this.backToUserList();
-          if (HttpStatusCode.Ok) {
-            this.toastrService.show(response["message"], "Success", {
+          if (response.statusCode === 200) {
+            this.toastrService.show(response.statusMessage, "Success", {
               status: "success",
               duration: 8000,
             });
           } else {
-            this.toastrService.show(response["message"], "Warning", {
+            this.toastrService.show(response.statusMessage, "Warning", {
               status: "warning",
               duration: 8000,
             });
           }
-          this.router.navigate([ROUTE_PATH.ADMIN, ROUTE_PATH.BESTPERFORMER, ROUTE_PATH.BESTPERFORMERS.LIST,]);
+           this.backToUserList();
         });
 
 
@@ -209,19 +209,18 @@ export class BestperformerAddEditComponent implements OnInit {
 
       this.userService.Createbestperformer(requestBody)
         .subscribe((response) => {
-          if (HttpStatusCode.Ok) {
-            this.toastrService.show(response["message"], "Success", {
+          if (response.statusCode === 200) {
+            this.toastrService.show(response.statusMessage, "Success", {
               status: "success",
               duration: 8000,
             });
           } else {
-            this.toastrService.show(response["message"], "Warning", {
+            this.toastrService.show(response.statusMessage, "Warning", {
               status: "warning",
               duration: 8000,
             });
           }
-          //  this.backToUserList();
-          this.router.navigate([ROUTE_PATH.ADMIN, ROUTE_PATH.BESTPERFORMER, ROUTE_PATH.BESTPERFORMERS.LIST,]);
+           this.backToUserList();
         });
     }
   }

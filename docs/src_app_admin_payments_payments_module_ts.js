@@ -151,6 +151,7 @@ class PaymentAddEditComponent {
         this.toastrService = toastrService;
         this.datePipe = datePipe;
         this.userService = userService;
+        //Submit click to hide
         this.submitted = false;
         this.data_loading = false;
         //summit button size 
@@ -169,9 +170,6 @@ class PaymentAddEditComponent {
         else {
             this.page_title = "Add Payment Details";
             this.AddPaymentForm.reset();
-            // Enable form controls for adding
-            this.GetSalesForm.get('cid').enable();
-            this.GetSalesForm.get('monthAndYear').enable();
         }
         // Check if user details are passed user list, service to user-edit
         this.paymentSubscription = this.paymentService.getUserDetails().subscribe(user => {
@@ -251,6 +249,9 @@ class PaymentAddEditComponent {
         }
     }
     totalSales() {
+        // Disable form controls for editing
+        this.GetSalesForm.get('cid').disable();
+        this.GetSalesForm.get('monthAndYear').disable();
         if (this.GetSalesForm.invalid) {
             return;
         }
@@ -305,14 +306,19 @@ class PaymentAddEditComponent {
             };
             this.paymentService.updatePayment(requestBody)
                 .subscribe((response) => {
-                if (true /* Ok */) {
-                    this.toastrService.show(response["message"], "Success", {
+                if (response.statusCode === 200) {
+                    this.toastrService.show(response.statusMessage, "Success", {
                         status: "success",
                         duration: 8000,
                     });
                 }
-                else {}
-                this.router.navigate([_shared_constants_route_path_constant__WEBPACK_IMPORTED_MODULE_0__.ROUTE_PATH.ADMIN, _shared_constants_route_path_constant__WEBPACK_IMPORTED_MODULE_0__.ROUTE_PATH.PAYMENT, _shared_constants_route_path_constant__WEBPACK_IMPORTED_MODULE_0__.ROUTE_PATH.PAYMENTS.LIST,]);
+                else {
+                    this.toastrService.show(response.statusMessage, "Warning", {
+                        status: "warning",
+                        duration: 8000,
+                    });
+                }
+                this.backToPaymentList();
             });
         }
         else {
@@ -341,15 +347,19 @@ class PaymentAddEditComponent {
             };
             this.paymentService.CreatePayment(requestBody)
                 .subscribe((response) => {
-                if (true /* Ok */) {
-                    this.toastrService.show(response["message"], "Success", {
+                if (response.statusCode === 200) {
+                    this.toastrService.show(response.statusMessage, "Success", {
                         status: "success",
                         duration: 8000,
                     });
                 }
-                else {}
-                //  this.backToPaymentList();
-                this.router.navigate([_shared_constants_route_path_constant__WEBPACK_IMPORTED_MODULE_0__.ROUTE_PATH.ADMIN, _shared_constants_route_path_constant__WEBPACK_IMPORTED_MODULE_0__.ROUTE_PATH.PAYMENT, _shared_constants_route_path_constant__WEBPACK_IMPORTED_MODULE_0__.ROUTE_PATH.PAYMENTS.LIST,]);
+                else if (response.statusCode === 403) {
+                    this.toastrService.show(response.statusMessage, "Warning", {
+                        status: "warning",
+                        duration: 8000,
+                    });
+                }
+                this.backToPaymentList();
             });
         }
     }
@@ -363,7 +373,7 @@ class PaymentAddEditComponent {
     }
 }
 PaymentAddEditComponent.ɵfac = function PaymentAddEditComponent_Factory(t) { return new (t || PaymentAddEditComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_7__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_8__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_8__.ActivatedRoute), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdirectiveInject"](_services_payments_service__WEBPACK_IMPORTED_MODULE_1__.PaymentsService), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdirectiveInject"](_nebular_theme__WEBPACK_IMPORTED_MODULE_9__.NbToastrService), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdirectiveInject"](_angular_common__WEBPACK_IMPORTED_MODULE_10__.DatePipe), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdirectiveInject"](_bestperformer_services_bestperformer_service__WEBPACK_IMPORTED_MODULE_2__.BestperformerService)); };
-PaymentAddEditComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdefineComponent"]({ type: PaymentAddEditComponent, selectors: [["ngx-payment-add-edit"]], decls: 65, vars: 21, consts: [[1, "row"], [1, "col-md-12"], [1, "text-center", "bold-text"], [1, "text-center"], [3, "formGroup", "ngSubmit"], [1, "form-group", "row"], ["for", "cid", 1, "label", "col-sm-3", "col-form-label"], [1, "flex", "justify-content-center"], [1, "p-float-label"], ["formControlName", "cid", 3, "suggestions", "forceSelection", "minLength", "completeMethod"], [4, "ngIf"], ["for", "monthAndYear", 1, "label", "col-sm-2", "col-form-label"], [1, "col-sm-2"], ["formControlName", "monthAndYear", "view", "month", "dateFormat", "mm/yy", 3, "readonlyInput"], ["type", "submit", "nbButton", "", "outline", "", "status", "success", "size", "small", 3, "disabled"], ["nbSpinnerStatus", "info", 3, "nbSpinner"], [1, "form-group", "row", "justify-content-center"], ["for", "salesAmount", 1, "label", "col-sm-3", "col-form-label"], [1, "col-sm-7"], ["nbInput", "", "fullWidth", "", "type", "text", "formControlName", "salesAmount", "disabled", ""], ["for", "dateOfPayment", 1, "label", "col-sm-3", "col-form-label"], ["nbInput", "", "fullWidth", "", "formControlName", "dateOfPayment", 3, "nbDatepicker"], ["fromDatepicker", ""], ["for", "bank", 1, "label", "col-sm-3", "col-form-label"], ["nbInput", "", "fullWidth", "", "type", "text", "formControlName", "bank"], ["for", "paymentDetails", 1, "label", "col-sm-3", "col-form-label"], ["nbInput", "", "fullWidth", "", "type", "text", "formControlName", "paymentDetails"], ["for", "remarks", 1, "label", "col-sm-3", "col-form-label"], ["nbInput", "", "fullWidth", "", "type", "text", "formControlName", "remarks"], ["type", "submit", "nbButton", "", "status", "primary", 3, "disabled"], ["nbButton", "", "status", "danger", "routerLinkActive", "router-link-active", 3, "click"], ["class", "caption status-danger", 4, "ngIf"], [1, "caption", "status-danger"]], template: function PaymentAddEditComponent_Template(rf, ctx) { if (rf & 1) {
+PaymentAddEditComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdefineComponent"]({ type: PaymentAddEditComponent, selectors: [["ngx-payment-add-edit"]], decls: 65, vars: 21, consts: [[1, "row"], [1, "col-md-12"], [1, "text-center", "bold-text"], [1, "text-center"], [3, "formGroup", "ngSubmit"], [1, "form-group", "row"], ["for", "cid", 1, "label", "col-sm-3", "col-form-label"], [1, "flex", "justify-content-center"], [1, "p-float-label"], ["formControlName", "cid", "placeholder", "Enter minimum 3 letters", 3, "suggestions", "forceSelection", "minLength", "completeMethod"], [4, "ngIf"], ["for", "monthAndYear", 1, "label", "col-sm-2", "col-form-label"], [1, "col-sm-2"], ["formControlName", "monthAndYear", "view", "month", "dateFormat", "mm/yy", 3, "readonlyInput"], ["type", "submit", "nbButton", "", "outline", "", "status", "success", "size", "small", 3, "disabled"], ["nbSpinnerStatus", "info", 3, "nbSpinner"], [1, "form-group", "row", "justify-content-center"], ["for", "salesAmount", 1, "label", "col-sm-3", "col-form-label"], [1, "col-sm-7"], ["nbInput", "", "fullWidth", "", "type", "text", "formControlName", "salesAmount", "disabled", ""], ["for", "dateOfPayment", 1, "label", "col-sm-3", "col-form-label"], ["nbInput", "", "fullWidth", "", "formControlName", "dateOfPayment", 3, "nbDatepicker"], ["fromDatepicker", ""], ["for", "bank", 1, "label", "col-sm-3", "col-form-label"], ["nbInput", "", "fullWidth", "", "type", "text", "formControlName", "bank"], ["for", "paymentDetails", 1, "label", "col-sm-3", "col-form-label"], ["nbInput", "", "fullWidth", "", "type", "text", "formControlName", "paymentDetails"], ["for", "remarks", 1, "label", "col-sm-3", "col-form-label"], ["nbInput", "", "fullWidth", "", "type", "text", "formControlName", "remarks"], ["type", "submit", "nbButton", "", "status", "primary", 3, "disabled"], ["nbButton", "", "status", "danger", "routerLinkActive", "router-link-active", 3, "click"], ["class", "caption status-danger", 4, "ngIf"], [1, "caption", "status-danger"]], template: function PaymentAddEditComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 0)(1, "div", 1)(2, "nb-card")(3, "nb-card-header", 2);
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](4);
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](5, "div", 3)(6, "form", 4);
@@ -506,7 +516,7 @@ class PaymentDeleteComponent {
     }
 }
 PaymentDeleteComponent.ɵfac = function PaymentDeleteComponent_Factory(t) { return new (t || PaymentDeleteComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_nebular_theme__WEBPACK_IMPORTED_MODULE_1__.NbDialogRef)); };
-PaymentDeleteComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: PaymentDeleteComponent, selectors: [["ngx-payment-delete"]], decls: 47, vars: 11, consts: [[1, "text-center"], ["nbButton", "", "status", "success", 3, "click"], ["nbButton", "", "status", "primary", 3, "click"]], template: function PaymentDeleteComponent_Template(rf, ctx) { if (rf & 1) {
+PaymentDeleteComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: PaymentDeleteComponent, selectors: [["ngx-payment-delete"]], decls: 51, vars: 12, consts: [[1, "text-center"], ["nbButton", "", "status", "success", 3, "click"], ["nbButton", "", "status", "primary", 3, "click"]], template: function PaymentDeleteComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "nb-card")(1, "nb-card-header", 0)(2, "b");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](3, "Delete Confirmation");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]()();
@@ -528,41 +538,46 @@ PaymentDeleteComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MOD
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](18);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](19, "li")(20, "strong");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](21, "Sales Amount:");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](21, "Year:");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](22);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](23, "li")(24, "strong");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](25, " Date Of Payment:");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](25, "Sales Amount:");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](26);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](27, "date");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](28, "li")(29, "strong");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](30, "Bank:");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](27, "li")(28, "strong");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](29, " Date Of Payment:");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](31);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](30);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](31, "date");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](32, "li")(33, "strong");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](34, "Payment Details:");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](34, "Bank:");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](35);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](36, "li")(37, "strong");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](38, "Remarks:");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](38, "Payment Details:");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](39);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]()()();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](40, "nb-card-footer", 0)(41, "button", 1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function PaymentDeleteComponent_Template_button_click_41_listener() { return ctx.deletePayment(); });
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](42, "Delete");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](43, "\u00A0\u00A0\u00A0 ");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](44, "button", 2);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function PaymentDeleteComponent_Template_button_click_44_listener() { return ctx.close(); });
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](45, "Cancel");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](40, "li")(41, "strong");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](42, "Remarks:");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](43);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]()()();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](46, ",\n");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](44, "nb-card-footer", 0)(45, "button", 1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function PaymentDeleteComponent_Template_button_click_45_listener() { return ctx.deletePayment(); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](46, "Delete");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](47, "\u00A0\u00A0\u00A0 ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](48, "button", 2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function PaymentDeleteComponent_Template_button_click_48_listener() { return ctx.close(); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](49, "Cancel");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]()()();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](50, ",\n");
     } if (rf & 2) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](8);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx.user.refid);
@@ -571,9 +586,11 @@ PaymentDeleteComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MOD
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", ctx.user.month, "");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", ctx.user.year, "");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", ctx.user.salesAmount, "");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind2"](27, 8, ctx.user.dateOfPayment, "dd/MM/yyyy"), "");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind2"](31, 9, ctx.user.dateOfPayment, "dd/MM/yyyy"), "");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](5);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", ctx.user.bank, "");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
@@ -803,8 +820,9 @@ class PaymentsListComponent {
         this.dialogService = dialogService;
         this.formBuilder = formBuilder;
         this.userService = userService;
-        this.submitted = false;
         this.data_loading = false;
+        //Change value to hide table
+        this.showTable = false;
         this.itemsPerPage = [10, 25, 50];
         this.first = 0;
         this.rows = 10;
@@ -812,7 +830,16 @@ class PaymentsListComponent {
         this.small = 'small';
     }
     ngOnInit() {
+        var _a, _b;
         this.AddPaymentFormInitialize();
+        // Add event listener to name field Change value to hide table
+        (_a = this.AddPaymentForm.get('name')) === null || _a === void 0 ? void 0 : _a.valueChanges.subscribe(() => {
+            this.showTable = true;
+        });
+        // Add event listener to monthAndYear field Change value to hide table 
+        (_b = this.AddPaymentForm.get('monthAndYear')) === null || _b === void 0 ? void 0 : _b.valueChanges.subscribe(() => {
+            this.showTable = true;
+        });
         // table   with their respective field name and header value
         this.columns = [
             { field: "id", header: "Id", show: true, sort: true },
@@ -931,9 +958,9 @@ class PaymentsListComponent {
      * @returns
      */
     onSubmit() {
-        this.submitted = true;
         const selectedName = this.AddPaymentForm.value.name;
         const selectedDate = this.AddPaymentForm.value.monthAndYear;
+        console.log(selectedDate);
         if (selectedDate && selectedName) {
             // Convert the month to a string representation (e.g., January, February)
             const month = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(selectedDate);
@@ -972,12 +999,13 @@ class PaymentsListComponent {
     paymentApiRequest(requestBody) {
         this.paymentService.getPaymentList(requestBody)
             .subscribe((response) => {
+            this.showTable = false;
             this.users = response;
         });
     }
 }
 PaymentsListComponent.ɵfac = function PaymentsListComponent_Factory(t) { return new (t || PaymentsListComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](primeng_api__WEBPACK_IMPORTED_MODULE_9__.ConfirmationService), _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](_nebular_theme__WEBPACK_IMPORTED_MODULE_10__.NbToastrService), _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_11__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_11__.ActivatedRoute), _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](_services_payments_service__WEBPACK_IMPORTED_MODULE_2__.PaymentsService), _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](_nebular_theme__WEBPACK_IMPORTED_MODULE_10__.NbDialogService), _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](_bestperformer_services_bestperformer_service__WEBPACK_IMPORTED_MODULE_3__.BestperformerService)); };
-PaymentsListComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdefineComponent"]({ type: PaymentsListComponent, selectors: [["ngx-payments-list"]], decls: 32, vars: 12, consts: [[1, "inline-form-card", "full-card"], [1, "row"], [1, "col-md-9", "text-center", "bold-text"], [1, "col-md-3"], [1, "btn", "btn-sm", "btn-success", 3, "click"], [1, "card", "text-center"], [3, "formGroup", "ngSubmit"], [1, "form-group", "row"], ["for", "name", 1, "label", "col-sm-3", "col-form-label"], [1, "col-sm-3"], [1, "p-fluid"], ["formControlName", "name", 3, "suggestions", "forceSelection", "minLength", "completeMethod"], [4, "ngIf"], ["for", "monthAndYear", 1, "label", "col-sm-2", "col-form-label"], [1, "col-sm-2"], ["formControlName", "monthAndYear", "view", "month", "dateFormat", "mm/yy", 3, "readonlyInput"], ["type", "submit", "nbButton", "", "outline", "", "status", "success", "size", "small"], ["class", "text-center", 4, "ngIf"], ["class", "card", 4, "ngIf"], ["class", "caption status-danger", 4, "ngIf"], [1, "caption", "status-danger"], [1, "text-center"], [1, "card"], ["scrollHeight", "400px", 3, "value", "resizableColumns", "paginator", "rows", "showCurrentPageReport", "autoLayout", "rowsPerPageOptions", "scrollable"], ["pTemplate", "header"], ["pTemplate", "body"], ["pTemplate", "emptymessage"], [4, "ngFor", "ngForOf"], ["pResizableColumn", "", "class", "text-center", 3, "pSortableColumn", "class", 4, "ngIf"], ["pResizableColumn", "", 1, "text-center", 3, "pSortableColumn"], ["class", "sort-icon", 3, "field", "id", 4, "ngIf"], [1, "sort-icon", 3, "field", "id"], ["nbTooltipPlacement", "top", 3, "nbTooltip"], [1, "text-center", "action"], ["routerLinkActive", "router-link-active", "nbTooltip", "Edit", "nbTooltipPlacement", "top", 1, "btn", "btn-outline-primary", "btn-sm", "action-button", 3, "click"], ["icon", "edit", "pack", "eva", 1, "action-icons"], ["nbTooltip", "Delete", "nbTooltipPlacement", "top", 1, "btn", "btn-outline-danger", "btn-sm", "action-button", 3, "click"], ["icon", "close", "pack", "eva", 1, "action-icons"], ["colspan", "3", 1, "text-center"]], template: function PaymentsListComponent_Template(rf, ctx) { if (rf & 1) {
+PaymentsListComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdefineComponent"]({ type: PaymentsListComponent, selectors: [["ngx-payments-list"]], decls: 32, vars: 12, consts: [[1, "inline-form-card", "full-card"], [1, "row"], [1, "col-md-9", "text-center", "bold-text"], [1, "col-md-3"], ["type", "button", 1, "btn", "btn-sm", "btn-success", 3, "click"], [1, "card", "text-center"], [3, "formGroup", "ngSubmit"], [1, "form-group", "row"], ["for", "name", 1, "label", "col-sm-3", "col-form-label"], [1, "col-sm-3"], [1, "p-fluid"], ["formControlName", "name", "placeholder", "Enter minimum 3 letters", 3, "suggestions", "forceSelection", "minLength", "completeMethod"], [4, "ngIf"], ["for", "monthAndYear", 1, "label", "col-sm-2", "col-form-label"], [1, "col-sm-2"], ["formControlName", "monthAndYear", "view", "month", "dateFormat", "mm/yy", 3, "readonlyInput"], ["type", "submit", "nbButton", "", "outline", "", "status", "success", "size", "small"], ["class", "text-center", 4, "ngIf"], ["class", "card", 4, "ngIf"], ["class", "caption status-danger", 4, "ngIf"], [1, "caption", "status-danger"], [1, "text-center"], [1, "card"], ["scrollHeight", "400px", 3, "value", "resizableColumns", "paginator", "rows", "showCurrentPageReport", "autoLayout", "rowsPerPageOptions", "scrollable"], ["pTemplate", "header"], ["pTemplate", "body"], ["pTemplate", "emptymessage"], [4, "ngFor", "ngForOf"], ["pResizableColumn", "", "class", "text-center", 3, "pSortableColumn", "class", 4, "ngIf"], ["pResizableColumn", "", 1, "text-center", 3, "pSortableColumn"], ["class", "sort-icon", 3, "field", "id", 4, "ngIf"], [1, "sort-icon", 3, "field", "id"], ["nbTooltipPlacement", "top", 3, "nbTooltip"], [1, "text-center", "action"], ["routerLinkActive", "router-link-active", "nbTooltip", "Edit", "nbTooltipPlacement", "top", 1, "btn", "btn-outline-primary", "btn-sm", "action-button", 3, "click"], ["icon", "edit", "pack", "eva", 1, "action-icons"], ["nbTooltip", "Delete", "nbTooltipPlacement", "top", 1, "btn", "btn-outline-danger", "btn-sm", "action-button", 3, "click"], ["icon", "close", "pack", "eva", 1, "action-icons"], ["colspan", "3", 1, "text-center"]], template: function PaymentsListComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementStart"](0, "nb-card", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelement"](1, "p-confirmDialog");
         _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementStart"](2, "nb-card-header")(3, "div", 1)(4, "div", 2);
@@ -1029,9 +1057,9 @@ PaymentsListComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODU
         _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("ngIf", ctx.AddPaymentForm.controls.monthAndYear.touched && ctx.AddPaymentForm.controls.monthAndYear.errors);
         _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"](6);
-        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("ngIf", !ctx.users || ctx.users.length === 0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("ngIf", !ctx.users || ctx.users.length === 0 || ctx.showTable);
         _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"](1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("ngIf", ctx.users && ctx.users.length > 0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("ngIf", ctx.users && ctx.users.length > 0 && !ctx.showTable);
     } }, directives: [_nebular_theme__WEBPACK_IMPORTED_MODULE_10__.NbCardComponent, primeng_confirmdialog__WEBPACK_IMPORTED_MODULE_12__.ConfirmDialog, _nebular_theme__WEBPACK_IMPORTED_MODULE_10__.NbCardHeaderComponent, _angular_forms__WEBPACK_IMPORTED_MODULE_8__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_8__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormGroupDirective, primeng_autocomplete__WEBPACK_IMPORTED_MODULE_13__.AutoComplete, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormControlName, _angular_common__WEBPACK_IMPORTED_MODULE_14__.NgIf, primeng_calendar__WEBPACK_IMPORTED_MODULE_15__.Calendar, _nebular_theme__WEBPACK_IMPORTED_MODULE_10__.NbButtonComponent, _nebular_theme__WEBPACK_IMPORTED_MODULE_10__.NbCardBodyComponent, primeng_table__WEBPACK_IMPORTED_MODULE_16__.Table, primeng_api__WEBPACK_IMPORTED_MODULE_9__.PrimeTemplate, _angular_common__WEBPACK_IMPORTED_MODULE_14__.NgForOf, primeng_table__WEBPACK_IMPORTED_MODULE_16__.ResizableColumn, primeng_table__WEBPACK_IMPORTED_MODULE_16__.SortableColumn, primeng_table__WEBPACK_IMPORTED_MODULE_16__.SortIcon, _nebular_theme__WEBPACK_IMPORTED_MODULE_10__.NbTooltipDirective, _angular_router__WEBPACK_IMPORTED_MODULE_11__.RouterLinkActive, _nebular_theme__WEBPACK_IMPORTED_MODULE_10__.NbIconComponent], pipes: [_angular_common__WEBPACK_IMPORTED_MODULE_14__.DatePipe], styles: [".bold-text[_ngcontent-%COMP%] {\n  font-size: larger;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInBheW1lbnRzLWxpc3QuY29tcG9uZW50LnNjc3MiLCIuLlxcLi5cXC4uXFwuLlxcLi5cXC4uXFwuLlxcQW5ndWxhciUyMFByb2plY3RcXFZlV2luXFxzcmNcXGFwcFxcYWRtaW5cXHBheW1lbnRzXFxwYXltZW50cy1saXN0XFxwYXltZW50cy1saXN0LmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsaUJBQUE7QUNDRiIsImZpbGUiOiJwYXltZW50cy1saXN0LmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmJvbGQtdGV4dCB7XHJcbiAgZm9udC1zaXplOiBsYXJnZXI7XHJcbn0iLCIuYm9sZC10ZXh0IHtcbiAgZm9udC1zaXplOiBsYXJnZXI7XG59Il19 */"] });
 
 

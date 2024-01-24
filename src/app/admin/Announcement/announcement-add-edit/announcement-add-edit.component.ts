@@ -128,18 +128,18 @@ export class AnnouncementAddEditComponent implements OnInit {
       this.announcementService.updateAnnouncement(requestBody)
         .subscribe((response) => {
           // this.backToUserList();
-          if (HttpStatusCode.Ok) {
-            this.toastrService.show(response["message"], "Success", {
+          if (response.statusCode === 200) {
+            this.toastrService.show(response.statusMessage, "Success", {
               status: "success",
               duration: 8000,
             });
           } else {
-            this.toastrService.show(response["message"], "Warning", {
+            this.toastrService.show(response.statusMessage, "Warning", {
               status: "warning",
               duration: 8000,
             });
           }
-          this.router.navigate([ROUTE_PATH.ADMIN, ROUTE_PATH.ANNOUNCEMENT, ROUTE_PATH.ANNOUNCEMENTS.LIST,]);
+          this.backToAnnouncementList();
         });
 
 
@@ -159,19 +159,18 @@ export class AnnouncementAddEditComponent implements OnInit {
 
       this.announcementService.CreateAnnouncement(requestBody)
         .subscribe((response) => {
-          if (HttpStatusCode.Ok) {
-            this.toastrService.show(response["message"], "Success", {
+          if (response.statusCode === 200) {
+            this.toastrService.show(response.statusMessage, "Success", {
               status: "success",
               duration: 8000,
             });
           } else {
-            this.toastrService.show(response["message"], "Warning", {
+            this.toastrService.show(response.statusMessage, "Warning", {
               status: "warning",
               duration: 8000,
             });
           }
-          //  this.backToUserList();
-          this.router.navigate([ROUTE_PATH.ADMIN, ROUTE_PATH.ANNOUNCEMENT, ROUTE_PATH.ANNOUNCEMENTS.LIST,]);
+          this.backToAnnouncementList();
         });
     }
   }

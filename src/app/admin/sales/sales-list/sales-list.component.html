@@ -11,11 +11,11 @@
         <div class="card  text-center">
             <form [formGroup]="AddSaleForm" (ngSubmit)="onSubmit()"> <br>
                 <div class="form-group row">
-                    <label for="name" class="label col-sm-3 col-form-label"> Search Customer Name *</label>
+                    <label for="name" class="label col-sm-3 col-form-label" > Search Customer Name *</label>
                     <div class="col-sm-3">
                         <span class="p-fluid">
                             <p-autoComplete formControlName="name" [suggestions]="results" [forceSelection]="true"
-                                (completeMethod)="onNameInputChange($event)" [minLength]="3">
+                                (completeMethod)="onNameInputChange($event)" [minLength]="3" placeholder="Enter minimum 3 letters">
                             </p-autoComplete>
                         </span>
                         <ng-container *ngIf="AddSaleForm.controls.name.touched && AddSaleForm.controls.name.errors">
@@ -44,10 +44,11 @@
         </div><br>
     </nb-card-header>
     <nb-card-body>
-        <div class="text-center" *ngIf="!users || users.length === 0">
+        <div class="text-center" *ngIf="!users || users.length === 0 || showTable 
+">
             <h5>No Data Found !</h5>
         </div>
-        <div class="card" *ngIf="users && users.length > 0">
+        <div class="card" *ngIf="users && users.length > 0 && !showTable">
             <div class="card">
                 <p-table [value]="users" [resizableColumns]="true" [paginator]="true" [rows]="rows"
                     [showCurrentPageReport]="true" [autoLayout]="true" [rowsPerPageOptions]="itemsPerPage"
@@ -72,7 +73,7 @@
                             <td nbTooltip="{{ user.date }}" nbTooltipPlacement="top">{{ user.date }}</td>
                             <td nbTooltip="{{ user.app }}" nbTooltipPlacement="top">{{ user.app }}</td>
                             <td nbTooltip="{{ user.sales }}" nbTooltipPlacement="top">{{ user.sales }}</td>
-                            <td nbTooltip="{{ user.salesReturn }}" nbTooltipPlacement="top">{{ user.salesReturn }}</td>                           
+                            <td nbTooltip="{{ user.salesReturn }}" nbTooltipPlacement="top">{{ user.salesReturn }}</td>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="emptymessage">

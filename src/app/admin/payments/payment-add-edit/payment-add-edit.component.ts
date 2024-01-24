@@ -24,6 +24,8 @@ export class PaymentAddEditComponent implements OnInit {
 
   AddPaymentForm: FormGroup;
   GetSalesForm: FormGroup;
+
+  //Submit click to hide
   submitted = false;
   data_loading = false;
 
@@ -68,10 +70,6 @@ export class PaymentAddEditComponent implements OnInit {
     } else {
       this.page_title = "Add Payment Details";
       this.AddPaymentForm.reset();
-
-      // Enable form controls for adding
-      this.GetSalesForm.get('cid').enable();
-      this.GetSalesForm.get('monthAndYear').enable();
     }
 
 
@@ -88,7 +86,7 @@ export class PaymentAddEditComponent implements OnInit {
           paymentDetails: this.paymentDetails.paymentDetails,
           remarks: this.paymentDetails.remarks,
         });
-        
+
         // Extracted year and month values from the paymentDetails
         const year = this.paymentDetails.year;
         const month = this.paymentDetails.month;
@@ -164,6 +162,10 @@ export class PaymentAddEditComponent implements OnInit {
   }
 
   totalSales() {
+    // Disable form controls for editing
+    this.GetSalesForm.get('cid').disable();
+    this.GetSalesForm.get('monthAndYear').disable();
+
     if (this.GetSalesForm.invalid) {
       return;
     }
@@ -231,18 +233,18 @@ export class PaymentAddEditComponent implements OnInit {
 
       this.paymentService.updatePayment(requestBody)
         .subscribe((response) => {
-          if (HttpStatusCode.Ok) {
-            this.toastrService.show(response["message"], "Success", {
+          if (response.statusCode === 200) {
+            this.toastrService.show(response.statusMessage, "Success", {
               status: "success",
               duration: 8000,
             });
           } else {
-            this.toastrService.show(response["message"], "Warning", {
+            this.toastrService.show(response.statusMessage, "Warning", {
               status: "warning",
               duration: 8000,
             });
           }
-          this.router.navigate([ROUTE_PATH.ADMIN, ROUTE_PATH.PAYMENT, ROUTE_PATH.PAYMENTS.LIST,]);
+          this.backToPaymentList();
         });
 
 
@@ -277,19 +279,18 @@ export class PaymentAddEditComponent implements OnInit {
 
       this.paymentService.CreatePayment(requestBody)
         .subscribe((response) => {
-          if (HttpStatusCode.Ok) {
-            this.toastrService.show(response["message"], "Success", {
+          if (response.statusCode === 200) {
+            this.toastrService.show(response.statusMessage, "Success", {
               status: "success",
               duration: 8000,
             });
-          } else {
-            this.toastrService.show(response["message"], "Warning", {
+          } else if (response.statusCode === 403) {
+            this.toastrService.show(response.statusMessage, "Warning", {
               status: "warning",
               duration: 8000,
             });
           }
-          //  this.backToPaymentList();
-          this.router.navigate([ROUTE_PATH.ADMIN, ROUTE_PATH.PAYMENT, ROUTE_PATH.PAYMENTS.LIST,]);
+          this.backToPaymentList();
         });
     }
   }

@@ -10,7 +10,7 @@
                                 <span class="p-float-label">
                                     <p-autoComplete formControlName="cid" [suggestions]="results"
                                         [forceSelection]="true" (completeMethod)="onNameInputChange($event)"
-                                        [minLength]="3"
+                                        [minLength]="3" placeholder="Enter minimum 3 letters"
                                         [attr.disabled]="GetSalesForm.get('cid').disabled ? true : null">
                                     </p-autoComplete>
                                     <!-- <label for="float-label">Search Name *</label> -->

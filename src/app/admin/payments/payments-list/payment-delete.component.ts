@@ -13,6 +13,7 @@ import { NbDialogRef } from '@nebular/theme';
         <ul>
           <li><strong>Customer ID:</strong> {{ user.cid }}</li>
           <li><strong>Month:</strong> {{ user.month }}</li>
+          <li><strong>Year:</strong> {{ user.year }}</li>
           <li><strong>Sales Amount:</strong> {{ user.salesAmount }}</li>          
           <li><strong> Date Of Payment:</strong> {{ user.dateOfPayment | date: 'dd/MM/yyyy' }}</li>
           <li><strong>Bank:</strong> {{ user.bank }}</li>

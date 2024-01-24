@@ -152,10 +152,17 @@ export class BannerAddEditComponent implements OnInit {
       this.bannerService.updateBanner(formData).subscribe(
         (response) => {
           // Handle response as needed
-          this.toastrService.show(response['message'], 'Success', {
-            status: 'success',
-            duration: 8000,
-          });
+          if (response.statusCode === 200) {
+            this.toastrService.show(response.statusMessage, "Success", {
+              status: "success",
+              duration: 8000,
+            });
+          } else {
+            this.toastrService.show(response.statusMessage, "Warning", {
+              status: "warning",
+              duration: 8000,
+            });
+          }
           this.backToBannerList();
         },
         (error) => {
@@ -183,10 +190,17 @@ export class BannerAddEditComponent implements OnInit {
       this.bannerService.CreateBanner(formData).subscribe(
         (response) => {
           // Handle response as needed
-          this.toastrService.show(response['message'], 'Success', {
-            status: 'success',
-            duration: 8000,
-          });
+          if (response.statusCode === 200) {
+            this.toastrService.show(response.statusMessage, "Success", {
+              status: "success",
+              duration: 8000,
+            });
+          } else {
+            this.toastrService.show(response.statusMessage, "Warning", {
+              status: "warning",
+              duration: 8000,
+            });
+          }
           this.backToBannerList();
         },
         (error) => {

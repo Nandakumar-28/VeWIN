@@ -21,8 +21,11 @@ export class PaymentsListComponent implements OnInit {
 
   AddPaymentForm: FormGroup;
 
-  submitted = false;
   data_loading = false;
+
+  //Change value to hide table
+  showTable = false;
+
 
   itemsPerPage: any[] = [10, 25, 50];
   users: any;
@@ -51,6 +54,17 @@ export class PaymentsListComponent implements OnInit {
   ngOnInit() {
 
     this.AddPaymentFormInitialize();
+
+    // Add event listener to name field Change value to hide table
+    this.AddPaymentForm.get('name')?.valueChanges.subscribe(() => {
+      this.showTable = true;
+    });
+
+    // Add event listener to monthAndYear field Change value to hide table 
+    this.AddPaymentForm.get('monthAndYear')?.valueChanges.subscribe(() => {
+      this.showTable = true;
+    });
+    
     // table   with their respective field name and header value
     this.columns = [
       { field: "id", header: "Id", show: true, sort: true },
@@ -192,12 +206,12 @@ export class PaymentsListComponent implements OnInit {
 
 
   onSubmit() {
-    this.submitted = true;
 
     const selectedName = this.AddPaymentForm.value.name;
     const selectedDate = this.AddPaymentForm.value.monthAndYear;
-
+    console.log(selectedDate)
     if (selectedDate && selectedName) {
+
       // Convert the month to a string representation (e.g., January, February)
       const month = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(selectedDate);
       const year = selectedDate.getFullYear().toString(); // Convert the year to a string
@@ -222,6 +236,7 @@ export class PaymentsListComponent implements OnInit {
 
       this.paymentApiRequest(requestBody);
     } else if (selectedDate) {
+
       // Convert the month to a string representation (e.g., January, February)
       const month = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(selectedDate);
       const year = selectedDate.getFullYear().toString(); // Convert the year to a string
@@ -240,6 +255,7 @@ export class PaymentsListComponent implements OnInit {
   private paymentApiRequest(requestBody: any) {
     this.paymentService.getPaymentList(requestBody)
       .subscribe((response) => {
+        this.showTable = false;
         this.users = response;
       })
   }

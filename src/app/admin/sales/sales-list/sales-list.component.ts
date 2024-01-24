@@ -19,7 +19,8 @@ export class SalesListComponent implements OnInit {
 
   AddSaleForm: FormGroup;
 
-  submitted = false;
+  //Change value to hide table
+  showTable = false;
   data_loading = false;
 
   itemsPerPage: any[] = [10, 25, 50];
@@ -48,6 +49,17 @@ export class SalesListComponent implements OnInit {
   ngOnInit() {
 
     this.AddSaleFormInitialize();
+
+    // Add event listener to name field Change value to hide table
+    this.AddSaleForm.get('name')?.valueChanges.subscribe(() => {
+      this.showTable = true;
+    });
+
+    // Add event listener to monthAndYear field Change value to hide table 
+    this.AddSaleForm.get('monthAndYear')?.valueChanges.subscribe(() => {
+      this.showTable = true;
+    });
+
     // table   with their respective field name and header value
     this.columns = [
       { field: "date", header: "Date", show: true, sort: true },
@@ -107,7 +119,7 @@ export class SalesListComponent implements OnInit {
    * @returns
    */
   makePayment() {
-     this.paymentService.setUserDetails(null);
+    this.paymentService.setUserDetails(null);
     this.router.navigate([
       ROUTE_PATH.ADMIN,
       ROUTE_PATH.PAYMENT,
@@ -123,7 +135,6 @@ export class SalesListComponent implements OnInit {
    */
 
   onSubmit() {
-    this.submitted = true;
 
     const selectedName = this.AddSaleForm.value.name;
     const selectedDate = this.AddSaleForm.value.monthAndYear;
@@ -172,6 +183,7 @@ export class SalesListComponent implements OnInit {
     this.saleService.getSaleList(requestBody)
       .subscribe((response) => {
         this.users = response;
+        this.showTable = false;
       });
   }
 }

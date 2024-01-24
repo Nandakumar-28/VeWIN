@@ -182,14 +182,19 @@ class AnnouncementAddEditComponent {
             this.announcementService.updateAnnouncement(requestBody)
                 .subscribe((response) => {
                 // this.backToUserList();
-                if (true /* Ok */) {
-                    this.toastrService.show(response["message"], "Success", {
+                if (response.statusCode === 200) {
+                    this.toastrService.show(response.statusMessage, "Success", {
                         status: "success",
                         duration: 8000,
                     });
                 }
-                else {}
-                this.router.navigate([_shared_constants_route_path_constant__WEBPACK_IMPORTED_MODULE_0__.ROUTE_PATH.ADMIN, _shared_constants_route_path_constant__WEBPACK_IMPORTED_MODULE_0__.ROUTE_PATH.ANNOUNCEMENT, _shared_constants_route_path_constant__WEBPACK_IMPORTED_MODULE_0__.ROUTE_PATH.ANNOUNCEMENTS.LIST,]);
+                else {
+                    this.toastrService.show(response.statusMessage, "Warning", {
+                        status: "warning",
+                        duration: 8000,
+                    });
+                }
+                this.backToAnnouncementList();
             });
         }
         else {
@@ -207,15 +212,19 @@ class AnnouncementAddEditComponent {
             };
             this.announcementService.CreateAnnouncement(requestBody)
                 .subscribe((response) => {
-                if (true /* Ok */) {
-                    this.toastrService.show(response["message"], "Success", {
+                if (response.statusCode === 200) {
+                    this.toastrService.show(response.statusMessage, "Success", {
                         status: "success",
                         duration: 8000,
                     });
                 }
-                else {}
-                //  this.backToUserList();
-                this.router.navigate([_shared_constants_route_path_constant__WEBPACK_IMPORTED_MODULE_0__.ROUTE_PATH.ADMIN, _shared_constants_route_path_constant__WEBPACK_IMPORTED_MODULE_0__.ROUTE_PATH.ANNOUNCEMENT, _shared_constants_route_path_constant__WEBPACK_IMPORTED_MODULE_0__.ROUTE_PATH.ANNOUNCEMENTS.LIST,]);
+                else {
+                    this.toastrService.show(response.statusMessage, "Warning", {
+                        status: "warning",
+                        duration: 8000,
+                    });
+                }
+                this.backToAnnouncementList();
             });
         }
     }

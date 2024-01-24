@@ -176,7 +176,8 @@ class SalesListComponent {
         this.formBuilder = formBuilder;
         this.userService = userService;
         this.paymentService = paymentService;
-        this.submitted = false;
+        //Change value to hide table
+        this.showTable = false;
         this.data_loading = false;
         this.itemsPerPage = [10, 25, 50];
         this.first = 0;
@@ -185,7 +186,16 @@ class SalesListComponent {
         this.small = 'small';
     }
     ngOnInit() {
+        var _a, _b;
         this.AddSaleFormInitialize();
+        // Add event listener to name field Change value to hide table
+        (_a = this.AddSaleForm.get('name')) === null || _a === void 0 ? void 0 : _a.valueChanges.subscribe(() => {
+            this.showTable = true;
+        });
+        // Add event listener to monthAndYear field Change value to hide table 
+        (_b = this.AddSaleForm.get('monthAndYear')) === null || _b === void 0 ? void 0 : _b.valueChanges.subscribe(() => {
+            this.showTable = true;
+        });
         // table   with their respective field name and header value
         this.columns = [
             { field: "date", header: "Date", show: true, sort: true },
@@ -251,7 +261,6 @@ class SalesListComponent {
      * @returns
      */
     onSubmit() {
-        this.submitted = true;
         const selectedName = this.AddSaleForm.value.name;
         const selectedDate = this.AddSaleForm.value.monthAndYear;
         if (selectedDate && selectedName) {
@@ -293,11 +302,12 @@ class SalesListComponent {
         this.saleService.getSaleList(requestBody)
             .subscribe((response) => {
             this.users = response;
+            this.showTable = false;
         });
     }
 }
 SalesListComponent.ɵfac = function SalesListComponent_Factory(t) { return new (t || SalesListComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](_nebular_theme__WEBPACK_IMPORTED_MODULE_9__.NbToastrService), _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_10__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_10__.ActivatedRoute), _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](_services_sales_service__WEBPACK_IMPORTED_MODULE_1__.SalesService), _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](_nebular_theme__WEBPACK_IMPORTED_MODULE_9__.NbDialogService), _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](_bestperformer_services_bestperformer_service__WEBPACK_IMPORTED_MODULE_2__.BestperformerService), _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](_payments_services_payments_service__WEBPACK_IMPORTED_MODULE_3__.PaymentsService)); };
-SalesListComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdefineComponent"]({ type: SalesListComponent, selectors: [["ngx-sales-list"]], decls: 32, vars: 12, consts: [[1, "inline-form-card", "full-card"], [1, "row"], [1, "col-md-9", "text-center", "bold-text"], [1, "col-md-3"], [1, "btn", "btn-sm", "btn-success", 3, "click"], [1, "card", "text-center"], [3, "formGroup", "ngSubmit"], [1, "form-group", "row"], ["for", "name", 1, "label", "col-sm-3", "col-form-label"], [1, "col-sm-3"], [1, "p-fluid"], ["formControlName", "name", 3, "suggestions", "forceSelection", "minLength", "completeMethod"], [4, "ngIf"], ["for", "monthAndYear", 1, "label", "col-sm-2", "col-form-label"], [1, "col-sm-2"], ["formControlName", "monthAndYear", "view", "month", "dateFormat", "mm/yy", 3, "readonlyInput"], ["type", "submit", "nbButton", "", "outline", "", "status", "success", "size", "small"], ["class", "text-center", 4, "ngIf"], ["class", "card", 4, "ngIf"], ["class", "caption status-danger", 4, "ngIf"], [1, "caption", "status-danger"], [1, "text-center"], [1, "card"], ["scrollHeight", "400px", 3, "value", "resizableColumns", "paginator", "rows", "showCurrentPageReport", "autoLayout", "rowsPerPageOptions", "scrollable"], ["pTemplate", "header"], ["pTemplate", "body"], ["pTemplate", "emptymessage"], [4, "ngFor", "ngForOf"], ["pResizableColumn", "", "class", "text-center", 3, "pSortableColumn", "class", 4, "ngIf"], ["pResizableColumn", "", 1, "text-center", 3, "pSortableColumn"], ["class", "sort-icon", 3, "field", "id", 4, "ngIf"], [1, "sort-icon", 3, "field", "id"], ["nbTooltipPlacement", "top", 3, "nbTooltip"], ["colspan", "3", 1, "text-center"]], template: function SalesListComponent_Template(rf, ctx) { if (rf & 1) {
+SalesListComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdefineComponent"]({ type: SalesListComponent, selectors: [["ngx-sales-list"]], decls: 32, vars: 12, consts: [[1, "inline-form-card", "full-card"], [1, "row"], [1, "col-md-9", "text-center", "bold-text"], [1, "col-md-3"], [1, "btn", "btn-sm", "btn-success", 3, "click"], [1, "card", "text-center"], [3, "formGroup", "ngSubmit"], [1, "form-group", "row"], ["for", "name", 1, "label", "col-sm-3", "col-form-label"], [1, "col-sm-3"], [1, "p-fluid"], ["formControlName", "name", "placeholder", "Enter minimum 3 letters", 3, "suggestions", "forceSelection", "minLength", "completeMethod"], [4, "ngIf"], ["for", "monthAndYear", 1, "label", "col-sm-2", "col-form-label"], [1, "col-sm-2"], ["formControlName", "monthAndYear", "view", "month", "dateFormat", "mm/yy", 3, "readonlyInput"], ["type", "submit", "nbButton", "", "outline", "", "status", "success", "size", "small"], ["class", "text-center", 4, "ngIf"], ["class", "card", 4, "ngIf"], ["class", "caption status-danger", 4, "ngIf"], [1, "caption", "status-danger"], [1, "text-center"], [1, "card"], ["scrollHeight", "400px", 3, "value", "resizableColumns", "paginator", "rows", "showCurrentPageReport", "autoLayout", "rowsPerPageOptions", "scrollable"], ["pTemplate", "header"], ["pTemplate", "body"], ["pTemplate", "emptymessage"], [4, "ngFor", "ngForOf"], ["pResizableColumn", "", "class", "text-center", 3, "pSortableColumn", "class", 4, "ngIf"], ["pResizableColumn", "", 1, "text-center", 3, "pSortableColumn"], ["class", "sort-icon", 3, "field", "id", 4, "ngIf"], [1, "sort-icon", 3, "field", "id"], ["nbTooltipPlacement", "top", 3, "nbTooltip"], ["colspan", "3", 1, "text-center"]], template: function SalesListComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementStart"](0, "nb-card", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelement"](1, "p-confirmDialog");
         _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementStart"](2, "nb-card-header")(3, "div", 1)(4, "div", 2);
@@ -349,9 +359,9 @@ SalesListComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_
         _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("ngIf", ctx.AddSaleForm.controls.monthAndYear.touched && ctx.AddSaleForm.controls.monthAndYear.errors);
         _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"](6);
-        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("ngIf", !ctx.users || ctx.users.length === 0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("ngIf", !ctx.users || ctx.users.length === 0 || ctx.showTable);
         _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"](1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("ngIf", ctx.users && ctx.users.length > 0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("ngIf", ctx.users && ctx.users.length > 0 && !ctx.showTable);
     } }, directives: [_nebular_theme__WEBPACK_IMPORTED_MODULE_9__.NbCardComponent, primeng_confirmdialog__WEBPACK_IMPORTED_MODULE_11__.ConfirmDialog, _nebular_theme__WEBPACK_IMPORTED_MODULE_9__.NbCardHeaderComponent, _angular_forms__WEBPACK_IMPORTED_MODULE_8__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_8__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormGroupDirective, primeng_autocomplete__WEBPACK_IMPORTED_MODULE_12__.AutoComplete, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormControlName, _angular_common__WEBPACK_IMPORTED_MODULE_13__.NgIf, primeng_calendar__WEBPACK_IMPORTED_MODULE_14__.Calendar, _nebular_theme__WEBPACK_IMPORTED_MODULE_9__.NbButtonComponent, _nebular_theme__WEBPACK_IMPORTED_MODULE_9__.NbCardBodyComponent, primeng_table__WEBPACK_IMPORTED_MODULE_15__.Table, primeng_api__WEBPACK_IMPORTED_MODULE_16__.PrimeTemplate, _angular_common__WEBPACK_IMPORTED_MODULE_13__.NgForOf, primeng_table__WEBPACK_IMPORTED_MODULE_15__.ResizableColumn, primeng_table__WEBPACK_IMPORTED_MODULE_15__.SortableColumn, primeng_table__WEBPACK_IMPORTED_MODULE_15__.SortIcon, _nebular_theme__WEBPACK_IMPORTED_MODULE_9__.NbTooltipDirective], styles: [".bold-text[_ngcontent-%COMP%] {\n  font-size: larger;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNhbGVzLWxpc3QuY29tcG9uZW50LnNjc3MiLCIuLlxcLi5cXC4uXFwuLlxcLi5cXC4uXFwuLlxcQW5ndWxhciUyMFByb2plY3RcXFZlV2luXFxzcmNcXGFwcFxcYWRtaW5cXHNhbGVzXFxzYWxlcy1saXN0XFxzYWxlcy1saXN0LmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsaUJBQUE7QUNDRiIsImZpbGUiOiJzYWxlcy1saXN0LmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmJvbGQtdGV4dCB7XHJcbiAgZm9udC1zaXplOiBsYXJnZXI7XHJcbn0iLCIuYm9sZC10ZXh0IHtcbiAgZm9udC1zaXplOiBsYXJnZXI7XG59Il19 */"] });
 
 

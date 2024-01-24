@@ -142,18 +142,18 @@ export class UserAddEditComponent implements OnInit {
     this.userService.updateUser(user)
       .subscribe((response) => {
         this.backToUserList();
-        if (HttpStatusCode.Ok) {
-          this.toastrService.show(response["message"], "Success", {
-            status: "success",
-            duration: 8000,
-          });
-        } else {
-          this.toastrService.show(response["message"], "Warning", {
-            status: "warning",
-            duration: 8000,
-          });
-        }
-        this.router.navigate([ROUTE_PATH.ADMIN, ROUTE_PATH.USERS, ROUTE_PATH.USERES.LIST,]);
+          if (response.statusCode === 200) {
+            this.toastrService.show(response.statusMessage, "Success", {
+              status: "success",
+              duration: 8000,
+            });
+          } else {
+            this.toastrService.show(response.statusMessage, "Warning", {
+              status: "warning",
+              duration: 8000,
+            });
+          }
+           this.backToUserList();
       });
   }
 
