@@ -20,7 +20,7 @@ export class SalesListComponent implements OnInit {
   AddSaleForm: FormGroup;
 
   //Change value to hide table
-  showTable = false;
+  showTable = true;
   data_loading = false;
 
   itemsPerPage: any[] = [10, 25, 50];

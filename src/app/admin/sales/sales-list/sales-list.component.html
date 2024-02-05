@@ -11,11 +11,12 @@
         <div class="card  text-center">
             <form [formGroup]="AddSaleForm" (ngSubmit)="onSubmit()"> <br>
                 <div class="form-group row">
-                    <label for="name" class="label col-sm-3 col-form-label" > Search Customer Name *</label>
+                    <label for="name" class="label col-sm-3 col-form-label"> Search Customer Name *</label>
                     <div class="col-sm-3">
                         <span class="p-fluid">
                             <p-autoComplete formControlName="name" [suggestions]="results" [forceSelection]="true"
-                                (completeMethod)="onNameInputChange($event)" [minLength]="3" placeholder="Enter minimum 3 letters">
+                                (completeMethod)="onNameInputChange($event)" [minLength]="3"
+                                placeholder="Enter minimum 3 letters">
                             </p-autoComplete>
                         </span>
                         <ng-container *ngIf="AddSaleForm.controls.name.touched && AddSaleForm.controls.name.errors">
@@ -44,8 +45,7 @@
         </div><br>
     </nb-card-header>
     <nb-card-body>
-        <div class="text-center" *ngIf="!users || users.length === 0 || showTable 
-">
+        <div class="card text-center" *ngIf="!showTable && (!users || users.length === 0)">
             <h5>No Data Found !</h5>
         </div>
         <div class="card" *ngIf="users && users.length > 0 && !showTable">

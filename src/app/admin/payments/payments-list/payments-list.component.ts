@@ -24,7 +24,7 @@ export class PaymentsListComponent implements OnInit {
   data_loading = false;
 
   //Change value to hide table
-  showTable = false;
+  showTable = true;
 
 
   itemsPerPage: any[] = [10, 25, 50];

@@ -46,8 +46,8 @@
         </div><br>
     </nb-card-header>
     <nb-card-body>
-        <div class="text-center" *ngIf="!users || users.length === 0 || showTable">
-            <h5>No Data Found !</h5>
+        <div class="card text-center" *ngIf="!showTable && (!users || users.length === 0)">
+                <h5>No Data Found !</h5>
         </div>
         <div class="card" *ngIf="users && users.length > 0 && !showTable">
             <div class="card">
